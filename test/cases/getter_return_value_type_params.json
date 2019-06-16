@@ -1,0 +1,34 @@
+{
+  "X": {
+    "type": "class",
+    "properties": {
+      "desc": {
+        "type": "ChangeSet",
+        "typeParams": [
+          {
+            "type": "ChangeDesc",
+            "loc": {
+              "line": 2,
+              "column": 24,
+              "file": "test/cases/getter_return_value_type_params.ts"
+            }
+          }
+        ],
+        "loc": {
+          "line": 2,
+          "column": 2,
+          "file": "test/cases/getter_return_value_type_params.ts"
+        },
+        "id": "X.desc",
+        "readonly": true
+      }
+    },
+    "loc": {
+      "line": 1,
+      "column": 0,
+      "file": "test/cases/getter_return_value_type_params.ts"
+    },
+    "id": "X",
+    "exported": true
+  }
+}

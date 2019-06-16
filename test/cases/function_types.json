@@ -1,0 +1,86 @@
+{
+  "ChangeSet": {
+    "loc": {
+      "line": 1,
+      "column": 0,
+      "file": "test/cases/function_types.ts"
+    },
+    "type": "class",
+    "exported": true,
+    "staticProperties": {
+      "fromJSON": {
+        "loc": {
+          "line": 2,
+          "column": 2,
+          "file": "test/cases/function_types.ts"
+        },
+        "type": "Function",
+        "params": [
+          {
+            "loc": {
+              "line": 2,
+              "column": 18,
+              "file": "test/cases/function_types.ts"
+            },
+            "type": "Object",
+            "properties": {
+              "fromJSON": {
+                "loc": {
+                  "line": 2,
+                  "column": 31,
+                  "file": "test/cases/function_types.ts"
+                },
+                "type": "Function",
+                "params": [
+                  {
+                    "loc": {
+                      "line": 2,
+                      "column": 42,
+                      "file": "test/cases/function_types.ts"
+                    },
+                    "type": "any",
+                    "name": "json",
+                    "id": "ChangeSet^fromJSON^ChangeType.fromJSON^json"
+                  }
+                ],
+                "returns": {
+                  "loc": {
+                    "line": 2,
+                    "column": 56,
+                    "file": "test/cases/function_types.ts"
+                  },
+                  "type": "ChangeSet",
+                  "id": "ChangeSet^fromJSON^ChangeType.fromJSON^returns"
+                },
+                "id": "ChangeSet^fromJSON^ChangeType.fromJSON"
+              }
+            },
+            "name": "ChangeType",
+            "id": "ChangeSet^fromJSON^ChangeType"
+          },
+          {
+            "loc": {
+              "line": 2,
+              "column": 68,
+              "file": "test/cases/function_types.ts"
+            },
+            "type": "any",
+            "name": "json",
+            "id": "ChangeSet^fromJSON^json"
+          }
+        ],
+        "returns": {
+          "loc": {
+            "line": 2,
+            "column": 80,
+            "file": "test/cases/function_types.ts"
+          },
+          "type": "ChangeSet",
+          "id": "ChangeSet^fromJSON^returns"
+        },
+        "id": "ChangeSet^fromJSON"
+      }
+    },
+    "id": "ChangeSet"
+  }
+}

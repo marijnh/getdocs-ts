@@ -1,0 +1,54 @@
+{
+  "Text": {
+    "type": "class",
+    "properties": {
+      "children": {
+        "type": "union",
+        "typeParams": [
+          {
+            "type": "ReadonlyArray",
+            "typeParams": [
+              {
+                "type": "Text",
+                "loc": {
+                  "line": 2,
+                  "column": 44,
+                  "file": "test/cases/internal.ts"
+                }
+              }
+            ],
+            "loc": {
+              "line": 2,
+              "column": 30,
+              "file": "test/cases/internal.ts"
+            }
+          },
+          {
+            "type": "null",
+            "loc": {
+              "line": 2,
+              "column": 52,
+              "file": "test/cases/internal.ts"
+            }
+          }
+        ],
+        "loc": {
+          "line": 2,
+          "column": 2,
+          "file": "test/cases/internal.ts"
+        },
+        "abstract": true,
+        "readonly": true,
+        "id": "Text.children"
+      }
+    },
+    "abstract": true,
+    "loc": {
+      "line": 1,
+      "column": 0,
+      "file": "test/cases/internal.ts"
+    },
+    "id": "Text",
+    "exported": true
+  }
+}

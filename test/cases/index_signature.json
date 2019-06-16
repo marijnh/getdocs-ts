@@ -1,0 +1,31 @@
+{
+  "X": {
+    "exported": true,
+    "type": "type",
+    "value": {
+      "type": "Object",
+      "properties": {
+        "[x: number]": {
+          "type": "number",
+          "loc": {
+            "file": "test/cases/index_signature.ts",
+            "line": 1,
+            "column": 30
+          },
+          "id": "X.[x: number]"
+        }
+      },
+      "loc": {
+        "file": "test/cases/index_signature.ts",
+        "line": 1,
+        "column": 16
+      }
+    },
+    "loc": {
+      "file": "test/cases/index_signature.ts",
+      "line": 1,
+      "column": 0
+    },
+    "id": "X"
+  }
+}

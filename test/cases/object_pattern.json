@@ -1,0 +1,123 @@
+{
+  "StateField": {
+    "type": "class",
+    "constructor": {
+      "type": "Function",
+      "params": [
+        {
+          "type": "Object",
+          "properties": {
+            "init": {
+              "type": "Function",
+              "params": [
+                {
+                  "type": "EditorState",
+                  "loc": {
+                    "line": 3,
+                    "column": 11,
+                    "file": "test/cases/object_pattern.ts"
+                  },
+                  "id": "StateField.constructor^init^state",
+                  "name": "state"
+                }
+              ],
+              "returns": {
+                "type": "T",
+                "loc": {
+                  "line": 3,
+                  "column": 34,
+                  "file": "test/cases/object_pattern.ts"
+                },
+                "id": "StateField.constructor^init^returns"
+              },
+              "loc": {
+                "line": 3,
+                "column": 4,
+                "file": "test/cases/object_pattern.ts"
+              },
+              "id": "StateField.constructor^init"
+            },
+            "apply": {
+              "type": "Function",
+              "params": [
+                {
+                  "type": "Transaction",
+                  "loc": {
+                    "line": 4,
+                    "column": 12,
+                    "file": "test/cases/object_pattern.ts"
+                  },
+                  "id": "StateField.constructor^apply^tr",
+                  "name": "tr"
+                },
+                {
+                  "type": "T",
+                  "loc": {
+                    "line": 4,
+                    "column": 29,
+                    "file": "test/cases/object_pattern.ts"
+                  },
+                  "id": "StateField.constructor^apply^value",
+                  "name": "value"
+                },
+                {
+                  "type": "EditorState",
+                  "loc": {
+                    "line": 4,
+                    "column": 39,
+                    "file": "test/cases/object_pattern.ts"
+                  },
+                  "id": "StateField.constructor^apply^newState",
+                  "name": "newState"
+                }
+              ],
+              "returns": {
+                "type": "T",
+                "loc": {
+                  "line": 4,
+                  "column": 65,
+                  "file": "test/cases/object_pattern.ts"
+                },
+                "id": "StateField.constructor^apply^returns"
+              },
+              "loc": {
+                "line": 4,
+                "column": 4,
+                "file": "test/cases/object_pattern.ts"
+              },
+              "id": "StateField.constructor^apply"
+            }
+          },
+          "loc": {
+            "line": 2,
+            "column": 14,
+            "file": "test/cases/object_pattern.ts"
+          }
+        }
+      ],
+      "loc": {
+        "line": 2,
+        "column": 2,
+        "file": "test/cases/object_pattern.ts"
+      },
+      "id": "StateField.constructor"
+    },
+    "typeParams": [
+      {
+        "type": "T",
+        "loc": {
+          "line": 1,
+          "column": 24,
+          "file": "test/cases/object_pattern.ts"
+        }
+      }
+    ],
+    "loc": {
+      "line": 1,
+      "column": 0,
+      "file": "test/cases/object_pattern.ts"
+    },
+    "id": "StateField",
+    "exported": true
+  }
+}

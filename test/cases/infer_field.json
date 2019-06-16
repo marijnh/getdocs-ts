@@ -1,0 +1,23 @@
+{
+  "X": {
+    "type": "class",
+    "staticProperties": {
+      "y": {
+        "type": "number",
+        "loc": {
+          "line": 2,
+          "column": 2,
+          "file": "test/cases/infer_field.ts"
+        },
+        "id": "X^y"
+      }
+    },
+    "loc": {
+      "line": 1,
+      "column": 0,
+      "file": "test/cases/infer_field.ts"
+    },
+    "id": "X",
+    "exported": true
+  }
+}

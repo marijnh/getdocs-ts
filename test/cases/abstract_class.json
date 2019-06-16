@@ -1,0 +1,13 @@
+{
+  "X": {
+    "type": "class",
+    "loc": {
+      "line": 1,
+      "column": 0,
+      "file": "test/cases/abstract_class.ts"
+    },
+    "id": "X",
+    "exported": true,
+    "abstract": true
+  }
+}

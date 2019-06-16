@@ -1,0 +1,64 @@
+{
+  "X": {
+    "type": "class",
+    "exported": true,
+    "properties": {
+      "iter": {
+        "type": "Function",
+        "params": [
+          {
+            "type": "union",
+            "typeParams": [
+              {
+                "type": "1",
+                "loc": {
+                  "line": 2,
+                  "column": 12,
+                  "file": "test/cases/literal_type.ts"
+                }
+              },
+              {
+                "type": "-1",
+                "loc": {
+                  "line": 2,
+                  "column": 16,
+                  "file": "test/cases/literal_type.ts"
+                }
+              }
+            ],
+            "optional": true,
+            "loc": {
+              "line": 2,
+              "column": 7,
+              "file": "test/cases/literal_type.ts"
+            },
+            "id": "X.iter^dir",
+            "default": "1",
+            "name": "dir"
+          }
+        ],
+        "returns": {
+          "type": "TextIterator",
+          "loc": {
+            "line": 2,
+            "column": 25,
+            "file": "test/cases/literal_type.ts"
+          },
+          "id": "X.iter^returns"
+        },
+        "loc": {
+          "line": 2,
+          "column": 2,
+          "file": "test/cases/literal_type.ts"
+        },
+        "id": "X.iter"
+      }
+    },
+    "loc": {
+      "line": 1,
+      "column": 0,
+      "file": "test/cases/literal_type.ts"
+    },
+    "id": "X"
+  }
+}

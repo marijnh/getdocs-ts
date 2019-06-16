@@ -1,0 +1,36 @@
+{
+  "X": {
+    "type": "class",
+    "properties": {
+      "peek": {
+        "type": "Function",
+        "returns": {
+          "type": "union",
+          "typeParams": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "id": "X.peek^returns"
+        },
+        "params": [],
+        "loc": {
+          "line": 2,
+          "column": 2,
+          "file": "test/cases/union_inference.ts"
+        },
+        "id": "X.peek"
+      }
+    },
+    "loc": {
+      "line": 1,
+      "column": 0,
+      "file": "test/cases/union_inference.ts"
+    },
+    "id": "X",
+    "exported": true
+  }
+}

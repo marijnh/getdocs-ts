@@ -1,0 +1,34 @@
+{
+  "X": {
+    "exported": true,
+    "loc": {
+      "line": 1,
+      "column": 0,
+      "file": "test/cases/abstract_method.ts"
+    },
+    "type": "class",
+    "properties": {
+      "firstLineLength": {
+        "type": "Function",
+        "abstract": true,
+        "loc": {
+          "line": 2,
+          "column": 2,
+          "file": "test/cases/abstract_method.ts"
+        },
+        "params": [],
+        "returns": {
+          "loc": {
+            "line": 2,
+            "column": 30,
+            "file": "test/cases/abstract_method.ts"
+          },
+          "type": "number",
+          "id": "X.firstLineLength^returns"
+        },
+        "id": "X.firstLineLength"
+      }
+    },
+    "id": "X"
+  }
+}

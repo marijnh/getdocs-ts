@@ -1,0 +1,30 @@
+{
+  "ChangeSet": {
+    "type": "class",
+    "typeParams": [
+      {
+        "type": "C extends ChangeDesc = Change",
+        "loc": {
+          "line": 1,
+          "column": 23,
+          "file": "test/cases/type_param.ts"
+        }
+      }
+    ],
+    "implements": {
+      "type": "Mapping",
+      "loc": {
+        "line": 1,
+        "column": 65,
+        "file": "test/cases/type_param.ts"
+      }
+    },
+    "loc": {
+      "line": 1,
+      "column": 0,
+      "file": "test/cases/type_param.ts"
+    },
+    "id": "ChangeSet",
+    "exported": true
+  }
+}

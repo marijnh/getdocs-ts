@@ -1,0 +1,45 @@
+{
+  "Line": {
+    "type": "class",
+    "constructor": {
+      "type": "Function",
+      "params": [
+        {
+          "type": "number",
+          "loc": {
+            "line": 2,
+            "column": 14,
+            "file": "test/cases/param_prop.ts"
+          },
+          "id": "Line.constructor^start",
+          "name": "start"
+        }
+      ],
+      "loc": {
+        "line": 2,
+        "column": 2,
+        "file": "test/cases/param_prop.ts"
+      },
+      "id": "Line.constructor"
+    },
+    "properties": {
+      "start": {
+        "type": "number",
+        "loc": {
+          "line": 2,
+          "column": 14,
+          "file": "test/cases/param_prop.ts"
+        },
+        "id": "Line.start",
+        "readonly": true
+      }
+    },
+    "loc": {
+      "line": 1,
+      "column": 0,
+      "file": "test/cases/param_prop.ts"
+    },
+    "id": "Line",
+    "exported": true
+  }
+}

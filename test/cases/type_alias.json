@@ -1,0 +1,71 @@
+{
+  "RangeFilter": {
+    "type": "type",
+    "value": {
+      "type": "Function",
+      "returns": {
+        "type": "bool",
+        "loc": {
+          "line": 1,
+          "column": 69,
+          "file": "test/cases/type_alias.ts"
+        },
+        "id": "RangeFilter^returns"
+      },
+      "params": [
+        {
+          "type": "number",
+          "loc": {
+            "line": 1,
+            "column": 30,
+            "file": "test/cases/type_alias.ts"
+          },
+          "id": "RangeFilter^from",
+          "name": "from"
+        },
+        {
+          "type": "number",
+          "loc": {
+            "line": 1,
+            "column": 44,
+            "file": "test/cases/type_alias.ts"
+          },
+          "id": "RangeFilter^to",
+          "name": "to"
+        },
+        {
+          "type": "T",
+          "loc": {
+            "line": 1,
+            "column": 56,
+            "file": "test/cases/type_alias.ts"
+          },
+          "id": "RangeFilter^value",
+          "name": "value"
+        }
+      ],
+      "loc": {
+        "line": 1,
+        "column": 29,
+        "file": "test/cases/type_alias.ts"
+      },
+      "typeParams": [
+        {
+          "type": "T",
+          "loc": {
+            "line": 1,
+            "column": 24,
+            "file": "test/cases/type_alias.ts"
+          }
+        }
+      ]
+    },
+    "loc": {
+      "line": 1,
+      "column": 0,
+      "file": "test/cases/type_alias.ts"
+    },
+    "id": "RangeFilter",
+    "exported": true
+  }
+}

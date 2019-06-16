@@ -1,0 +1,83 @@
+{
+  "findColumn": {
+    "loc": {
+      "line": 1,
+      "column": 0,
+      "file": "test/cases/type_literal.ts"
+    },
+    "type": "Function",
+    "params": [
+      {
+        "loc": {
+          "line": 1,
+          "column": 27,
+          "file": "test/cases/type_literal.ts"
+        },
+        "type": "string",
+        "name": "string",
+        "id": "findColumn^string"
+      },
+      {
+        "loc": {
+          "line": 1,
+          "column": 43,
+          "file": "test/cases/type_literal.ts"
+        },
+        "type": "number",
+        "name": "n",
+        "id": "findColumn^n"
+      },
+      {
+        "loc": {
+          "line": 1,
+          "column": 54,
+          "file": "test/cases/type_literal.ts"
+        },
+        "type": "number",
+        "name": "col",
+        "id": "findColumn^col"
+      },
+      {
+        "loc": {
+          "line": 1,
+          "column": 67,
+          "file": "test/cases/type_literal.ts"
+        },
+        "type": "number",
+        "name": "tabSize",
+        "id": "findColumn^tabSize"
+      }
+    ],
+    "returns": {
+      "loc": {
+        "line": 1,
+        "column": 85,
+        "file": "test/cases/type_literal.ts"
+      },
+      "type": "Object",
+      "properties": {
+        "offset": {
+          "loc": {
+            "line": 1,
+            "column": 86,
+            "file": "test/cases/type_literal.ts"
+          },
+          "type": "number",
+          "id": "findColumn^returns.offset"
+        },
+        "leftOver": {
+          "loc": {
+            "line": 1,
+            "column": 102,
+            "file": "test/cases/type_literal.ts"
+          },
+          "type": "number",
+          "id": "findColumn^returns.leftOver"
+        }
+      },
+      "id": "findColumn^returns"
+    },
+    "exported": true,
+    "id": "findColumn"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "X": {
+    "type": "class",
+    "properties": {
+      "x": {
+        "type": "number",
+        "readonly": true,
+        "loc": {
+          "line": 3,
+          "column": 2,
+          "file": "test/cases/accessors.ts"
+        },
+        "id": "X.x"
+      },
+      "y": {
+        "type": "number",
+        "loc": {
+          "line": 4,
+          "column": 2,
+          "file": "test/cases/accessors.ts"
+        },
+        "id": "X.y"
+      }
+    },
+    "staticProperties": {
+      "x": {
+        "type": "number",
+        "readonly": true,
+        "loc": {
+          "line": 6,
+          "column": 2,
+          "file": "test/cases/accessors.ts"
+        },
+        "id": "X^x"
+      },
+      "y": {
+        "type": "number",
+        "loc": {
+          "line": 7,
+          "column": 2,
+          "file": "test/cases/accessors.ts"
+        },
+        "id": "X^y"
+      }
+    },
+    "loc": {
+      "line": 2,
+      "column": 0,
+      "file": "test/cases/accessors.ts"
+    },
+    "id": "X",
+    "exported": true
+  }
+}

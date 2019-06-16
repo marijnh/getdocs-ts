@@ -1,0 +1,43 @@
+{
+  "Config": {
+    "exported": true,
+    "type": "interface",
+    "properties": {
+      "value": {
+        "type": "bool",
+        "loc": {
+          "file": "test/cases/infer_instantiation.ts",
+          "line": 5,
+          "column": 26
+        },
+        "id": "Config.value"
+      }
+    },
+    "loc": {
+      "file": "test/cases/infer_instantiation.ts",
+      "line": 5,
+      "column": 0
+    },
+    "id": "Config"
+  },
+  "f": {
+    "exported": true,
+    "type": "Function",
+    "returns": {
+      "type": "bool"
+    },
+    "params": [
+      {
+        "type": "Config",
+        "id": "f.spec",
+        "name": "spec"
+      }
+    ],
+    "loc": {
+      "file": "test/cases/infer_instantiation.ts",
+      "line": 7,
+      "column": 13
+    },
+    "id": "f"
+  }
+}

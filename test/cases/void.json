@@ -1,0 +1,22 @@
+{
+  "x": {
+    "exported": true,
+    "type": "Function",
+    "returns": {
+      "type": "void",
+      "loc": {
+        "file": "test/cases/void.ts",
+        "line": 1,
+        "column": 22
+      },
+      "id": "x^returns"
+    },
+    "params": [],
+    "loc": {
+      "file": "test/cases/void.ts",
+      "line": 1,
+      "column": 13
+    },
+    "id": "x"
+  }
+}

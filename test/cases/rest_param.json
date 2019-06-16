@@ -1,0 +1,50 @@
+{
+  "Extension": {
+    "type": "class",
+    "staticProperties": {
+      "all": {
+        "type": "Function",
+        "params": [
+          {
+            "loc": {
+              "line": 2,
+              "column": 13,
+              "file": "test/cases/rest_param.ts"
+            },
+            "id": "Extension^all^extensions",
+            "type": "Array",
+            "typeParams": [
+              {
+                "type": "Extension",
+                "loc": {
+                  "line": 2,
+                  "column": 28,
+                  "file": "test/cases/rest_param.ts"
+                }
+              }
+            ],
+            "rest": true,
+            "name": "extensions"
+          }
+        ],
+        "returns": {
+          "type": "Extension",
+          "id": "Extension^all^returns"
+        },
+        "loc": {
+          "line": 2,
+          "column": 2,
+          "file": "test/cases/rest_param.ts"
+        },
+        "id": "Extension^all"
+      }
+    },
+    "loc": {
+      "line": 1,
+      "column": 0,
+      "file": "test/cases/rest_param.ts"
+    },
+    "id": "Extension",
+    "exported": true
+  }
+}

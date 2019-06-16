@@ -1,0 +1,17 @@
+{
+  "name": "gettypes",
+  "version": "0.0.1",
+  "description": "extract builddocs-style info from typescript sources",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Adrian Heine <mail@adrianheine.de>",
+  "license": "AGPL-3.0",
+  "dependencies": {
+    "typescript": "^3.4.5"
+  },
+  "devDependencies": {
+    "mocha": "^6.1.4"
+  }
+}

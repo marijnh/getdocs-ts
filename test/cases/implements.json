@@ -1,0 +1,20 @@
+{
+  "ChangeDesc": {
+    "type": "class",
+    "implements": {
+      "type": "Mapping",
+      "loc": {
+        "line": 1,
+        "column": 35,
+        "file": "test/cases/implements.ts"
+      }
+    },
+    "loc": {
+      "line": 1,
+      "column": 0,
+      "file": "test/cases/implements.ts"
+    },
+    "id": "ChangeDesc",
+    "exported": true
+  }
+}

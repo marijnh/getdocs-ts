@@ -1,0 +1,54 @@
+{
+  "MapMode": {
+    "type": "",
+    "properties": {
+      "Simple": {
+        "type": "",
+        "description": " ",
+        "loc": {
+          "line": 1,
+          "column": 23,
+          "file": "test/cases/enum.ts"
+        },
+        "id": "MapMode.Simple"
+      },
+      "TrackDel": {
+        "type": "",
+        "description": " ",
+        "loc": {
+          "line": 1,
+          "column": 31,
+          "file": "test/cases/enum.ts"
+        },
+        "id": "MapMode.TrackDel"
+      },
+      "TrackBefore": {
+        "type": "",
+        "description": " ",
+        "loc": {
+          "line": 1,
+          "column": 41,
+          "file": "test/cases/enum.ts"
+        },
+        "id": "MapMode.TrackBefore"
+      },
+      "TrackAfter": {
+        "type": "",
+        "description": " ",
+        "loc": {
+          "line": 1,
+          "column": 54,
+          "file": "test/cases/enum.ts"
+        },
+        "id": "MapMode.TrackAfter"
+      }
+    },
+    "loc": {
+      "line": 1,
+      "column": 0,
+      "file": "test/cases/enum.ts"
+    },
+    "id": "MapMode",
+    "exported": true
+  }
+}

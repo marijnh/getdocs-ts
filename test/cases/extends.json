@@ -1,0 +1,20 @@
+{
+  "ChangeDesc": {
+    "loc": {
+      "line": 1,
+      "column": 0,
+      "file": "test/cases/extends.ts"
+    },
+    "extends": {
+      "loc": {
+        "line": 1,
+        "column": 32,
+        "file": "test/cases/extends.ts"
+      },
+      "type": "Mapping"
+    },
+    "type": "class",
+    "exported": true,
+    "id": "ChangeDesc"
+  }
+}

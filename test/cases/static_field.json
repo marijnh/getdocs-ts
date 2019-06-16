@@ -1,0 +1,23 @@
+{
+  "X": {
+    "type": "class",
+    "staticProperties": {
+      "empty": {
+        "type": "Text",
+        "loc": {
+          "line": 2,
+          "column": 2,
+          "file": "test/cases/static_field.ts"
+        },
+        "id": "X^empty"
+      }
+    },
+    "loc": {
+      "line": 1,
+      "column": 0,
+      "file": "test/cases/static_field.ts"
+    },
+    "id": "X",
+    "exported": true
+  }
+}
