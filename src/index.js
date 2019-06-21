@@ -46,7 +46,8 @@ class Gatherer {
             if (start === null && !ts.isWhiteSpaceSingleLine(ch)) start = pos
             if (ts.isLineBreak(ch)) break
           }
-          result += text.substr(start, pos - start)
+          let line = text.substr(start, pos - start)
+          result += (result && !/\s$/.test(result) ? " " : "") + line
           ++pos
         } else if (nextCh === 42) { // asterisk
           const start = pos + 2
