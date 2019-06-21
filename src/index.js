@@ -33,12 +33,16 @@ class Gatherer {
     const sourceFile = node.getSourceFile()
     if (!sourceFile) return '' // Synthetic node
     const {text} = sourceFile
-    let result = ''
+    let result = '', blankLine = false
     while (pos < text.length) {
       const ch = text.charCodeAt(pos)
       if (ch === 47) { // slash
         const nextCh = text.charCodeAt(pos + 1)
         if (nextCh === 47) {
+          if (blankLine) {
+            blankLine = false
+            result = ""
+          }
           let start = null
           pos += 2
           for (; pos < text.length; ++pos) {
@@ -48,15 +52,23 @@ class Gatherer {
           }
           let line = text.substr(start, pos - start)
           result += (result && !/\s$/.test(result) ? " " : "") + line
-          ++pos
         } else if (nextCh === 42) { // asterisk
+          if (blankLine) {
+            blankLine = false
+            result = ""
+          }
           const start = pos + 2
-          for (pos = start; pos < text.length; ++pos) if (text.charCodeAt(pos) === 42 /* asterisk */ && text.charCodeAt(pos + 1) === 47 /* slash */) break
+          for (pos = start; pos < text.length; ++pos)
+            if (text.charCodeAt(pos) === 42 /* asterisk */ && text.charCodeAt(pos + 1) === 47 /* slash */) break
           result += text.substr(start, pos - start)
           pos += 2
         }
-      } else if (ts.isWhiteSpaceLike(ch)) ++pos
-      else break
+      } else if (ts.isWhiteSpaceLike(ch)) {
+        pos++
+        if (ch == 10 && text.charCodeAt(pos) == 10) blankLine = true
+      } else {
+        break
+      }
     }
     return result
 
