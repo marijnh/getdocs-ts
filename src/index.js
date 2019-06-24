@@ -151,6 +151,8 @@ class Gatherer {
   // This is handled (i. e. removed) by callers
   VoidKeyword() { return this._simple("void") }
   UndefinedKeyword() { return this._simple("undefined") }
+  FalseKeyword() { return this._simple("false") }
+  TrueKeyword() { return this._simple("true") }
   ThisType(node, context) { return this._simple(context.thisContext) }
   IndexSignature(node, context) {
     // FIXME: This is pretty horrible
