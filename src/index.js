@@ -98,11 +98,13 @@ class Gatherer {
           // Resolve instantiated type parameters
           // This breaks getLoc and getComments because it returns synthesized nodes
           const decl = this.typeChecker.signatureToSignatureDeclaration(signature)
-          return {
+          const returns = this.takeUnnamed(decl.type, new Context(context.path, context.thisContext, '^').add("returns"))
+          let result = {
             type: "Function",
-            returns: this.takeUnnamed(decl.type, new Context(context.path, context.thisContext, '^').add("returns")),
             params: this.handleNodes(decl.parameters, context, [])
           }
+          if (returns.type != "void") result.returns = returns
+          return result
         }
         return {
           type: "Object",
@@ -388,7 +390,11 @@ class Gatherer {
         const returnType = this.typeChecker.getReturnTypeOfSignature( signature )
         ret.returns = this.mapType(returnType, returnsContext)
       }
-      ret.returns.id = returnsContext.path
+      if (ret.returns.type == "void") {
+        delete ret.returns
+      } else {
+        ret.returns.id = returnsContext.path
+      }
       ret.params = this.handleNodes(node.parameters, context, [])
       return ret
     })
