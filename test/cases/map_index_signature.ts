@@ -1,4 +1,4 @@
-type Attrs = {[name: string]: string}
+export type Attrs = {[name: string]: string}
 class X {
 }
 

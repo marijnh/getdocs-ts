@@ -1,0 +1,101 @@
+{
+  "Attrs": {
+    "exported": true,
+    "type": "type",
+    "value": {
+      "type": "Object",
+      "properties": {
+        "[name: string]": {
+          "type": "string",
+          "loc": {
+            "file": "test/cases/map_index_signature.ts",
+            "line": 1,
+            "column": 37
+          },
+          "id": "Attrs.[name: string]"
+        }
+      },
+      "loc": {
+        "file": "test/cases/map_index_signature.ts",
+        "line": 1,
+        "column": 20
+      }
+    },
+    "loc": {
+      "file": "test/cases/map_index_signature.ts",
+      "line": 1,
+      "column": 0
+    },
+    "id": "Attrs"
+  },
+  "ViewField": {
+    "exported": true,
+    "type": "class",
+    "properties": {
+      "editorAttributeEffect": {
+        "type": "Function",
+        "returns": {
+          "type": "union",
+          "typeParams": [
+            {
+              "type": "Attrs",
+              "loc": {
+                "file": "test/cases/map_index_signature.ts",
+                "line": 6,
+                "column": 62
+              }
+            },
+            {
+              "type": "null",
+              "loc": {
+                "file": "test/cases/map_index_signature.ts",
+                "line": 6,
+                "column": 70
+              }
+            }
+          ],
+          "loc": {
+            "file": "test/cases/map_index_signature.ts",
+            "line": 6,
+            "column": 62
+          },
+          "id": "ViewField.editorAttributeEffect^returns"
+        },
+        "params": [
+          {
+            "type": "ReadonlyArray",
+            "typeParams": [
+              {
+                "type": "X",
+                "loc": {
+                  "file": "test/cases/map_index_signature.ts",
+                  "line": 6,
+                  "column": 54
+                }
+              }
+            ],
+            "loc": {
+              "file": "test/cases/map_index_signature.ts",
+              "line": 6,
+              "column": 33
+            },
+            "id": "ViewField.editorAttributeEffect^field",
+            "name": "field"
+          }
+        ],
+        "loc": {
+          "file": "test/cases/map_index_signature.ts",
+          "line": 6,
+          "column": 2
+        },
+        "id": "ViewField.editorAttributeEffect"
+      }
+    },
+    "loc": {
+      "file": "test/cases/map_index_signature.ts",
+      "line": 5,
+      "column": 0
+    },
+    "id": "ViewField"
+  }
+}
