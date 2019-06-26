@@ -291,23 +291,26 @@ class Gatherer {
         } else if (!isPrivate(prop)) {
           const isStatic = ts.hasModifier(prop, ts.ModifierFlags.Static)
           let [props, ctx] = isStatic ? [staticProperties, staticContext] : [properties, context]
+          const addProp = (name, v) => {
+            props = props || Object.create(null)
+            if (!props[name]) props[name] = v
+            else {
+              if (props[name].type !== v.type) console.warn(`Getter and setter types mismatch for ${name}: ${props[name].type} vs ${v.type}`)
+              props[name].description = props[name].description || v.description
+            }
+          }
           if (ts.SyntaxKind[prop.kind] == "GetAccessor") {
             const ret = this.callHandler(prop, ctx)
             if (!ret) continue
             const [name, v] = ret
-            props = props || Object.create(null)
-            if (!props[name]) props[name] = v
-            else props[name].description = props[name].description || v.description
+            v.readonly = true
+            addProp(name, v)
           } else if (ts.SyntaxKind[prop.kind] == "SetAccessor") {
             const ret = this.callHandler(prop, ctx)
             if (!ret) continue
             const [name, v] = ret
-            props = props || Object.create(null)
-            if (!props[name]) props[name] = v
-            else {
-              props[name].description = props[name].description || v.description
-              delete props[name].readonly
-            }
+            addProp(name, v)
+            delete props[name].readonly
           } else {
             props = this.handleNode(prop, ctx, props)
           }
@@ -351,17 +354,15 @@ class Gatherer {
     if (ts.hasModifier(node, ts.ModifierFlags.Abstract)) ret.abstract = true
     return [name, ret]
   }
-  _Accessor(node, context) {
+  GetAccessor(node, context) {
     const [name, v] = this.MethodDeclaration(node, context)
     const {returns: {loc: _, ...type}, params: _2, ...value} = v
     return [name, {...value, ...type}]
   }
-  GetAccessor(node, context) {
-    const [name, v] = this._Accessor(node, context)
-    return [name, {...v, readonly: true}]
-  }
   SetAccessor(node, context) {
-    return this._Accessor(node, context)
+    const [name, v] = this.MethodDeclaration(node, context)
+    const {params: [{loc:_, ...type}], ...value} = v
+    return [name, {...value, ...type}]
   }
   Constructor(node, context) {
     const [name, ret] = this._Function(node, "constructor", context)
