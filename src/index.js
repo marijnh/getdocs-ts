@@ -468,7 +468,8 @@ class Gatherer {
     let internal = ts.isInternalDeclaration(node, node.getSourceFile())
     if (internal && node.kind !== ts.SyntaxKind.Parameter && node.kind !== ts.SyntaxKind.Constructor) return
     const [name, value] = this[ts.SyntaxKind[node.kind]](node, context)
-    let comment = this.getComments(node)
+    let comment = this.getComments(ts.SyntaxKind[node.kind] == "VariableDeclaration" ? node.parent.parent : node)
+
     // In this case, @internal only refers to the field, not the constructor parameter
     if (internal && node.kind === ts.SyntaxKind.Parameter && node.symbol.parent) {
       this.constructorProps[this.constructorProps.length - 1].pop()
