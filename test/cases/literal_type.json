@@ -52,6 +52,156 @@
           "file": "test/cases/literal_type.ts"
         },
         "id": "X.iter"
+      },
+      "movePos": {
+        "type": "Function",
+        "returns": {
+          "type": "number",
+          "loc": {
+            "file": "test/cases/literal_type.ts",
+            "line": 5,
+            "column": 47
+          },
+          "id": "X.movePos^returns"
+        },
+        "params": [
+          {
+            "type": "number",
+            "loc": {
+              "file": "test/cases/literal_type.ts",
+              "line": 3,
+              "column": 10
+            },
+            "id": "X.movePos^start",
+            "name": "start"
+          },
+          {
+            "type": "union",
+            "typeParams": [
+              {
+                "type": "\"forward\"",
+                "loc": {
+                  "file": "test/cases/literal_type.ts",
+                  "line": 3,
+                  "column": 36
+                }
+              },
+              {
+                "type": "\"backward\"",
+                "loc": {
+                  "file": "test/cases/literal_type.ts",
+                  "line": 3,
+                  "column": 48
+                }
+              },
+              {
+                "type": "\"left\"",
+                "loc": {
+                  "file": "test/cases/literal_type.ts",
+                  "line": 3,
+                  "column": 61
+                }
+              },
+              {
+                "type": "\"right\"",
+                "loc": {
+                  "file": "test/cases/literal_type.ts",
+                  "line": 3,
+                  "column": 70
+                }
+              }
+            ],
+            "loc": {
+              "file": "test/cases/literal_type.ts",
+              "line": 3,
+              "column": 25
+            },
+            "id": "X.movePos^direction",
+            "name": "direction"
+          },
+          {
+            "type": "union",
+            "typeParams": [
+              {
+                "type": "\"character\"",
+                "loc": {
+                  "file": "test/cases/literal_type.ts",
+                  "line": 4,
+                  "column": 23
+                }
+              },
+              {
+                "type": "\"word\"",
+                "loc": {
+                  "file": "test/cases/literal_type.ts",
+                  "line": 4,
+                  "column": 37
+                }
+              },
+              {
+                "type": "\"line\"",
+                "loc": {
+                  "file": "test/cases/literal_type.ts",
+                  "line": 4,
+                  "column": 46
+                }
+              },
+              {
+                "type": "\"lineboundary\"",
+                "loc": {
+                  "file": "test/cases/literal_type.ts",
+                  "line": 4,
+                  "column": 55
+                }
+              }
+            ],
+            "default": "\"character\"",
+            "optional": true,
+            "loc": {
+              "file": "test/cases/literal_type.ts",
+              "line": 4,
+              "column": 10
+            },
+            "id": "X.movePos^granularity",
+            "name": "granularity"
+          },
+          {
+            "type": "union",
+            "typeParams": [
+              {
+                "type": "\"move\"",
+                "loc": {
+                  "file": "test/cases/literal_type.ts",
+                  "line": 5,
+                  "column": 18
+                }
+              },
+              {
+                "type": "\"extend\"",
+                "loc": {
+                  "file": "test/cases/literal_type.ts",
+                  "line": 5,
+                  "column": 27
+                }
+              }
+            ],
+            "default": "\"move\"",
+            "optional": true,
+            "loc": {
+              "file": "test/cases/literal_type.ts",
+              "line": 5,
+              "column": 10
+            },
+            "id": "X.movePos^action",
+            "name": "action"
+          }
+        ],
+        "loc": {
+          "file": "test/cases/literal_type.ts",
+          "line": 3,
+          "column": 2
+        },
+        "id": "X.movePos"
       }
     },
     "loc": {

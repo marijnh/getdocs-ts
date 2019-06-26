@@ -257,7 +257,7 @@ class Gatherer {
     return [null, {type: "Array", typeParams: [this.takeUnnamed(node.elementType, context)]}]
   }
   LiteralType(node, context) {
-    return [null, {type: JSON.stringify(node.literal.text) || this.getText(node)}]
+    return [null, {type: ts.SyntaxKind[node.literal.kind] === 'StringLiteral' ? JSON.stringify(node.literal.text) : node.literal.text || this.getText(node)}]
   }
 
   ClassDeclaration(node, context) {
