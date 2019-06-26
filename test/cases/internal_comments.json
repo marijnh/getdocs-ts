@@ -5,10 +5,6 @@
       "g": {
         "type": "Function",
         "params": [],
-        "returns": {
-          "type": "void",
-          "id": "X.g^returns"
-        },
         "loc": {
           "line": 7,
           "column": 2,
