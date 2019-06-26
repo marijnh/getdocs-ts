@@ -148,7 +148,8 @@ class Gatherer {
   BooleanKeyword() { return this._simple("bool") }
   StringKeyword() { return this._simple("string") }
   NullKeyword() { return this._simple("null") } // FIXME: Is this correct?
-  VoidKeyword() { return this._simple("void") } // FIXME: Nope
+  // This is handled (i. e. removed) by callers
+  VoidKeyword() { return this._simple("void") }
   UndefinedKeyword() { return this._simple("undefined") }
   ThisType(node, context) { return this._simple(context.thisContext) }
   IndexSignature(node, context) {
