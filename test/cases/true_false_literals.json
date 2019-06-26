@@ -1,0 +1,58 @@
+{
+  "x": {
+    "exported": true,
+    "type": "Function",
+    "params": [
+      {
+        "type": "any",
+        "id": "x.a",
+        "name": "a"
+      }
+    ],
+    "returns": {
+      "type": "union",
+      "typeParams": [
+        {
+          "type": "true"
+        },
+        {
+          "type": "\"no\""
+        }
+      ]
+    },
+    "loc": {
+      "file": "test/cases/true_false_literals.ts",
+      "line": 1,
+      "column": 13
+    },
+    "id": "x"
+  },
+  "y": {
+    "exported": true,
+    "type": "Function",
+    "params": [
+      {
+        "type": "any",
+        "id": "y.a",
+        "name": "a"
+      }
+    ],
+    "returns": {
+      "type": "union",
+      "typeParams": [
+        {
+          "type": "false"
+        },
+        {
+          "type": "\"no\""
+        }
+      ]
+    },
+    "loc": {
+      "file": "test/cases/true_false_literals.ts",
+      "line": 2,
+      "column": 13
+    },
+    "id": "y"
+  }
+}
