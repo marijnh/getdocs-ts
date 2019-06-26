@@ -1,0 +1,35 @@
+{
+  "y": {
+    "exported": true,
+    "type": "1",
+    "description": "Should appear",
+    "loc": {
+      "file": "test/cases/spacing.ts",
+      "line": 5,
+      "column": 13
+    },
+    "id": "y"
+  },
+  "X": {
+    "exported": true,
+    "type": "class",
+    "properties": {
+      "x": {
+        "type": "number",
+        "description": "Should be separate words",
+        "loc": {
+          "file": "test/cases/spacing.ts",
+          "line": 8,
+          "column": 2
+        },
+        "id": "X.x"
+      }
+    },
+    "loc": {
+      "file": "test/cases/spacing.ts",
+      "line": 7,
+      "column": 0
+    },
+    "id": "X"
+  }
+}
