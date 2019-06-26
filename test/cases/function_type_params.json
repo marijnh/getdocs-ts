@@ -9,12 +9,12 @@
           "typeParams": [
             {
               "type": "T",
+              "typeParamUsage": true,
               "loc": {
                 "line": 2,
                 "column": 33,
                 "file": "test/cases/function_type_params.ts"
-              },
-              "typeParamUsage": true
+              }
             },
             {
               "type": "undefined",
@@ -38,12 +38,12 @@
             "typeParams": [
               {
                 "type": "T",
+                "typeParamUsage": true,
                 "loc": {
                   "line": 2,
                   "column": 28,
                   "file": "test/cases/function_type_params.ts"
-                },
-                "typeParamUsage": true
+                }
               }
             ],
             "loc": {
@@ -62,8 +62,7 @@
               "line": 2,
               "column": 10,
               "file": "test/cases/function_type_params.ts"
-            },
-            "typeParamUsage": true
+            }
           }
         ],
         "loc": {

@@ -23,6 +23,7 @@
               ],
               "returns": {
                 "type": "T",
+                "typeParamUsage": true,
                 "loc": {
                   "line": 3,
                   "column": 34,
@@ -52,6 +53,7 @@
                 },
                 {
                   "type": "T",
+                  "typeParamUsage": true,
                   "loc": {
                     "line": 4,
                     "column": 29,
@@ -73,6 +75,7 @@
               ],
               "returns": {
                 "type": "T",
+                "typeParamUsage": true,
                 "loc": {
                   "line": 4,
                   "column": 65,

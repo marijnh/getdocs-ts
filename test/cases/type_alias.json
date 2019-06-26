@@ -35,6 +35,7 @@
         },
         {
           "type": "T",
+          "typeParamUsage": true,
           "loc": {
             "line": 1,
             "column": 56,

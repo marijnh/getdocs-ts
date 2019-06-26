@@ -14,24 +14,24 @@
     "params": [
       {
         "type": "T",
+        "typeParamUsage": true,
         "loc": {
           "file": "test/cases/indexed_access.ts",
           "line": 1,
           "column": 50
         },
         "id": "getProperty^o",
-        "typeParamUsage": true,
         "name": "o"
       },
       {
         "type": "K",
+        "typeParamUsage": true,
         "loc": {
           "file": "test/cases/indexed_access.ts",
           "line": 1,
           "column": 56
         },
         "id": "getProperty^name",
-        "typeParamUsage": true,
         "name": "name"
       }
     ],
@@ -42,8 +42,7 @@
           "file": "test/cases/indexed_access.ts",
           "line": 1,
           "column": 28
-        },
-        "typeParamUsage": true
+        }
       },
       {
         "type": "K extends keyof T",

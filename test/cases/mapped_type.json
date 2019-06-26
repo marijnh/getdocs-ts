@@ -7,6 +7,7 @@
       "properties": {
         "[K in keyof A]": {
           "type": "B",
+          "typeParamUsage": true,
           "loc": {
             "file": "test/cases/mapped_type.ts",
             "line": 1,
