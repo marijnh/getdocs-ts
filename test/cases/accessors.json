@@ -10,16 +10,18 @@
           "column": 2,
           "file": "test/cases/accessors.ts"
         },
-        "id": "X.x"
+        "id": "X.x",
+        "description": "This is get x"
       },
       "y": {
         "type": "number",
         "loc": {
-          "line": 4,
+          "line": 5,
           "column": 2,
           "file": "test/cases/accessors.ts"
         },
-        "id": "X.y"
+        "id": "X.y",
+        "description": "This is get y"
       }
     },
     "staticProperties": {
@@ -27,20 +29,22 @@
         "type": "number",
         "readonly": true,
         "loc": {
-          "line": 6,
+          "line": 9,
           "column": 2,
           "file": "test/cases/accessors.ts"
         },
-        "id": "X^x"
+        "id": "X^x",
+        "description": "This is static get x"
       },
       "y": {
         "type": "number",
         "loc": {
-          "line": 7,
+          "line": 11,
           "column": 2,
           "file": "test/cases/accessors.ts"
         },
-        "id": "X^y"
+        "id": "X^y",
+        "description": "This is static set y"
       }
     },
     "loc": {
