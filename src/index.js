@@ -294,13 +294,17 @@ class Gatherer {
             const [name, v] = ret
             props = props || Object.create(null)
             if (!props[name]) props[name] = {...v.returns, loc: v.loc, id: v.id, readonly: true, description: v.description}
+            else props[name].description = props[name].description || v.description
           } else if (ts.SyntaxKind[prop.kind] == "SetAccessor") {
             const ret = this.callHandler(prop, ctx)
             if (!ret) continue
             const [name, v] = ret
             props = props || Object.create(null)
             if (!props[name]) props[name] = {...v.returns, loc: v.loc, id: v.id, description: v.description}
-            delete props[name].readonly
+            else {
+              props[name].description = props[name].description || v.description
+              delete props[name].readonly
+            }
           } else {
             props = this.handleNode(prop, ctx, props)
           }
