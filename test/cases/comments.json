@@ -4,7 +4,7 @@
     "type": "1",
     "description": "Should appear",
     "loc": {
-      "file": "test/cases/spacing.ts",
+      "file": "test/cases/comments.ts",
       "line": 5,
       "column": 13
     },
@@ -18,7 +18,7 @@
         "type": "number",
         "description": "Should be separate words",
         "loc": {
-          "file": "test/cases/spacing.ts",
+          "file": "test/cases/comments.ts",
           "line": 8,
           "column": 2
         },
@@ -26,7 +26,7 @@
       }
     },
     "loc": {
-      "file": "test/cases/spacing.ts",
+      "file": "test/cases/comments.ts",
       "line": 7,
       "column": 0
     },
