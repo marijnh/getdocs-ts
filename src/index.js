@@ -293,14 +293,14 @@ class Gatherer {
             if (!ret) continue
             const [name, v] = ret
             props = props || Object.create(null)
-            if (!props[name]) props[name] = {...v.returns, loc: v.loc, id: v.id, readonly: true, description: v.description}
+            if (!props[name]) props[name] = v
             else props[name].description = props[name].description || v.description
           } else if (ts.SyntaxKind[prop.kind] == "SetAccessor") {
             const ret = this.callHandler(prop, ctx)
             if (!ret) continue
             const [name, v] = ret
             props = props || Object.create(null)
-            if (!props[name]) props[name] = {...v.returns, loc: v.loc, id: v.id, description: v.description}
+            if (!props[name]) props[name] = v
             else {
               props[name].description = props[name].description || v.description
               delete props[name].readonly
@@ -348,11 +348,17 @@ class Gatherer {
     if (ts.hasModifier(node, ts.ModifierFlags.Abstract)) ret.abstract = true
     return [name, ret]
   }
+  _Accessor(node, context) {
+    const [name, v] = this.MethodDeclaration(node, context)
+    const {returns: {loc: _, ...type}, params: _2, ...value} = v
+    return [name, {...value, ...type}]
+  }
   GetAccessor(node, context) {
-    return this.MethodDeclaration(node, context)
+    const [name, v] = this._Accessor(node, context)
+    return [name, {...v, readonly: true}]
   }
   SetAccessor(node, context) {
-    return this.MethodDeclaration(node, context)
+    return this._Accessor(node, context)
   }
   Constructor(node, context) {
     const [name, ret] = this._Function(node, "constructor", context)
