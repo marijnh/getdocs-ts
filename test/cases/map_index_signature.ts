@@ -1,7 +1,5 @@
 export type Attrs = {[name: string]: string}
-class X {
-}
 
 export class ViewField {
-  public editorAttributeEffect: (field: ReadonlyArray<X>) => (Attrs | null)
+  public editorAttributeEffect: (field: ReadonlyArray<RegExp>) => (Attrs | null)
 }

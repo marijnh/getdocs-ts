@@ -1,26 +1,8 @@
 {
   "Attrs": {
-    "exported": true,
-    "type": "type",
-    "value": {
-      "type": "Object",
-      "properties": {
-        "[name: string]": {
-          "type": "string",
-          "loc": {
-            "file": "test/cases/map_index_signature.ts",
-            "line": 1,
-            "column": 37
-          },
-          "id": "Attrs.[name: string]"
-        }
-      },
-      "loc": {
-        "file": "test/cases/map_index_signature.ts",
-        "line": 1,
-        "column": 20
-      }
-    },
+    "kind": "typealias",
+    "type": "Object",
+    "typeArgs": [{"type": "string"}],
     "loc": {
       "file": "test/cases/map_index_signature.ts",
       "line": 1,
@@ -29,63 +11,35 @@
     "id": "Attrs"
   },
   "ViewField": {
-    "exported": true,
+    "kind": "class",
     "type": "class",
-    "properties": {
+    "instanceProperties": {
       "editorAttributeEffect": {
+        "kind": "property",
         "type": "Function",
         "returns": {
           "type": "union",
-          "typeParams": [
-            {
-              "type": "Attrs",
-              "loc": {
-                "file": "test/cases/map_index_signature.ts",
-                "line": 6,
-                "column": 62
-              }
-            },
-            {
-              "type": "null",
-              "loc": {
-                "file": "test/cases/map_index_signature.ts",
-                "line": 6,
-                "column": 70
-              }
-            }
-          ],
-          "loc": {
-            "file": "test/cases/map_index_signature.ts",
-            "line": 6,
-            "column": 62
-          },
-          "id": "ViewField.editorAttributeEffect^returns"
+          "typeArgs": [
+            {"type": "null"},
+            {"type": "Attrs"}
+          ]
         },
         "params": [
           {
             "type": "ReadonlyArray",
-            "typeParams": [
+            "typeArgs": [
               {
-                "type": "X",
-                "loc": {
-                  "file": "test/cases/map_index_signature.ts",
-                  "line": 6,
-                  "column": 54
-                }
+                "type": "RegExp",
+                "typeSource": "node_modules/typescript/lib/lib.es5.d.ts"
               }
             ],
-            "loc": {
-              "file": "test/cases/map_index_signature.ts",
-              "line": 6,
-              "column": 33
-            },
-            "id": "ViewField.editorAttributeEffect^field",
+            "typeSource": "node_modules/typescript/lib/lib.es5.d.ts",
             "name": "field"
           }
         ],
         "loc": {
           "file": "test/cases/map_index_signature.ts",
-          "line": 6,
+          "line": 4,
           "column": 2
         },
         "id": "ViewField.editorAttributeEffect"
@@ -93,7 +47,7 @@
     },
     "loc": {
       "file": "test/cases/map_index_signature.ts",
-      "line": 5,
+      "line": 3,
       "column": 0
     },
     "id": "ViewField"

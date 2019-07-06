@@ -102,10 +102,20 @@ class Context {
     if ((mods & ModifierFlags.Readonly) || (symbol.flags & SymbolFlags.GetAccessor)) binding.readonly = true
     if ((mods & ModifierFlags.Private) || binding.description && /@internal\b/.test(binding.description)) return null
     
-    return {...binding, ...cx.getType(type, !["property", "method", "variable"].includes(kind))}
+    return {...binding, ...kind == "typealias" ? cx.getTypeInner(type) : cx.getType(type)}
   }
 
-  getType(type: Type, describe = false): BindingType {
+  getType(type: Type): BindingType {
+    if (type.aliasSymbol) {
+      let result: BindingType = {type: name(type.aliasSymbol)}
+      if (type.aliasTypeArguments) result.typeArgs = type.aliasTypeArguments.map(arg => this.getType(arg))
+      return result
+    } else {
+      return this.getTypeInner(type)
+    }
+  }
+
+  getTypeInner(type: Type): BindingType {
     if (type.flags & TypeFlags.Any) return {type: "any"}
     if (type.flags & TypeFlags.String) return {type: "string"}
     if (type.flags & TypeFlags.Number) return {type: "number"}
@@ -117,8 +127,9 @@ class Context {
     if (type.flags & TypeFlags.Literal) return {type: JSON.stringify((type as LiteralType).value)}
     if (type.flags & TypeFlags.Never) return {type: "never"}
 
-    // FIXME enums, aliases
+    // FIXME enums
 
+    // FIXME TypeScript seems to reverse the type args to unions. Check whether this is reliable, and re-reverse them if so
     if (type.flags & TypeFlags.UnionOrIntersection) return {
       type: type.flags & TypeFlags.Union ? "union" : "intersection",
       typeArgs: (type as UnionOrIntersectionType).types.map(type => this.getType(type))
