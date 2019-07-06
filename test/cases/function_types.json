@@ -5,23 +5,19 @@
       "column": 0,
       "file": "test/cases/function_types.ts"
     },
+    "kind": "class",
     "type": "class",
-    "exported": true,
-    "staticProperties": {
+    "properties": {
       "fromJSON": {
         "loc": {
           "line": 2,
           "column": 2,
           "file": "test/cases/function_types.ts"
         },
+        "kind": "method",
         "type": "Function",
         "params": [
           {
-            "loc": {
-              "line": 2,
-              "column": 18,
-              "file": "test/cases/function_types.ts"
-            },
             "type": "Object",
             "properties": {
               "fromJSON": {
@@ -30,53 +26,31 @@
                   "column": 31,
                   "file": "test/cases/function_types.ts"
                 },
+                "kind": "property",
                 "type": "Function",
                 "params": [
                   {
-                    "loc": {
-                      "line": 2,
-                      "column": 42,
-                      "file": "test/cases/function_types.ts"
-                    },
                     "type": "any",
-                    "name": "json",
-                    "id": "ChangeSet^fromJSON^ChangeType.fromJSON^json"
+                    "name": "json"
                   }
                 ],
                 "returns": {
-                  "loc": {
-                    "line": 2,
-                    "column": 56,
-                    "file": "test/cases/function_types.ts"
-                  },
                   "type": "ChangeSet",
-                  "id": "ChangeSet^fromJSON^ChangeType.fromJSON^returns"
+                  "typeSource": "test/cases/function_types.ts"
                 },
                 "id": "ChangeSet^fromJSON^ChangeType.fromJSON"
               }
             },
-            "name": "ChangeType",
-            "id": "ChangeSet^fromJSON^ChangeType"
+            "name": "ChangeType"
           },
           {
-            "loc": {
-              "line": 2,
-              "column": 68,
-              "file": "test/cases/function_types.ts"
-            },
             "type": "any",
-            "name": "json",
-            "id": "ChangeSet^fromJSON^json"
+            "name": "json"
           }
         ],
         "returns": {
-          "loc": {
-            "line": 2,
-            "column": 80,
-            "file": "test/cases/function_types.ts"
-          },
           "type": "ChangeSet",
-          "id": "ChangeSet^fromJSON^returns"
+          "typeSource": "test/cases/function_types.ts"
         },
         "id": "ChangeSet^fromJSON"
       }

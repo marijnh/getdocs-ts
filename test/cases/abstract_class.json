@@ -1,6 +1,8 @@
 {
   "X": {
+    "kind": "class",
     "type": "class",
+    "source": "abstract_class.ts",
     "loc": {
       "line": 1,
       "column": 0,

@@ -1,8 +1,11 @@
 {
   "X": {
+    "kind": "class",
     "type": "class",
-    "staticProperties": {
+    "source": "infer_field.ts",
+    "properties": {
       "y": {
+        "kind": "property",
         "type": "number",
         "loc": {
           "line": 2,
@@ -17,7 +20,6 @@
       "column": 0,
       "file": "test/cases/infer_field.ts"
     },
-    "id": "X",
-    "exported": true
+    "id": "X"
   }
 }

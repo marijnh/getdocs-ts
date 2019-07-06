@@ -1,14 +1,17 @@
 {
   "X": {
+    "kind": "class",
     "type": "class",
-    "staticProperties": {
+    "properties": {
       "empty": {
-        "type": "Text",
+        "kind": "property",
         "loc": {
           "line": 2,
           "column": 2,
           "file": "test/cases/static_field.ts"
         },
+        "type": "X",
+        "typeSource": "test/cases/static_field.ts",
         "id": "X^empty"
       }
     },
@@ -17,7 +20,6 @@
       "column": 0,
       "file": "test/cases/static_field.ts"
     },
-    "id": "X",
-    "exported": true
+    "id": "X"
   }
 }

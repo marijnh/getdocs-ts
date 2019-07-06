@@ -1,10 +1,11 @@
 {
   "Config": {
-    "exported": true,
+    "kind": "interface",
     "type": "interface",
     "properties": {
       "value": {
-        "type": "bool",
+        "kind": "property",
+        "type": "boolean",
         "loc": {
           "file": "test/cases/infer_instantiation.ts",
           "line": 5,
@@ -21,16 +22,15 @@
     "id": "Config"
   },
   "f": {
-    "exported": true,
+    "kind": "variable",
     "type": "Function",
     "returns": {
-      "type": "bool"
+      "type": "boolean"
     },
     "params": [
       {
         "type": "Config",
-        "id": "f.spec",
-        "name": "spec"
+        "typeSource": "test/cases/infer_instantiation.ts"
       }
     ],
     "loc": {

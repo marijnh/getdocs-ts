@@ -1,3 +1,3 @@
 export class X {
-  static empty: Text
+  static empty: X
 }
