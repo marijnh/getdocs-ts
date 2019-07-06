@@ -89,11 +89,13 @@ class Context {
     else throw new Error(`Can not determine a kind for symbol ${symbol.escapedName} with flags ${symbol.flags}`)
 
     let binding: Binding = {kind, id: this.id}, type = this.symbolType(symbol)
-    if (hasDecl(symbol)) this.addSourceData(decl(symbol), binding)
+    if (hasDecl(symbol)) this.addSourceData(symbol.declarations, binding)
 
     let mods = symbol.valueDeclaration ? getCombinedModifierFlags(symbol.valueDeclaration) : 0
     if (mods & ModifierFlags.Abstract) binding.abstract = true
-    if ((mods & ModifierFlags.Readonly) || (symbol.flags & SymbolFlags.GetAccessor)) binding.readonly = true
+    if ((mods & ModifierFlags.Readonly) ||
+        ((symbol.flags & (SymbolFlags.GetAccessor | SymbolFlags.SetAccessor)) == SymbolFlags.GetAccessor))
+      binding.readonly = true
     if ((mods & ModifierFlags.Private) || binding.description && /@internal\b/.test(binding.description)) return null
 
     let params = this.getTypeParams(decl(symbol))
@@ -178,7 +180,7 @@ class Context {
       let out: BindingType = {type: "class"}
       let ctor = type.getConstructSignatures(), ctorNode
       if (ctor.length && (ctorNode = ctor[0].getDeclaration())) {
-        out.construct = {...this.addSourceData(ctorNode, {kind: "constructor", id: this.id + "^constructor"}),
+        out.construct = {...this.addSourceData([ctorNode], {kind: "constructor", id: this.id + "^constructor"}),
                          type: "Function",
                          params: this.getParams(ctor[0])}
       }
@@ -251,15 +253,19 @@ class Context {
     return relative(process.cwd(), node.getSourceFile().fileName)
   }
 
-  addSourceData(node: Node, target: Binding) {
-    let comment = getComment(node.kind == SyntaxKind.VariableDeclaration ? node.parent.parent : node)
+  addSourceData(nodes: readonly Node[], target: Binding) {
+    let comment = ""
+    for (let node of nodes) {
+      let c = getComment(node.kind == SyntaxKind.VariableDeclaration ? node.parent.parent : node)
+      if (c) comment += (comment ? " " : "") + c
+    }
     if (comment) target.description = comment
-    const sourceFile = node.getSourceFile()
+    const sourceFile = nodes[0].getSourceFile()
     if (!sourceFile) return target // Synthetic node
-    let {pos} = node
+    let {pos} = nodes[0]
     while (isWhiteSpaceLike(sourceFile.text.charCodeAt(pos))) ++pos
     const {line, character} = getLineAndCharacterOfPosition(sourceFile, pos)
-    target.loc = {file: this.nodePath(node), line: line + 1, column: character}
+    target.loc = {file: this.nodePath(nodes[0]), line: line + 1, column: character}
     return target
   }
 }

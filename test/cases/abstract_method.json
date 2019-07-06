@@ -7,11 +7,10 @@
     },
     "kind": "class",
     "type": "class",
-    "source": "abstract_method.ts",
     "instanceProperties": {
       "firstLineLength": {
         "kind": "method",
-        "type": "function",
+        "type": "Function",
         "abstract": true,
         "loc": {
           "line": 2,
