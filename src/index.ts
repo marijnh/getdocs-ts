@@ -30,7 +30,7 @@ type Binding = {
 type BindingType = {
   type: string,
   typeSource?: string, // missing means this is a built-in type
-  typeParamID?: string,
+  typeParamSource?: string,
   properties?: {[name: string]: Item},
   instanceProperties?: {[name: string]: Item},
   typeArgs?: readonly BindingType[],
@@ -49,20 +49,31 @@ type ParamType = BindingType & {
 
 type Item = Binding & BindingType
 
-class Module {
+class Context {
   constructor(readonly tc: TypeChecker,
               readonly exports: readonly Symbol[],
-              readonly basedir: string) {}
+              readonly basedir: string,
+              readonly id: string,
+              readonly typeParams: {name: string, id: string}[]) {}
 
-  gatherSymbols(symbols: readonly Symbol[], target: {[name: string]: any}, parentID: string) {
+  extend(symbol: Symbol | string, sep = "^") {
+    let nm = typeof symbol == "string" ? symbol : name(symbol)
+    return new Context(this.tc, this.exports, this.basedir, this.id ? this.id + sep + nm : nm, this.typeParams)
+  }
+
+  addParams(typeParams: {name: string, id: string}[]) {
+    return new Context(this.tc, this.exports, this.basedir, this.id, typeParams.concat(this.typeParams))
+  }
+
+  gatherSymbols(symbols: readonly Symbol[], target: {[name: string]: any}, sep = ".") {
     for (const symbol of symbols) {
-      let item = this.itemForSymbol(symbol, parentID)
+      let item = this.extend(symbol, sep).itemForSymbol(symbol)
       if (item) target[name(symbol)] = item
     }
   }
 
-  itemForSymbol(symbol: Symbol, parentID: string): Item | null {
-    let id = parentID + name(symbol), kind: BindingKind
+  itemForSymbol(symbol: Symbol): Item | null {
+    let kind: BindingKind
     if (symbol.flags & SymbolFlags.PropertyOrAccessor) kind = "property"
     else if (symbol.flags & SymbolFlags.Method) kind = "method"
     else if (symbol.flags & SymbolFlags.EnumMember) kind = "enummember"
@@ -74,20 +85,24 @@ class Module {
     else if (symbol.flags & SymbolFlags.TypeParameter) kind = "typeparam"
     else throw new Error(`Can not determine a kind for symbol ${symbol.escapedName} with flags ${symbol.flags}`)
 
-    let binding: Binding = {kind, id}, type = this.symbolType(symbol)
+    let binding: Binding = {kind, id: this.id}, type = this.symbolType(symbol)
     if (hasDecl(symbol)) this.addSourceData(decl(symbol), binding)
-    let params = this.getTypeParams(decl(symbol), id)
-    if (params) binding.typeParams = params
+    let params = this.getTypeParams(decl(symbol))
+    let cx: Context = this
+    if (params) {
+      binding.typeParams = params
+      cx = cx.addParams(params.map(p => ({name: p.name, id: cx.id})))
+    }
 
     let mods = symbol.valueDeclaration ? getCombinedModifierFlags(symbol.valueDeclaration) : 0
     if (mods & ModifierFlags.Abstract) binding.abstract = true
     if ((mods & ModifierFlags.Readonly) || (symbol.flags & SymbolFlags.GetAccessor)) binding.readonly = true
     if ((mods & ModifierFlags.Private) || binding.description && /@internal\b/.test(binding.description)) return null
     
-    return {...binding, ...this.getType(type, id, !["property", "method", "variable"].includes(kind))}
+    return {...binding, ...cx.getType(type, !["property", "method", "variable"].includes(kind))}
   }
 
-  getType(type: Type, id: string, describe = false): BindingType {
+  getType(type: Type, describe = false): BindingType {
     if (type.flags & TypeFlags.Any) return {type: "any"}
     if (type.flags & TypeFlags.String) return {type: "string"}
     if (type.flags & TypeFlags.Number) return {type: "number"}
@@ -103,30 +118,35 @@ class Module {
 
     if (type.flags & TypeFlags.UnionOrIntersection) return {
       type: type.flags & TypeFlags.Union ? "union" : "intersection",
-      typeArgs: (type as UnionOrIntersectionType).types.map(type => this.getType(type, id))
+      typeArgs: (type as UnionOrIntersectionType).types.map(type => this.getType(type))
     }
 
-    if (type.flags & TypeFlags.TypeParameter) return {
-      type: name(type.symbol)
+    if (type.flags & TypeFlags.TypeParameter) {
+      let nm = name(type.symbol), found = this.typeParams.find(p => p.name == nm)
+      if (!found) throw new Error(`Unknown type parameter ${nm}`)
+      return {type: nm, typeParamSource: found.id}
     }
 
     if (type.flags & TypeFlags.Object) {
-      if (((type as ObjectType).objectFlags & ObjectFlags.Reference) == 0)
-        return this.getTypeDesc(type as ObjectType, id)
+      if ((type as ObjectType).objectFlags & ObjectFlags.Reference) {
+        let result: BindingType = {type: name(type.symbol), typeSource: this.typeSource(type)}
+        let typeArgs = (type as TypeReference).typeArguments
+        if (typeArgs && typeArgs.length) result.typeArgs = typeArgs.map(arg => this.getType(arg))
+        return result
+      }
+
+      // FIXME signatures with both index/call stuff and properties
       let call = type.getCallSignatures(), strIndex = type.getStringIndexType(), numIndex = type.getNumberIndexType()
-      if (call.length) return this.addCallSignature(call[0], {type: "Function"}, id)
-      if (strIndex) return {type: "Object", typeArgs: [this.getType(strIndex, id + "^0")]}
-      if (numIndex) return {type: "Array", typeArgs: [this.getType(numIndex, id + "^0")]}
-      let result: BindingType = {type: name(type.symbol), typeSource: this.typeSource(type)}
-      let typeArgs = (type as TypeReference).typeArguments
-      if (typeArgs && typeArgs.length) result.typeArgs = typeArgs.map(arg => this.getType(arg, id))
-      return result
+      if (call.length) return this.addCallSignature(call[0], {type: "Function"})
+      if (strIndex) return {type: "Object", typeArgs: [this.extend("0").getType(strIndex)]}
+      if (numIndex) return {type: "Array", typeArgs: [this.extend("0").getType(numIndex)]}
+      return this.getTypeDesc(type as ObjectType)
     }
 
     throw new Error(`Unsupported type ${this.tc.typeToString(type)}`)
   }
 
-  getTypeDesc(type: ObjectType, id: string): BindingType {
+  getTypeDesc(type: ObjectType): BindingType {
     let call = type.getCallSignatures(), props = type.getProperties()
     // FIXME array/function types
     // FIXME figure out how type params vs type args are represented
@@ -134,9 +154,9 @@ class Module {
       let out: BindingType = {type: "class"}
       let ctor = type.getConstructSignatures(), ctorNode
       if (ctor.length && (ctorNode = ctor[0].getDeclaration())) {
-        out.construct = {...this.addSourceData(ctorNode, {kind: "constructor", id: id + "^constructor"}),
+        out.construct = {...this.addSourceData(ctorNode, {kind: "constructor", id: this.id + "^constructor"}),
                          type: "Function",
-                         params: this.getParams(ctor[0], id)}
+                         params: this.getParams(ctor[0])}
       }
       props = props.filter(prop => prop.escapedName != "prototype")
 
@@ -144,13 +164,13 @@ class Module {
       let instanceType = ctor.length && ctor[0].getReturnType()
       if (instanceType) {
         let protoProps = instanceType.getProperties()
-        if (protoProps.length) this.gatherSymbols(protoProps, out.instanceProperties = {}, id + ".")
+        if (protoProps.length) this.gatherSymbols(protoProps, out.instanceProperties = {})
       }
-      if (props.length) this.gatherSymbols(props, out.properties = {}, id + "^")
+      if (props.length) this.gatherSymbols(props, out.properties = {}, "^")
       let classDecl = decl(type.symbol)
       if (isClassLike(classDecl) && classDecl.heritageClauses) {
         for (let heritage of classDecl.heritageClauses) {
-          let parents = heritage.types.map(node => this.getType(this.tc.getTypeAtLocation(node), id))
+          let parents = heritage.types.map(node => this.getType(this.tc.getTypeAtLocation(node)))
           if (heritage.token == SyntaxKind.ExtendsKeyword) out.extends = parents[0]
           else out.implements = parents
         }
@@ -159,8 +179,8 @@ class Module {
     }
 
     let out: BindingType = {type: type.symbol.flags & SymbolFlags.Interface ? "interface" : "Object"}
-    if (call.length) this.addCallSignature(call[0], out, id)
-    if (props.length) this.gatherSymbols(props, out.properties = {}, id + ".")
+    if (call.length) this.addCallSignature(call[0], out)
+    if (props.length) this.gatherSymbols(props, out.properties = {})
     return out
   }
 
@@ -168,9 +188,9 @@ class Module {
     return relative(process.cwd(), decl(type.symbol).getSourceFile().fileName)
   }
 
-  getParams(signature: Signature, id: string): ParamType[] {
+  getParams(signature: Signature): ParamType[] {
     return signature.getParameters().map(param => {
-      let result = this.getType(this.symbolType(param), id + "^" + param.escapedName) as ParamType
+      let result = this.extend(param).getType(this.symbolType(param)) as ParamType
       result.name = name(param)
       let deflt: Node = param.valueDeclaration && (param.valueDeclaration as any).initializer
       if (deflt) result.default = deflt.getSourceFile().text.slice(deflt.pos, deflt.end).trim()
@@ -179,25 +199,24 @@ class Module {
     })
   }
 
-  getTypeParams(decl: Node, id: string): ParamType[] | null {
+  getTypeParams(decl: Node): ParamType[] | null {
     let params = (decl as any).typeParameters as TypeParameterDeclaration[]
     return !params ? null : params.map(param => {
       let sym = this.tc.getSymbolAtLocation(param.name)!
-      let type = this.getType(this.symbolType(sym), id + "^" + name(sym)) as ParamType
-      type.name = name(sym)
+      let type: ParamType = {type: "typeparam", name: name(sym)}
       let constraint = getEffectiveConstraintOfTypeParameter(param), cType
       if (constraint && (cType = this.tc.getTypeAtLocation(constraint)))
-        type.implements = [this.getType(cType, id)]
+        type.implements = [this.getType(cType)]
       if (param.default)
         type.default = param.getSourceFile().text.slice(param.default.pos, param.default.end).trim()
       return type
     })
   }
 
-  addCallSignature(signature: Signature, target: BindingType, id: string) {
-    target.params = this.getParams(signature, id)
+  addCallSignature(signature: Signature, target: BindingType) {
+    target.params = this.getParams(signature)
     let ret = signature.getReturnType()
-    if (!(ret.flags & TypeFlags.Void)) target.returns = this.getType(ret, id)
+    if (!(ret.flags & TypeFlags.Void)) target.returns = this.getType(ret)
     return target
   }
 
@@ -289,7 +308,7 @@ export function gather({filename, items = Object.create(null)}: {filename: strin
   const tc = program.getTypeChecker()
   const exports = tc.getExportsOfModule(tc.getSymbolAtLocation(program.getSourceFile(filename)!)!)
   const basedir = resolve(dirname(configPath || filename))
-  const module = new Module(tc, exports, basedir)
+  const module = new Context(tc, exports, basedir, "", [])
   module.gatherSymbols(exports, items, "")
   
   return items

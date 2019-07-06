@@ -10,21 +10,22 @@
           "type": "union",
           "typeArgs": [
             {
-              "type": "T",
-              "paramID": "something"
+              "type": "undefined"
             },
             {
-              "type": "undefined"
+              "type": "T",
+              "typeParamSource": "X.getMeta"
             }
           ]
         },
         "params": [
           {
             "type": "Iterator",
+            "typeSource": "node_modules/typescript/lib/lib.es2015.iterable.d.ts",
             "typeArgs": [
               {
                 "type": "T",
-                "paramID": "something"
+                "typeParamSource": "X.getMeta"
               }
             ],
             "name": "type"
