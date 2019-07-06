@@ -1,19 +1,13 @@
 {
   "X": {
+    "kind": "class",
     "type": "class",
-    "properties": {
+    "instanceProperties": {
       "desc": {
-        "type": "ChangeSet",
-        "typeParams": [
-          {
-            "type": "ChangeDesc",
-            "loc": {
-              "line": 2,
-              "column": 24,
-              "file": "test/cases/getter_return_value_type_params.ts"
-            }
-          }
-        ],
+        "kind": "property",
+        "type": "Iterator",
+        "typeSource": "node_modules/typescript/lib/lib.es2015.iterable.d.ts",
+        "typeArgs": [{"type": "boolean"}],
         "loc": {
           "line": 2,
           "column": 2,
@@ -28,7 +22,6 @@
       "column": 0,
       "file": "test/cases/getter_return_value_type_params.ts"
     },
-    "id": "X",
-    "exported": true
+    "id": "X"
   }
 }

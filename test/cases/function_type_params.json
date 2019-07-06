@@ -1,68 +1,39 @@
 {
   "X": {
+    "kind": "class",
     "type": "class",
-    "properties": {
+    "instanceProperties": {
       "getMeta": {
+        "kind": "method",
         "type": "Function",
         "returns": {
           "type": "union",
-          "typeParams": [
+          "typeArgs": [
             {
               "type": "T",
-              "typeParamUsage": true,
-              "loc": {
-                "line": 2,
-                "column": 33,
-                "file": "test/cases/function_type_params.ts"
-              }
+              "paramID": "something"
             },
             {
-              "type": "undefined",
-              "loc": {
-                "line": 2,
-                "column": 37,
-                "file": "test/cases/function_type_params.ts"
-              }
+              "type": "undefined"
             }
-          ],
-          "loc": {
-            "line": 2,
-            "column": 33,
-            "file": "test/cases/function_type_params.ts"
-          },
-          "id": "X.getMeta^returns"
+          ]
         },
         "params": [
           {
-            "type": "SlotType",
-            "typeParams": [
+            "type": "Iterator",
+            "typeArgs": [
               {
                 "type": "T",
-                "typeParamUsage": true,
-                "loc": {
-                  "line": 2,
-                  "column": 28,
-                  "file": "test/cases/function_type_params.ts"
-                }
+                "paramID": "something"
               }
             ],
-            "loc": {
-              "line": 2,
-              "column": 13,
-              "file": "test/cases/function_type_params.ts"
-            },
-            "id": "X.getMeta^type",
             "name": "type"
           }
         ],
         "typeParams": [
           {
-            "type": "T",
-            "loc": {
-              "line": 2,
-              "column": 10,
-              "file": "test/cases/function_type_params.ts"
-            }
+            "name": "T",
+            "type": "typeparam"
           }
         ],
         "loc": {
@@ -78,7 +49,6 @@
       "column": 0,
       "file": "test/cases/function_type_params.ts"
     },
-    "id": "X",
-    "exported": true
+    "id": "X"
   }
 }

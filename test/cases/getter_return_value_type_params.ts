@@ -1,4 +1,4 @@
 export class X {
-  get desc(): ChangeSet<ChangeDesc> {
+  get desc(): Iterator<boolean> {
   }
 }

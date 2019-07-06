@@ -1,10 +1,12 @@
 import {
   getCombinedModifierFlags, findConfigFile, createCompilerHost, getParsedCommandLineOfConfigFile, createProgram, sys,
+  getEffectiveConstraintOfTypeParameter,
   getLineAndCharacterOfPosition, isWhiteSpaceLike, isWhiteSpaceSingleLine, isLineBreak,
+  isClassLike,
   TypeChecker,
   Symbol, SymbolFlags, ModifierFlags,
-  Type, TypeFlags, ObjectType, ObjectFlags, UnionOrIntersectionType, InterfaceType, Signature,
-  Node, TypeAliasDeclaration
+  Type, TypeFlags, ObjectType, TypeReference, ObjectFlags, LiteralType, UnionOrIntersectionType, Signature,
+  Node, SyntaxKind, TypeParameterDeclaration,
 } from "typescript"
 
 const {resolve, dirname, relative} = require("path")
@@ -19,7 +21,7 @@ type Binding = {
   id: string,
   description?: string,
   loc?: Loc,
-  typeParams?: readonly Item[],
+  typeParams?: readonly ParamType[],
   exported?: boolean,
   abstract?: boolean,
   readonly?: boolean,
@@ -32,9 +34,17 @@ type BindingType = {
   properties?: {[name: string]: Item},
   instanceProperties?: {[name: string]: Item},
   typeArgs?: readonly BindingType[],
-  params?: readonly (BindingType & {name: string})[],
+  params?: readonly ParamType[],
   returns?: BindingType,
+  extends?: BindingType,
+  implements?: readonly BindingType[],
   construct?: Item
+}
+
+type ParamType = BindingType & {
+  name: string,
+  optional?: boolean,
+  default?: string
 }
 
 type Item = Binding & BindingType
@@ -66,19 +76,12 @@ class Module {
 
     let binding: Binding = {kind, id}, type = this.symbolType(symbol)
     if (hasDecl(symbol)) this.addSourceData(decl(symbol), binding)
-    if (kind == "class" || kind == "interface") {
-      let params = (type as InterfaceType).typeParameters
-      if (params) binding.typeParams = params.map(tp => ({kind: "typeparam", id: id + "^" + name(tp.symbol), ...this.getType(tp, id)}))
-    } else if (kind == "typealias") {
-      let params = (decl(symbol) as TypeAliasDeclaration).typeParameters
-      if (params) binding.typeParams = params
-        .map(tpDecl => this.itemForSymbol(this.tc.getSymbolAtLocation(tpDecl)!, id + "^"))
-        .filter(v => !!v) as Item[]
-    } // FIXME check for call signatures with args, clean up handling of type params
+    let params = this.getTypeParams(decl(symbol), id)
+    if (params) binding.typeParams = params
 
     let mods = symbol.valueDeclaration ? getCombinedModifierFlags(symbol.valueDeclaration) : 0
     if (mods & ModifierFlags.Abstract) binding.abstract = true
-    if (mods & ModifierFlags.Readonly) binding.readonly = true
+    if ((mods & ModifierFlags.Readonly) || (symbol.flags & SymbolFlags.GetAccessor)) binding.readonly = true
     if ((mods & ModifierFlags.Private) || binding.description && /@internal\b/.test(binding.description)) return null
     
     return {...binding, ...this.getType(type, id, !["property", "method", "variable"].includes(kind))}
@@ -93,7 +96,7 @@ class Module {
     if (type.flags & TypeFlags.Boolean) return {type: "boolean"}
     if (type.flags & TypeFlags.Undefined) return {type: "undefined"}
     if (type.flags & TypeFlags.Null) return {type: "null"}
-    if (type.flags & TypeFlags.Literal) return {type: name(type.symbol)}
+    if (type.flags & TypeFlags.Literal) return {type: JSON.stringify((type as LiteralType).value)}
     if (type.flags & TypeFlags.Never) return {type: "never"}
 
     // FIXME enums, aliases
@@ -104,20 +107,20 @@ class Module {
     }
 
     if (type.flags & TypeFlags.TypeParameter) return {
-      type: name(type.symbol),
-      typeSource: this.typeSource(type),
-      // FIXME point at ID from context
+      type: name(type.symbol)
     }
 
     if (type.flags & TypeFlags.Object) {
-      if ((describe || (type as ObjectType).objectFlags & ObjectFlags.Anonymous) &&
-          ((type.symbol.flags & SymbolFlags.Class) || type.getProperties().length))
+      if (((type as ObjectType).objectFlags & ObjectFlags.Reference) == 0)
         return this.getTypeDesc(type as ObjectType, id)
       let call = type.getCallSignatures(), strIndex = type.getStringIndexType(), numIndex = type.getNumberIndexType()
       if (call.length) return this.addCallSignature(call[0], {type: "Function"}, id)
       if (strIndex) return {type: "Object", typeArgs: [this.getType(strIndex, id + "^0")]}
       if (numIndex) return {type: "Array", typeArgs: [this.getType(numIndex, id + "^0")]}
-      return {type: name(type.symbol), typeSource: this.typeSource(type)} // FIXME type args
+      let result: BindingType = {type: name(type.symbol), typeSource: this.typeSource(type)}
+      let typeArgs = (type as TypeReference).typeArguments
+      if (typeArgs && typeArgs.length) result.typeArgs = typeArgs.map(arg => this.getType(arg, id))
+      return result
     }
 
     throw new Error(`Unsupported type ${this.tc.typeToString(type)}`)
@@ -144,6 +147,14 @@ class Module {
         if (protoProps.length) this.gatherSymbols(protoProps, out.instanceProperties = {}, id + ".")
       }
       if (props.length) this.gatherSymbols(props, out.properties = {}, id + "^")
+      let classDecl = decl(type.symbol)
+      if (isClassLike(classDecl) && classDecl.heritageClauses) {
+        for (let heritage of classDecl.heritageClauses) {
+          let parents = heritage.types.map(node => this.getType(this.tc.getTypeAtLocation(node), id))
+          if (heritage.token == SyntaxKind.ExtendsKeyword) out.extends = parents[0]
+          else out.implements = parents
+        }
+      }
       return out
     }
 
@@ -157,9 +168,29 @@ class Module {
     return relative(process.cwd(), decl(type.symbol).getSourceFile().fileName)
   }
 
-  getParams(signature: Signature, id: string): (BindingType & {name: string})[] {
+  getParams(signature: Signature, id: string): ParamType[] {
     return signature.getParameters().map(param => {
-      return {name: name(param), ...this.getType(this.symbolType(param), id + "^" + param.escapedName)}
+      let result = this.getType(this.symbolType(param), id + "^" + param.escapedName) as ParamType
+      result.name = name(param)
+      let deflt: Node = param.valueDeclaration && (param.valueDeclaration as any).initializer
+      if (deflt) result.default = deflt.getSourceFile().text.slice(deflt.pos, deflt.end).trim()
+      if (deflt || (param.flags & SymbolFlags.Optional)) result.optional = true
+      return result
+    })
+  }
+
+  getTypeParams(decl: Node, id: string): ParamType[] | null {
+    let params = (decl as any).typeParameters as TypeParameterDeclaration[]
+    return !params ? null : params.map(param => {
+      let sym = this.tc.getSymbolAtLocation(param.name)!
+      let type = this.getType(this.symbolType(sym), id + "^" + name(sym)) as ParamType
+      type.name = name(sym)
+      let constraint = getEffectiveConstraintOfTypeParameter(param), cType
+      if (constraint && (cType = this.tc.getTypeAtLocation(constraint)))
+        type.implements = [this.getType(cType, id)]
+      if (param.default)
+        type.default = param.getSourceFile().text.slice(param.default.pos, param.default.end).trim()
+      return type
     })
   }
 
@@ -173,14 +204,13 @@ class Module {
   symbolType(symbol: Symbol) {
     let type = this.tc.getTypeOfSymbolAtLocation(symbol, decl(symbol))
     // FIXME this is weird and silly but for interface declarations TS gives a symbol type of any
-    if (!type.symbol || type.flags & TypeFlags.Any) type = this.tc.getDeclaredTypeOfSymbol(symbol)
+    if (type.flags & TypeFlags.Any) type = this.tc.getDeclaredTypeOfSymbol(symbol)
     return type
   }
 
   addSourceData(node: Node, target: Binding) {
-    let comment = getComment(node)
+    let comment = getComment(node.kind == SyntaxKind.VariableDeclaration ? node.parent.parent : node)
     if (comment) target.description = comment
-    // FIXME add description comments
     const sourceFile = node.getSourceFile()
     if (!sourceFile) return target // Synthetic node
     let {pos} = node

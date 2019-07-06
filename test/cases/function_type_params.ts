@@ -1,3 +1,3 @@
 export class X {
-  getMeta<T>(type: SlotType<T>): T | undefined {}
+  getMeta<T>(type: Iterator<T>): T | undefined {}
 }

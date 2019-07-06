@@ -40,22 +40,13 @@ class Module {
         let binding = { kind, id }, type = this.symbolType(symbol);
         if (hasDecl(symbol))
             this.addSourceData(decl(symbol), binding);
-        if (kind == "class" || kind == "interface") {
-            let params = type.typeParameters;
-            if (params)
-                binding.typeParams = params.map(tp => (Object.assign({ kind: "typeparam", id: id + "^" + name(tp.symbol) }, this.getType(tp, id))));
-        }
-        else if (kind == "typealias") {
-            let params = decl(symbol).typeParameters;
-            if (params)
-                binding.typeParams = params
-                    .map(tpDecl => this.itemForSymbol(this.tc.getSymbolAtLocation(tpDecl), id + "^"))
-                    .filter(v => !!v);
-        } // FIXME check for call signatures with args, clean up handling of type params
+        let params = this.getTypeParams(decl(symbol), id);
+        if (params)
+            binding.typeParams = params;
         let mods = symbol.valueDeclaration ? typescript_1.getCombinedModifierFlags(symbol.valueDeclaration) : 0;
         if (mods & typescript_1.ModifierFlags.Abstract)
             binding.abstract = true;
-        if (mods & typescript_1.ModifierFlags.Readonly)
+        if ((mods & typescript_1.ModifierFlags.Readonly) || (symbol.flags & typescript_1.SymbolFlags.GetAccessor))
             binding.readonly = true;
         if ((mods & typescript_1.ModifierFlags.Private) || binding.description && /@internal\b/.test(binding.description))
             return null;
@@ -79,7 +70,7 @@ class Module {
         if (type.flags & typescript_1.TypeFlags.Null)
             return { type: "null" };
         if (type.flags & typescript_1.TypeFlags.Literal)
-            return { type: name(type.symbol) };
+            return { type: JSON.stringify(type.value) };
         if (type.flags & typescript_1.TypeFlags.Never)
             return { type: "never" };
         // FIXME enums, aliases
@@ -90,12 +81,11 @@ class Module {
             };
         if (type.flags & typescript_1.TypeFlags.TypeParameter)
             return {
-                type: name(type.symbol),
+                type: "typeparam",
                 typeSource: this.typeSource(type),
             };
         if (type.flags & typescript_1.TypeFlags.Object) {
-            if ((describe || type.objectFlags & typescript_1.ObjectFlags.Anonymous) &&
-                ((type.symbol.flags & typescript_1.SymbolFlags.Class) || type.getProperties().length))
+            if ((type.objectFlags & typescript_1.ObjectFlags.Reference) == 0)
                 return this.getTypeDesc(type, id);
             let call = type.getCallSignatures(), strIndex = type.getStringIndexType(), numIndex = type.getNumberIndexType();
             if (call.length)
@@ -104,7 +94,11 @@ class Module {
                 return { type: "Object", typeArgs: [this.getType(strIndex, id + "^0")] };
             if (numIndex)
                 return { type: "Array", typeArgs: [this.getType(numIndex, id + "^0")] };
-            return { type: name(type.symbol), typeSource: this.typeSource(type) }; // FIXME type args
+            let result = { type: name(type.symbol), typeSource: this.typeSource(type) };
+            let typeArgs = type.typeArguments;
+            if (typeArgs && typeArgs.length)
+                result.typeArgs = typeArgs.map(arg => this.getType(arg, id));
+            return result;
         }
         throw new Error(`Unsupported type ${this.tc.typeToString(type)}`);
     }
@@ -113,7 +107,6 @@ class Module {
         // FIXME array/function types
         // FIXME figure out how type params vs type args are represented
         if (type.symbol.flags & typescript_1.SymbolFlags.Class) {
-            console.log("it's a class", props.length, this.tc.typeToString(type));
             let out = { type: "class" };
             let ctor = type.getConstructSignatures(), ctorNode;
             if (ctor.length && (ctorNode = ctor[0].getDeclaration())) {
@@ -129,6 +122,16 @@ class Module {
             }
             if (props.length)
                 this.gatherSymbols(props, out.properties = {}, id + "^");
+            let classDecl = decl(type.symbol);
+            if (typescript_1.isClassLike(classDecl) && classDecl.heritageClauses) {
+                for (let heritage of classDecl.heritageClauses) {
+                    let parents = heritage.types.map(node => this.getType(this.tc.getTypeAtLocation(node), id));
+                    if (heritage.token == typescript_1.SyntaxKind.ExtendsKeyword)
+                        out.extends = parents[0];
+                    else
+                        out.implements = parents;
+                }
+            }
             return out;
         }
         let out = { type: type.symbol.flags & typescript_1.SymbolFlags.Interface ? "interface" : "Object" };
@@ -143,7 +146,28 @@ class Module {
     }
     getParams(signature, id) {
         return signature.getParameters().map(param => {
-            return Object.assign({ name: name(param) }, this.getType(this.symbolType(param), id + "^" + param.escapedName));
+            let result = this.getType(this.symbolType(param), id + "^" + param.escapedName);
+            result.name = name(param);
+            let deflt = param.valueDeclaration && param.valueDeclaration.initializer;
+            if (deflt)
+                result.default = deflt.getSourceFile().text.slice(deflt.pos, deflt.end).trim();
+            if (deflt || (param.flags & typescript_1.SymbolFlags.Optional))
+                result.optional = true;
+            return result;
+        });
+    }
+    getTypeParams(decl, id) {
+        let params = decl.typeParameters;
+        return !params ? null : params.map(param => {
+            let sym = this.tc.getSymbolAtLocation(param.name);
+            let type = this.getType(this.symbolType(sym), id + "^" + name(sym));
+            type.name = name(sym);
+            let constraint = typescript_1.getEffectiveConstraintOfTypeParameter(param), cType;
+            if (constraint && (cType = this.tc.getTypeAtLocation(constraint)))
+                type.implements = [this.getType(cType, id)];
+            if (param.default)
+                type.default = param.getSourceFile().text.slice(param.default.pos, param.default.end).trim();
+            return type;
         });
     }
     addCallSignature(signature, target, id) {
@@ -156,15 +180,14 @@ class Module {
     symbolType(symbol) {
         let type = this.tc.getTypeOfSymbolAtLocation(symbol, decl(symbol));
         // FIXME this is weird and silly but for interface declarations TS gives a symbol type of any
-        if (!type.symbol || type.flags & typescript_1.TypeFlags.Any)
+        if (type.flags & typescript_1.TypeFlags.Any)
             type = this.tc.getDeclaredTypeOfSymbol(symbol);
         return type;
     }
     addSourceData(node, target) {
-        let comment = getComment(node);
+        let comment = getComment(node.kind == typescript_1.SyntaxKind.VariableDeclaration ? node.parent.parent : node);
         if (comment)
             target.description = comment;
-        // FIXME add description comments
         const sourceFile = node.getSourceFile();
         if (!sourceFile)
             return target; // Synthetic node

@@ -1,8 +1,10 @@
 {
   "X": {
+    "kind": "class",
     "type": "class",
-    "properties": {
+    "instanceProperties": {
       "g": {
+        "kind": "method",
         "type": "Function",
         "params": [],
         "loc": {
@@ -19,7 +21,6 @@
       "column": 0,
       "file": "test/cases/internal_comments.ts"
     },
-    "id": "X",
-    "exported": true
+    "id": "X"
   }
 }

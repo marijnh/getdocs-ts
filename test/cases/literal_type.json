@@ -1,50 +1,30 @@
 {
   "X": {
+    "kind": "class",
     "type": "class",
-    "exported": true,
-    "properties": {
+    "instanceProperties": {
       "iter": {
+        "kind": "method",
         "type": "Function",
         "params": [
           {
             "type": "union",
-            "typeParams": [
+            "typeArgs": [
               {
-                "type": "1",
-                "loc": {
-                  "line": 2,
-                  "column": 12,
-                  "file": "test/cases/literal_type.ts"
-                }
+                "type": "1"
               },
               {
-                "type": "-1",
-                "loc": {
-                  "line": 2,
-                  "column": 16,
-                  "file": "test/cases/literal_type.ts"
-                }
+                "type": "-1"
               }
             ],
             "optional": true,
-            "loc": {
-              "line": 2,
-              "column": 7,
-              "file": "test/cases/literal_type.ts"
-            },
-            "id": "X.iter^dir",
             "default": "1",
             "name": "dir"
           }
         ],
         "returns": {
           "type": "TextIterator",
-          "loc": {
-            "line": 2,
-            "column": 25,
-            "file": "test/cases/literal_type.ts"
-          },
-          "id": "X.iter^returns"
+          "typeSource": "test/cases/this_type.ts"
         },
         "loc": {
           "line": 2,
@@ -54,145 +34,66 @@
         "id": "X.iter"
       },
       "movePos": {
+        "kind": "method",
         "type": "Function",
         "returns": {
-          "type": "number",
-          "loc": {
-            "file": "test/cases/literal_type.ts",
-            "line": 5,
-            "column": 47
-          },
-          "id": "X.movePos^returns"
+          "type": "number"
         },
         "params": [
           {
             "type": "number",
-            "loc": {
-              "file": "test/cases/literal_type.ts",
-              "line": 3,
-              "column": 10
-            },
-            "id": "X.movePos^start",
             "name": "start"
           },
           {
             "type": "union",
-            "typeParams": [
+            "typeArgs": [
               {
-                "type": "\"forward\"",
-                "loc": {
-                  "file": "test/cases/literal_type.ts",
-                  "line": 3,
-                  "column": 36
-                }
+                "type": "\"forward\""
               },
               {
-                "type": "\"backward\"",
-                "loc": {
-                  "file": "test/cases/literal_type.ts",
-                  "line": 3,
-                  "column": 48
-                }
+                "type": "\"backward\""
               },
               {
-                "type": "\"left\"",
-                "loc": {
-                  "file": "test/cases/literal_type.ts",
-                  "line": 3,
-                  "column": 61
-                }
+                "type": "\"left\""
               },
               {
-                "type": "\"right\"",
-                "loc": {
-                  "file": "test/cases/literal_type.ts",
-                  "line": 3,
-                  "column": 70
-                }
+                "type": "\"right\""
               }
             ],
-            "loc": {
-              "file": "test/cases/literal_type.ts",
-              "line": 3,
-              "column": 25
-            },
-            "id": "X.movePos^direction",
             "name": "direction"
           },
           {
             "type": "union",
-            "typeParams": [
+            "typeArgs": [
               {
-                "type": "\"character\"",
-                "loc": {
-                  "file": "test/cases/literal_type.ts",
-                  "line": 4,
-                  "column": 23
-                }
+                "type": "\"character\""
               },
               {
-                "type": "\"word\"",
-                "loc": {
-                  "file": "test/cases/literal_type.ts",
-                  "line": 4,
-                  "column": 37
-                }
+                "type": "\"word\""
               },
               {
-                "type": "\"line\"",
-                "loc": {
-                  "file": "test/cases/literal_type.ts",
-                  "line": 4,
-                  "column": 46
-                }
+                "type": "\"line\""
               },
               {
-                "type": "\"lineboundary\"",
-                "loc": {
-                  "file": "test/cases/literal_type.ts",
-                  "line": 4,
-                  "column": 55
-                }
+                "type": "\"lineboundary\""
               }
             ],
             "default": "\"character\"",
             "optional": true,
-            "loc": {
-              "file": "test/cases/literal_type.ts",
-              "line": 4,
-              "column": 10
-            },
-            "id": "X.movePos^granularity",
             "name": "granularity"
           },
           {
             "type": "union",
-            "typeParams": [
+            "typeArgs": [
               {
-                "type": "\"move\"",
-                "loc": {
-                  "file": "test/cases/literal_type.ts",
-                  "line": 5,
-                  "column": 18
-                }
+                "type": "\"move\""
               },
               {
-                "type": "\"extend\"",
-                "loc": {
-                  "file": "test/cases/literal_type.ts",
-                  "line": 5,
-                  "column": 27
-                }
+                "type": "\"extend\""
               }
             ],
             "default": "\"move\"",
             "optional": true,
-            "loc": {
-              "file": "test/cases/literal_type.ts",
-              "line": 5,
-              "column": 10
-            },
-            "id": "X.movePos^action",
             "name": "action"
           }
         ],

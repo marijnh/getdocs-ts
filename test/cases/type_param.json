@@ -1,30 +1,32 @@
 {
   "ChangeSet": {
+    "kind": "class",
     "type": "class",
     "typeParams": [
       {
-        "type": "C extends ChangeDesc = Change",
-        "loc": {
-          "line": 1,
-          "column": 23,
-          "file": "test/cases/type_param.ts"
-        }
+        "name": "C",
+        "type": "typeparam",
+        "typeSource": "test/cases/type_param.ts",
+        "implements": [
+          {
+            "type": "Array",
+            "typeArgs": [{"type": "any"}]
+          }
+        ],
+        "default": "Array<number>"
       }
     ],
-    "implements": {
-      "type": "Mapping",
-      "loc": {
-        "line": 1,
-        "column": 65,
-        "file": "test/cases/type_param.ts"
+    "implements": [
+      {
+        "type": "RegExp",
+        "typeSource": "node_modules/typescript/lib/lib.es5.d.ts"
       }
-    },
+    ],
     "loc": {
       "line": 1,
       "column": 0,
       "file": "test/cases/type_param.ts"
     },
-    "id": "ChangeSet",
-    "exported": true
+    "id": "ChangeSet"
   }
 }

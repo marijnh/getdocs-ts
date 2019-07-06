@@ -1,2 +1,2 @@
-export class ChangeSet<C extends ChangeDesc = Change> implements Mapping {
+export class ChangeSet<C extends Array<any> = Array<number>> implements RegExp {
 }

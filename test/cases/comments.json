@@ -1,6 +1,6 @@
 {
   "y": {
-    "exported": true,
+    "kind": "variable",
     "type": "1",
     "description": "Should appear",
     "loc": {
@@ -11,10 +11,11 @@
     "id": "y"
   },
   "X": {
-    "exported": true,
+    "kind": "class",
     "type": "class",
-    "properties": {
+    "instanceProperties": {
       "x": {
+        "kind": "property",
         "type": "number",
         "description": "Should be separate words",
         "loc": {
