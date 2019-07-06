@@ -6,7 +6,7 @@ import {
   TypeChecker,
   Symbol, SymbolFlags, ModifierFlags,
   Type, TypeFlags, ObjectType, TypeReference, ObjectFlags, LiteralType, UnionOrIntersectionType, Signature,
-  Node, SyntaxKind, TypeParameterDeclaration,
+  Node, SyntaxKind, TypeParameterDeclaration, EnumDeclaration,
 } from "typescript"
 
 const {resolve, dirname, relative} = require("path")
@@ -79,10 +79,10 @@ class Context {
     let kind: BindingKind
     if (symbol.flags & SymbolFlags.PropertyOrAccessor) kind = "property"
     else if (symbol.flags & SymbolFlags.Method) kind = "method"
+    else if (symbol.flags & SymbolFlags.Enum) kind = "enum"
     else if (symbol.flags & SymbolFlags.EnumMember) kind = "enummember"
     else if (symbol.flags & SymbolFlags.Class) kind = "class"
     else if (symbol.flags & SymbolFlags.Interface) kind = "interface"
-    else if (symbol.flags & SymbolFlags.Enum) kind = "enum"
     else if (symbol.flags & SymbolFlags.TypeAlias) kind = "typealias"
     else if (symbol.flags & SymbolFlags.Variable) kind = "variable"
     else if (symbol.flags & SymbolFlags.TypeParameter) kind = "typeparam"
@@ -90,19 +90,31 @@ class Context {
 
     let binding: Binding = {kind, id: this.id}, type = this.symbolType(symbol)
     if (hasDecl(symbol)) this.addSourceData(decl(symbol), binding)
+
+    let mods = symbol.valueDeclaration ? getCombinedModifierFlags(symbol.valueDeclaration) : 0
+    if (mods & ModifierFlags.Abstract) binding.abstract = true
+    if ((mods & ModifierFlags.Readonly) || (symbol.flags & SymbolFlags.GetAccessor)) binding.readonly = true
+    if ((mods & ModifierFlags.Private) || binding.description && /@internal\b/.test(binding.description)) return null
+
     let params = this.getTypeParams(decl(symbol))
     let cx: Context = this
     if (params) {
       binding.typeParams = params
       cx = cx.addParams(params.map(p => ({name: p.name, id: cx.id})))
     }
-
-    let mods = symbol.valueDeclaration ? getCombinedModifierFlags(symbol.valueDeclaration) : 0
-    if (mods & ModifierFlags.Abstract) binding.abstract = true
-    if ((mods & ModifierFlags.Readonly) || (symbol.flags & SymbolFlags.GetAccessor)) binding.readonly = true
-    if ((mods & ModifierFlags.Private) || binding.description && /@internal\b/.test(binding.description)) return null
     
-    return {...binding, ...kind == "typealias" ? cx.getTypeInner(type) : cx.getType(type)}
+    return {...binding, ...kind == "typealias" ? cx.getTypeInner(type) : kind == "enum" ? this.getEnumType(symbol) : cx.getType(type)}
+  }
+
+  getEnumType(symbol: Symbol): BindingType {
+    let properties: {[name: string]: Item} = {}
+    this.gatherSymbols((decl(symbol) as EnumDeclaration).members
+                       .map(member => this.tc.getSymbolAtLocation(member.name)!), properties)
+    for (let n in properties) {
+      properties[n].type = name(symbol)
+      properties[n].typeSource = this.nodePath(decl(symbol))
+    }
+    return {type: "enum", properties}
   }
 
   getType(type: Type): BindingType {
@@ -127,8 +139,6 @@ class Context {
     if (type.flags & TypeFlags.Literal) return {type: JSON.stringify((type as LiteralType).value)}
     if (type.flags & TypeFlags.Never) return {type: "never"}
 
-    // FIXME enums
-
     // FIXME TypeScript seems to reverse the type args to unions. Check whether this is reliable, and re-reverse them if so
     if (type.flags & TypeFlags.UnionOrIntersection) return {
       type: type.flags & TypeFlags.Union ? "union" : "intersection",
@@ -143,7 +153,7 @@ class Context {
 
     if (type.flags & TypeFlags.Object) {
       if ((type as ObjectType).objectFlags & ObjectFlags.Reference) {
-        let result: BindingType = {type: name(type.symbol), typeSource: this.typeSource(type)}
+        let result: BindingType = {type: name(type.symbol), typeSource: this.nodePath(decl(type.symbol))}
         let typeArgs = (type as TypeReference).typeArguments
         if (typeArgs && typeArgs.length) result.typeArgs = typeArgs.map(arg => this.getType(arg))
         return result
@@ -198,10 +208,6 @@ class Context {
     return out
   }
 
-  typeSource(type: Type) {
-    return relative(process.cwd(), decl(type.symbol).getSourceFile().fileName)
-  }
-
   getParams(signature: Signature): ParamType[] {
     return signature.getParameters().map(param => {
       let result = this.extend(param).getType(this.symbolType(param)) as ParamType
@@ -241,6 +247,10 @@ class Context {
     return type
   }
 
+  nodePath(node: Node) {
+    return relative(process.cwd(), node.getSourceFile().fileName)
+  }
+
   addSourceData(node: Node, target: Binding) {
     let comment = getComment(node.kind == SyntaxKind.VariableDeclaration ? node.parent.parent : node)
     if (comment) target.description = comment
@@ -249,7 +259,7 @@ class Context {
     let {pos} = node
     while (isWhiteSpaceLike(sourceFile.text.charCodeAt(pos))) ++pos
     const {line, character} = getLineAndCharacterOfPosition(sourceFile, pos)
-    target.loc = {file: relative(process.cwd(), sourceFile.fileName), line: line + 1, column: character}
+    target.loc = {file: this.nodePath(node), line: line + 1, column: character}
     return target
   }
 }

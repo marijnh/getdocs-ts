@@ -1,1 +1,7 @@
-export enum MapMode  { Simple, TrackDel, TrackBefore, TrackAfter }
+export enum MapMode  {
+  Simple,
+  TrackDel,
+  // (Before)
+  TrackBefore,
+  TrackAfter
+}
