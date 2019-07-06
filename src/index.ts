@@ -73,6 +73,9 @@ class Context {
   }
 
   itemForSymbol(symbol: Symbol): Item | null {
+    if (symbol.flags & SymbolFlags.Alias)
+      return this.itemForSymbol(this.tc.getAliasedSymbol(symbol))
+
     let kind: BindingKind
     if (symbol.flags & SymbolFlags.PropertyOrAccessor) kind = "property"
     else if (symbol.flags & SymbolFlags.Method) kind = "method"
