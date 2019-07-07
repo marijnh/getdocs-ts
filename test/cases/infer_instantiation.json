@@ -29,6 +29,7 @@
     },
     "params": [
       {
+        "name": "spec",
         "type": "Config",
         "typeSource": "test/cases/infer_instantiation.ts"
       }

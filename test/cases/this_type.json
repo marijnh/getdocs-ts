@@ -1,54 +1,35 @@
 {
   "TextIterator": {
-    "exported": true,
+    "kind": "interface",
+    "type": "interface",
     "loc": {
       "line": 1,
       "column": 0,
       "file": "test/cases/this_type.ts"
     },
-    "type": "interface",
-    "extends": {
-      "loc": {
-        "line": 1,
-        "column": 38,
-        "file": "test/cases/this_type.ts"
-      },
-      "type": "Iterator",
-      "typeParams": [
-        {
-          "loc": {
-            "line": 1,
-            "column": 47,
-            "file": "test/cases/this_type.ts"
-          },
-          "type": "string"
-        }
-      ]
-    },
+    "implements": [
+      {
+        "type": "Iterator",
+        "typeArgs": [{"type": "string"}]
+      }
+    ],
     "properties": {
       "next": {
+        "kind": "method",
         "type": "Function",
         "params": [
           {
-            "type": "number",
-            "loc": {
-              "line": 2,
-              "file": "test/cases/this_type.ts",
-              "column": 7
-            },
-            "id": "TextIterator.next^skip",
             "name": "skip",
-            "optional": true
+            "type": "union",
+            "typeArgs": [
+              {"type": "undefined"},
+              {"type": "number"}
+            ]
           }
         ],
         "returns": {
           "type": "TextIterator",
-          "loc": {
-            "line": 2,
-            "file": "test/cases/this_type.ts",
-            "column": 23
-          },
-          "id": "TextIterator.next^returns"
+          "typeSource": "test/cases/this_type.ts"
         },
         "loc": {
           "line": 2,

@@ -1,17 +1,16 @@
 {
   "x": {
-    "exported": true,
+    "kind": "variable",
     "type": "Function",
     "params": [
       {
         "type": "any",
-        "id": "x.a",
         "name": "a"
       }
     ],
     "returns": {
       "type": "union",
-      "typeParams": [
+      "typeArgs": [
         {
           "type": "true"
         },
@@ -28,18 +27,17 @@
     "id": "x"
   },
   "y": {
-    "exported": true,
+    "kind": "variable",
     "type": "Function",
     "params": [
       {
         "type": "any",
-        "id": "y.a",
         "name": "a"
       }
     ],
     "returns": {
       "type": "union",
-      "typeParams": [
+      "typeArgs": [
         {
           "type": "false"
         },

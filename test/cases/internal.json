@@ -1,35 +1,23 @@
 {
   "Text": {
+    "kind": "class",
     "type": "class",
-    "properties": {
+    "instanceProperties": {
       "children": {
+        "kind": "property",
         "type": "union",
-        "typeParams": [
+        "typeArgs": [
           {
             "type": "ReadonlyArray",
-            "typeParams": [
+            "typeArgs": [
               {
                 "type": "Text",
-                "loc": {
-                  "line": 2,
-                  "column": 44,
-                  "file": "test/cases/internal.ts"
-                }
+                "typeSource": "test/cases/internal.ts"
               }
-            ],
-            "loc": {
-              "line": 2,
-              "column": 30,
-              "file": "test/cases/internal.ts"
-            }
+            ]
           },
           {
-            "type": "null",
-            "loc": {
-              "line": 2,
-              "column": 52,
-              "file": "test/cases/internal.ts"
-            }
+            "type": "null"
           }
         ],
         "loc": {
@@ -48,7 +36,6 @@
       "column": 0,
       "file": "test/cases/internal.ts"
     },
-    "id": "Text",
-    "exported": true
+    "id": "Text"
   }
 }

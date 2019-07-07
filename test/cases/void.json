@@ -1,6 +1,6 @@
 {
   "x": {
-    "exported": true,
+    "kind": "variable",
     "type": "Function",
     "params": [],
     "loc": {

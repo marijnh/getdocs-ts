@@ -1,26 +1,18 @@
 {
   "Extension": {
+    "kind": "class",
     "type": "class",
-    "staticProperties": {
+    "properties": {
       "all": {
+        "kind": "method",
         "type": "Function",
         "params": [
           {
-            "loc": {
-              "line": 2,
-              "column": 13,
-              "file": "test/cases/rest_param.ts"
-            },
-            "id": "Extension^all^extensions",
             "type": "Array",
-            "typeParams": [
+            "typeArgs": [
               {
                 "type": "Extension",
-                "loc": {
-                  "line": 2,
-                  "column": 28,
-                  "file": "test/cases/rest_param.ts"
-                }
+                "typeSource": "test/cases/rest_param.ts"
               }
             ],
             "rest": true,
@@ -29,7 +21,7 @@
         ],
         "returns": {
           "type": "Extension",
-          "id": "Extension^all^returns"
+          "typeSource": "test/cases/rest_param.ts"
         },
         "loc": {
           "line": 2,
@@ -44,7 +36,6 @@
       "column": 0,
       "file": "test/cases/rest_param.ts"
     },
-    "id": "Extension",
-    "exported": true
+    "id": "Extension"
   }
 }

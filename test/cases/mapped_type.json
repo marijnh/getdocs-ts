@@ -1,44 +1,23 @@
 {
   "T": {
-    "exported": true,
-    "type": "type",
-    "value": {
-      "type": "Object",
-      "properties": {
-        "[K in keyof A]": {
-          "type": "B",
-          "typeParamUsage": true,
-          "loc": {
-            "file": "test/cases/mapped_type.ts",
-            "line": 1,
-            "column": 39
-          }
-        }
+    "kind": "typealias",
+    "type": "Object",
+    "typeParams": [
+      {
+        "name": "A",
+        "type": "typeparam"
       },
-      "loc": {
-        "file": "test/cases/mapped_type.ts",
-        "line": 1,
-        "column": 22
-      },
-      "typeParams": [
-        {
-          "type": "A",
-          "loc": {
-            "file": "test/cases/mapped_type.ts",
-            "line": 1,
-            "column": 14
-          }
-        },
-        {
-          "type": "B",
-          "loc": {
-            "file": "test/cases/mapped_type.ts",
-            "line": 1,
-            "column": 17
-          }
-        }
-      ]
-    },
+      {
+        "name": "B",
+        "type": "typeparam"
+      }
+    ],
+    "typeArgs": [
+      {
+        "type": "B",
+        "typeParamSource": "T"
+      }
+    ],
     "loc": {
       "file": "test/cases/mapped_type.ts",
       "line": 1,

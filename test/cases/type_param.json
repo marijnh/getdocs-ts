@@ -6,7 +6,6 @@
       {
         "name": "C",
         "type": "typeparam",
-        "typeSource": "test/cases/type_param.ts",
         "implements": [
           {
             "type": "Array",

@@ -1,10 +1,11 @@
 {
   "Extension": {
-    "exported": true,
+    "kind": "class",
     "type": "class",
-    "properties": {
+    "instanceProperties": {
       "kind": {
-        "type": "Kind",
+        "kind": "property",
+        "type": "number",
         "loc": {
           "line": 3,
           "column": 14,

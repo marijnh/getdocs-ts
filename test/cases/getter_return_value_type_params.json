@@ -6,7 +6,6 @@
       "desc": {
         "kind": "property",
         "type": "Iterator",
-        "typeSource": "node_modules/typescript/lib/lib.es2015.iterable.d.ts",
         "typeArgs": [{"type": "boolean"}],
         "loc": {
           "line": 2,

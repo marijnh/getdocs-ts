@@ -1,3 +1,3 @@
 export class X {
-  constructor(readonly mirror: ReadonlyArray<number> = empty) {}
+  constructor(readonly mirror: ReadonlyArray<number> = []) {}
 }

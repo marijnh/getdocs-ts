@@ -1,15 +1,7 @@
 {
   "A": {
-    "exported": true,
-    "type": "type",
-    "value": {
-      "type": "number",
-      "loc": {
-        "file": "test/cases/parenthesized_type.ts",
-        "line": 1,
-        "column": 17
-      }
-    },
+    "kind": "typealias",
+    "type": "number",
     "loc": {
       "file": "test/cases/parenthesized_type.ts",
       "line": 1,

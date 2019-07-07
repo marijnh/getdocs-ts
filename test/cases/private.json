@@ -1,12 +1,12 @@
 {
   "EditorState": {
+    "kind": "class",
     "type": "class",
     "loc": {
       "line": 1,
       "column": 0,
       "file": "test/cases/private.ts"
     },
-    "id": "EditorState",
-    "exported": true
+    "id": "EditorState"
   }
 }

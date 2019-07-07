@@ -21,7 +21,6 @@
         "params": [
           {
             "type": "Iterator",
-            "typeSource": "node_modules/typescript/lib/lib.es2015.iterable.d.ts",
             "typeArgs": [
               {
                 "type": "T",

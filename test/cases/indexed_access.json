@@ -1,58 +1,53 @@
 {
   "getProperty": {
-    "exported": true,
+    "kind": "function",
     "type": "Function",
-    "returns": {
-      "type": "T[K]",
-      "loc": {
-        "file": "test/cases/indexed_access.ts",
-        "line": 1,
-        "column": 66
+    "typeParams": [
+      {
+        "name": "T",
+        "type": "typeparam"
       },
-      "id": "getProperty^returns"
-    },
+      {
+        "name": "K",
+        "type": "typeparam",
+        "implements": [
+          {
+            "type": "keyof",
+            "typeArgs": [
+              {
+                "type": "T",
+                "typeParamSource": "getProperty"
+              }
+            ]
+          }
+        ]
+      }
+    ],
     "params": [
       {
         "type": "T",
-        "typeParamUsage": true,
-        "loc": {
-          "file": "test/cases/indexed_access.ts",
-          "line": 1,
-          "column": 50
-        },
-        "id": "getProperty^o",
+        "typeParamSource": "getProperty",
         "name": "o"
       },
       {
         "type": "K",
-        "typeParamUsage": true,
-        "loc": {
-          "file": "test/cases/indexed_access.ts",
-          "line": 1,
-          "column": 56
-        },
-        "id": "getProperty^name",
+        "typeParamSource": "getProperty",
         "name": "name"
       }
     ],
-    "typeParams": [
-      {
-        "type": "T",
-        "loc": {
-          "file": "test/cases/indexed_access.ts",
-          "line": 1,
-          "column": 28
+    "returns": {
+      "type": "indexed",
+      "typeArgs": [
+        {
+          "type": "T",
+          "typeParamSource": "getProperty"
+        },
+        {
+          "type": "K",
+          "typeParamSource": "getProperty"
         }
-      },
-      {
-        "type": "K extends keyof T",
-        "loc": {
-          "file": "test/cases/indexed_access.ts",
-          "line": 1,
-          "column": 31
-        }
-      }
-    ],
+      ]
+    },
     "loc": {
       "file": "test/cases/indexed_access.ts",
       "line": 1,

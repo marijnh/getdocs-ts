@@ -1,18 +1,14 @@
 {
   "Line": {
+    "kind": "class",
     "type": "class",
-    "constructor": {
+    "construct": {
+      "kind": "constructor",
       "type": "Function",
       "params": [
         {
-          "type": "number",
-          "loc": {
-            "line": 2,
-            "column": 14,
-            "file": "test/cases/param_prop.ts"
-          },
-          "id": "Line.constructor^start",
-          "name": "start"
+          "name": "start",
+          "type": "number"
         }
       ],
       "loc": {
@@ -22,8 +18,9 @@
       },
       "id": "Line.constructor"
     },
-    "properties": {
+    "instanceProperties": {
       "start": {
+        "kind": "property",
         "type": "number",
         "loc": {
           "line": 2,
@@ -39,7 +36,6 @@
       "column": 0,
       "file": "test/cases/param_prop.ts"
     },
-    "id": "Line",
-    "exported": true
+    "id": "Line"
   }
 }

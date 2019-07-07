@@ -1,6 +1,6 @@
 {
   "Text": {
-    "exported": true,
+    "kind": "class",
     "abstract": true,
     "type": "class",
     "loc": {

@@ -2,18 +2,18 @@ import {
   getCombinedModifierFlags, findConfigFile, createCompilerHost, getParsedCommandLineOfConfigFile, createProgram, sys,
   getEffectiveConstraintOfTypeParameter,
   getLineAndCharacterOfPosition, isWhiteSpaceLike, isWhiteSpaceSingleLine, isLineBreak,
-  isClassLike,
+  isClassLike, isInterfaceDeclaration,
   TypeChecker,
   Symbol, SymbolFlags, ModifierFlags,
-  Type, TypeFlags, ObjectType, TypeReference, ObjectFlags, LiteralType, UnionOrIntersectionType, Signature,
-  Node, SyntaxKind, TypeParameterDeclaration, UnionOrIntersectionTypeNode,
-  Declaration, EnumDeclaration, VariableDeclaration
+  Type, TypeFlags, ObjectType, TypeReference, ObjectFlags, LiteralType, UnionOrIntersectionType, Signature, IndexType, IndexedAccessType,
+  Node, SyntaxKind, UnionOrIntersectionTypeNode, MappedTypeNode,
+  Declaration, TypeParameterDeclaration, ParameterDeclaration, EnumDeclaration, VariableDeclaration, ConstructorDeclaration
 } from "typescript"
 
 const {resolve, dirname, relative} = require("path")
 
 type BindingKind = "class" | "enum" | "enummember" | "interface" | "variable" | "property" | "method" |
-  "typealias" | "typeparam" | "constructor"
+  "typealias" | "typeparam" | "constructor" | "function"
 
 type Loc = {file: string, line: number, column: number}
 
@@ -45,6 +45,7 @@ type BindingType = {
 type ParamType = BindingType & {
   name: string,
   optional?: boolean,
+  rest?: boolean,
   default?: string
 }
 
@@ -66,11 +67,16 @@ class Context {
     return new Context(this.tc, this.exports, this.basedir, this.id, typeParams.concat(this.typeParams))
   }
 
-  gatherSymbols(symbols: readonly Symbol[], target: {[name: string]: any}, sep = ".") {
+  gatherSymbols(symbols: readonly Symbol[], target: {[name: string]: any} = {}, sep = ".") {
+    let gathered = 0
     for (const symbol of symbols.slice().sort(compareSymbols)) {
       let item = this.extend(symbol, sep).itemForSymbol(symbol)
-      if (item) target[name(symbol)] = item
+      if (item) {
+        target[name(symbol)] = item
+        gathered++
+      }
     }
+    return gathered ? target : null
   }
 
   itemForSymbol(symbol: Symbol): Item | null {
@@ -83,6 +89,7 @@ class Context {
     else if (symbol.flags & SymbolFlags.Enum) kind = "enum"
     else if (symbol.flags & SymbolFlags.EnumMember) kind = "enummember"
     else if (symbol.flags & SymbolFlags.Class) kind = "class"
+    else if (symbol.flags & SymbolFlags.Function) kind = "function"
     else if (symbol.flags & SymbolFlags.Interface) kind = "interface"
     else if (symbol.flags & SymbolFlags.TypeAlias) kind = "typealias"
     else if (symbol.flags & SymbolFlags.Variable) kind = "variable"
@@ -99,8 +106,8 @@ class Context {
       binding.readonly = true
     if ((mods & ModifierFlags.Private) || binding.description && /@internal\b/.test(binding.description)) return null
 
-    let params = this.getTypeParams(decl(symbol))
     let cx: Context = this
+    let params = this.getTypeParams(decl(symbol))
     if (params) {
       binding.typeParams = params
       cx = cx.addParams(params.map(p => ({name: p.name, id: cx.id})))
@@ -144,6 +151,7 @@ class Context {
     if (type.flags & TypeFlags.Boolean) return {type: "boolean"}
     if (type.flags & TypeFlags.Undefined) return {type: "undefined"}
     if (type.flags & TypeFlags.Null) return {type: "null"}
+    if (type.flags & TypeFlags.BooleanLiteral) return {type: (type as any).intrinsicName} // FIXME TypeScript doesn't export this
     if (type.flags & TypeFlags.Literal) return {type: JSON.stringify((type as LiteralType).value)}
     if (type.flags & TypeFlags.Never) return {type: "never"}
 
@@ -167,16 +175,33 @@ class Context {
       return {type: nm, typeParamSource: found.id}
     }
 
+    if (type.flags & TypeFlags.Index) {
+      return {type: "keyof", typeArgs: [this.getType((type as IndexType).type)]}
+    }
+
+    if (type.flags & TypeFlags.IndexedAccess) {
+      return {type: "indexed", typeArgs: [this.getType((type as IndexedAccessType).objectType),
+                                          this.getType((type as IndexedAccessType).indexType)]}
+    }
+
     if (type.flags & TypeFlags.Object) {
       let objFlags = (type as ObjectType).objectFlags
 
+      if (forSymbol && (forSymbol.flags & SymbolFlags.Class)) return this.getClassType(type as ObjectType)
+      if (forSymbol && (forSymbol.flags & SymbolFlags.Interface)) return this.getObjectType(type as ObjectType, forSymbol)
+
       if (!(objFlags & ObjectFlags.Reference)) {
-        if (type.symbol.flags & SymbolFlags.Class) return this.getClassType(type as ObjectType)
+        if (objFlags & ObjectFlags.Mapped) {
+          let decl = maybeDecl(type.symbol), innerType = decl && (decl as MappedTypeNode).type
+          return {type: "Object", typeArgs: [innerType ? this.getType(this.tc.getTypeAtLocation(innerType)) : {type: "any"}]}
+        }
 
         let call = type.getCallSignatures(), strIndex = type.getStringIndexType(), numIndex = type.getNumberIndexType()
         if (call.length) return this.addCallSignature(call[0], {type: "Function"})
-        if (strIndex) return {type: "Object", typeArgs: [this.extend("0").getType(strIndex)]}
-        if (numIndex) return {type: "Array", typeArgs: [this.extend("0").getType(numIndex)]}
+        if (strIndex) return {type: "Object", typeArgs: [this.getType(strIndex)]}
+        if (numIndex) return {type: "Array", typeArgs: [this.getType(numIndex)]}
+
+        
         if (objFlags & ObjectFlags.Anonymous) return this.getObjectType(type as ObjectType)
       }
 
@@ -192,14 +217,24 @@ class Context {
       return result
     }
 
-    throw new Error(`Unsupported type ${this.tc.typeToString(type)}`)
+    throw new Error(`Unsupported type ${this.tc.typeToString(type)} with flags ${type.flags}`)
   }
 
-  getObjectType(type: ObjectType): BindingType {
+  getObjectType(type: ObjectType, interfaceSymbol?: Symbol): BindingType {
+    let out: BindingType = {type: interfaceSymbol ? "interface" : "Object"}
+
     let call = type.getCallSignatures(), props = type.getProperties()
-    let out: BindingType = {type: type.symbol.flags & SymbolFlags.Interface ? "interface" : "Object"}
+    let intDecl = interfaceSymbol && maybeDecl(interfaceSymbol)
+    if (intDecl && isInterfaceDeclaration(intDecl)) {
+      let declared = intDecl.members.map(member => name(this.tc.getSymbolAtLocation(member.name!)!))
+      props = props.filter(prop => declared.includes(name(prop)))
+      if (intDecl.heritageClauses && intDecl.heritageClauses.length)
+        out.implements = intDecl.heritageClauses[0].types.map(node => this.getType(this.tc.getTypeAtLocation(node)))
+    }
+
     if (call.length) this.addCallSignature(call[0], out)
-    if (props.length) this.gatherSymbols(props, out.properties = {})
+    let propObj = this.gatherSymbols(props)
+    if (propObj) out.properties = propObj
     return out
   }
 
@@ -208,22 +243,28 @@ class Context {
     let classDecl = type.symbol.valueDeclaration
     if (!isClassLike(classDecl)) throw new Error("Class decl isn't class-like")
 
-    let definedProps: string[] = [], definedStatic: string[] = [], ctors: Node[] = []
+    let definedProps: string[] = [], definedStatic: string[] = [], ctors: Declaration[] = []
     for (let member of classDecl.members) {
       let symbol = this.tc.getSymbolAtLocation(member.name || member)!
-      if (member.kind == SyntaxKind.Constructor) ctors.push(member)
-      else if (getCombinedModifierFlags(member) & ModifierFlags.Static) definedStatic.push(name(symbol))
-      else definedProps.push(name(symbol))
+      if (member.kind == SyntaxKind.Constructor) {
+        ctors.push(member)
+        for (let param of (member as ConstructorDeclaration).parameters) {
+          if (getCombinedModifierFlags(param) & (ModifierFlags.Public | ModifierFlags.Readonly))
+            definedProps.push(name(this.tc.getSymbolAtLocation(param.name)!))
+        }
+      } else if (getCombinedModifierFlags(member) & ModifierFlags.Static) {
+        definedStatic.push(name(symbol))
+      } else {
+        definedProps.push(name(symbol))
+      }
     }
     
     for (let ctor of ctors) {
       let signature = type.getConstructSignatures().find(sig => sig.getDeclaration() == ctor)
-      if (!signature) continue
-      out.construct = {
-        ...this.addSourceData([ctor], {kind: "constructor", id: this.id + ".constructor"}),
-        type: "Function",
-        params: this.extend("constructor", ".").getParams(signature)
-      }
+      if (!signature || (getCombinedModifierFlags(ctor) & ModifierFlags.Private)) continue
+      let item = this.addSourceData([ctor], {kind: "constructor", id: this.id + ".constructor"})
+      if (item.description && /@internal\b/.test(item.description)) continue
+      out.construct = {...item, type: "Function", params: this.extend("constructor", ".").getParams(signature)}
       break
     }
 
@@ -231,11 +272,13 @@ class Context {
     let ctorType = type.getConstructSignatures()[0]
     if (ctorType) {
       let protoProps = ctorType.getReturnType().getProperties().filter(prop => definedProps.includes(name(prop)))
-      if (protoProps.length) this.gatherSymbols(protoProps, out.instanceProperties = {})
+      let instanceObj = this.gatherSymbols(protoProps)
+      if (instanceObj) out.instanceProperties = instanceObj
     }
 
     let props = type.getProperties().filter(prop => definedStatic.includes(name(prop)))
-    if (props.length) this.gatherSymbols(props, out.properties = {}, "^")
+    let propObj = this.gatherSymbols(props, undefined, "^")
+    if (propObj) out.properties = propObj
 
     if (classDecl.heritageClauses) {
       for (let heritage of classDecl.heritageClauses) {
@@ -251,23 +294,27 @@ class Context {
     return signature.getParameters().map(param => {
       let result = this.extend(param).getType(this.symbolType(param), param) as ParamType
       result.name = name(param)
-      let deflt: Node = param.valueDeclaration && (param.valueDeclaration as any).initializer
+      let decl = param.valueDeclaration as (ParameterDeclaration | undefined)
+      let deflt: Node = decl && (decl as any).initializer
       if (deflt) result.default = deflt.getSourceFile().text.slice(deflt.pos, deflt.end).trim()
       if (deflt || (param.flags & SymbolFlags.Optional)) result.optional = true
+      if (decl && decl.dotDotDotToken) result.rest = true
       return result
     })
   }
 
   getTypeParams(decl: Node): ParamType[] | null {
     let params = (decl as any).typeParameters as TypeParameterDeclaration[]
+    let cx: Context = this
     return !params ? null : params.map(param => {
-      let sym = this.tc.getSymbolAtLocation(param.name)!
+      let sym = cx.tc.getSymbolAtLocation(param.name)!
       let type: ParamType = {type: "typeparam", name: name(sym)}
       let constraint = getEffectiveConstraintOfTypeParameter(param), cType
-      if (constraint && (cType = this.tc.getTypeAtLocation(constraint)))
-        type.implements = [this.getType(cType)]
+      if (constraint && (cType = cx.tc.getTypeAtLocation(constraint)))
+        type.implements = [cx.getType(cType)]
       if (param.default)
         type.default = param.getSourceFile().text.slice(param.default.pos, param.default.end).trim()
+      cx = cx.addParams([{name: name(sym), id: cx.id}])
       return type
     })
   }
@@ -320,7 +367,7 @@ function decl(symbol: Symbol) {
 }
 
 function isBuiltin(path: string) {
-  return /typescript\/lib\/.*\.es\d+\.d\.ts$/.test(path)
+  return /typescript\/lib\/.*\.es\d+.*\.d\.ts$/.test(path)
 }
 
 function compareSymbols(a: Symbol, b: Symbol) {

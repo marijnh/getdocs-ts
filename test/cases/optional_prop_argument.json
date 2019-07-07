@@ -1,30 +1,17 @@
 {
   "X": {
+    "kind": "class",
     "type": "class",
-    "constructor": {
+    "construct": {
+      "kind": "constructor",
       "type": "Function",
       "params": [
         {
+          "name": "mirror",
           "type": "ReadonlyArray",
-          "typeParams": [
-            {
-              "type": "number",
-              "loc": {
-                "line": 2,
-                "column": 45,
-                "file": "test/cases/optional_prop_argument.ts"
-              }
-            }
-          ],
-          "loc": {
-            "line": 2,
-            "column": 14,
-            "file": "test/cases/optional_prop_argument.ts"
-          },
-          "id": "X.constructor^mirror",
+          "typeArgs": [{"type": "number"}],
           "optional": true,
-          "default": "empty",
-          "name": "mirror"
+          "default": "[]"
         }
       ],
       "loc": {
@@ -34,19 +21,11 @@
       },
       "id": "X.constructor"
     },
-    "properties": {
+    "instanceProperties": {
       "mirror": {
+        "kind": "property",
         "type": "ReadonlyArray",
-        "typeParams": [
-          {
-            "type": "number",
-            "loc": {
-              "line": 2,
-              "column": 45,
-              "file": "test/cases/optional_prop_argument.ts"
-            }
-          }
-        ],
+        "typeArgs": [{"type": "number"}],
         "loc": {
           "line": 2,
           "column": 14,
@@ -61,7 +40,6 @@
       "column": 0,
       "file": "test/cases/optional_prop_argument.ts"
     },
-    "id": "X",
-    "exported": true
+    "id": "X"
   }
 }

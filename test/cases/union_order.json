@@ -1,0 +1,30 @@
+{
+  "x": {
+    "kind": "variable",
+    "id": "x",
+    "loc": {
+      "file": "test/cases/union_order.ts",
+      "line": 1,
+      "column": 11
+    },
+    "type": "union",
+    "typeArgs": [
+      {"type": "number"},
+      {"type": "null"},
+      {"type": "Object",
+       "properties": {
+         "ok": {
+           "kind": "property",
+           "type": "boolean",
+           "id": "x.ok",
+           "loc": {
+             "file": "test/cases/union_order.ts",
+             "line": 1,
+             "column": 31
+           }
+         }
+       }},
+      {"type": "undefined"}
+    ]
+  }
+}
