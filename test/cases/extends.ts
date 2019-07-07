@@ -1,2 +1,2 @@
-export class ChangeDesc extends Mapping {
+export class ChangeDesc extends Error {
 }

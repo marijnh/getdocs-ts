@@ -1,20 +1,16 @@
 {
   "ChangeDesc": {
+    "kind": "class",
     "loc": {
       "line": 1,
       "column": 0,
       "file": "test/cases/extends.ts"
     },
     "extends": {
-      "loc": {
-        "line": 1,
-        "column": 32,
-        "file": "test/cases/extends.ts"
-      },
-      "type": "Mapping"
+      "type": "Error",
+      "typeSource": "node_modules/typescript/lib/lib.es5.d.ts"
     },
     "type": "class",
-    "exported": true,
     "id": "ChangeDesc"
   }
 }

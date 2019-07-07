@@ -105,7 +105,12 @@ class Context {
       cx = cx.addParams(params.map(p => ({name: p.name, id: cx.id})))
     }
     
-    return {...binding, ...kind == "typealias" ? cx.getTypeInner(type) : kind == "enum" ? this.getEnumType(symbol) : cx.getType(type)}
+    return {
+      ...binding,
+      ...kind == "typealias" ? cx.getTypeInner(type)
+        : kind == "enum" ? this.getEnumType(symbol)
+        : cx.getType(type, !["variable", "property", "method"].includes(kind))
+    }
   }
 
   getEnumType(symbol: Symbol): BindingType {
@@ -119,17 +124,17 @@ class Context {
     return {type: "enum", properties}
   }
 
-  getType(type: Type): BindingType {
+  getType(type: Type, define = false): BindingType {
     if (type.aliasSymbol) {
       let result: BindingType = {type: name(type.aliasSymbol)}
       if (type.aliasTypeArguments) result.typeArgs = type.aliasTypeArguments.map(arg => this.getType(arg))
       return result
     } else {
-      return this.getTypeInner(type)
+      return this.getTypeInner(type, define)
     }
   }
 
-  getTypeInner(type: Type): BindingType {
+  getTypeInner(type: Type, define = false): BindingType {
     if (type.flags & TypeFlags.Any) return {type: "any"}
     if (type.flags & TypeFlags.String) return {type: "string"}
     if (type.flags & TypeFlags.Number) return {type: "number"}
@@ -154,10 +159,18 @@ class Context {
     }
 
     if (type.flags & TypeFlags.Object) {
-      if ((type as ObjectType).objectFlags & ObjectFlags.Reference) {
-        let result: BindingType = {type: name(type.symbol), typeSource: this.nodePath(decl(type.symbol))}
+      // FIXME need a better way to distinguish when to use only a type name
+      let objFlags = (type as ObjectType).objectFlags
+      if (((objFlags & ObjectFlags.Reference) || (type.symbol && !define)) && !(objFlags & ObjectFlags.Anonymous)) {
+        let result: BindingType = {type: name(type.symbol)}
+        let typeSource = this.nodePath(decl(type.symbol))
+        if (!isBuiltin(typeSource)) result.typeSource = typeSource
         let typeArgs = (type as TypeReference).typeArguments
-        if (typeArgs && typeArgs.length) result.typeArgs = typeArgs.map(arg => this.getType(arg))
+        if (typeArgs) {
+          let targetParams = (type as TypeReference).target.typeParameters
+          let arity = targetParams ? targetParams.length : 0
+          if (arity > 0) result.typeArgs = typeArgs.slice(0, arity).map(arg => this.getType(arg))
+        }
         return result
       }
 
@@ -176,37 +189,55 @@ class Context {
     let call = type.getCallSignatures(), props = type.getProperties()
     // FIXME array/function types
     // FIXME figure out how type params vs type args are represented
-    if (type.symbol.flags & SymbolFlags.Class) {
-      let out: BindingType = {type: "class"}
-      let ctor = type.getConstructSignatures(), ctorNode
-      if (ctor.length && (ctorNode = ctor[0].getDeclaration())) {
-        out.construct = {...this.addSourceData([ctorNode], {kind: "constructor", id: this.id + "^constructor"}),
-                         type: "Function",
-                         params: this.getParams(ctor[0])}
-      }
-      props = props.filter(prop => prop.escapedName != "prototype")
-
-      // FIXME I haven't found a less weird way to get the instance type
-      let instanceType = ctor.length && ctor[0].getReturnType()
-      if (instanceType) {
-        let protoProps = instanceType.getProperties()
-        if (protoProps.length) this.gatherSymbols(protoProps, out.instanceProperties = {})
-      }
-      if (props.length) this.gatherSymbols(props, out.properties = {}, "^")
-      let classDecl = decl(type.symbol)
-      if (isClassLike(classDecl) && classDecl.heritageClauses) {
-        for (let heritage of classDecl.heritageClauses) {
-          let parents = heritage.types.map(node => this.getType(this.tc.getTypeAtLocation(node)))
-          if (heritage.token == SyntaxKind.ExtendsKeyword) out.extends = parents[0]
-          else out.implements = parents
-        }
-      }
-      return out
-    }
+    if (type.symbol.flags & SymbolFlags.Class) return this.getClassType(type)
 
     let out: BindingType = {type: type.symbol.flags & SymbolFlags.Interface ? "interface" : "Object"}
     if (call.length) this.addCallSignature(call[0], out)
     if (props.length) this.gatherSymbols(props, out.properties = {})
+    return out
+  }
+
+  getClassType(type: ObjectType): BindingType {
+    let out: BindingType = {type: "class"}
+    let classDecl = type.symbol.valueDeclaration
+    if (!isClassLike(classDecl)) throw new Error("Class decl isn't class-like")
+
+    let definedProps: string[] = [], definedStatic: string[] = [], ctors: Node[] = []
+    for (let member of classDecl.members) {
+      let symbol = this.tc.getSymbolAtLocation(member.name || member)!
+      if (member.kind == SyntaxKind.Constructor) ctors.push(member)
+      else if (getCombinedModifierFlags(member) & ModifierFlags.Static) definedStatic.push(name(symbol))
+      else definedProps.push(name(symbol))
+    }
+    
+    for (let ctor of ctors) {
+      let signature = type.getConstructSignatures().find(sig => sig.getDeclaration() == ctor)
+      if (!signature) continue
+      out.construct = {
+        ...this.addSourceData([ctor], {kind: "constructor", id: this.id + ".constructor"}),
+        type: "Function",
+        params: this.extend("constructor", ".").getParams(signature)
+      }
+      break
+    }
+
+    // FIXME I haven't found a less weird way to get the instance type
+    let ctorType = type.getConstructSignatures()[0]
+    if (ctorType) {
+      let protoProps = ctorType.getReturnType().getProperties().filter(prop => definedProps.includes(name(prop)))
+      if (protoProps.length) this.gatherSymbols(protoProps, out.instanceProperties = {})
+    }
+
+    let props = type.getProperties().filter(prop => definedStatic.includes(name(prop)))
+    if (props.length) this.gatherSymbols(props, out.properties = {}, "^")
+
+    if (classDecl.heritageClauses) {
+      for (let heritage of classDecl.heritageClauses) {
+        let parents = heritage.types.map(node => this.getType(this.tc.getTypeAtLocation(node)))
+        if (heritage.token == SyntaxKind.ExtendsKeyword) out.extends = parents[0]
+        else out.implements = parents
+      }
+    }
     return out
   }
 
@@ -280,6 +311,10 @@ function decl(symbol: Symbol) {
 
 function hasDecl(symbol: Symbol) {
   return !!symbol.valueDeclaration || symbol.declarations.length > 0
+}
+
+function isBuiltin(path: string) {
+  return /typescript\/lib\/.*\.es\d+\.d\.ts$/.test(path)
 }
 
 function getComment(node: Node) {

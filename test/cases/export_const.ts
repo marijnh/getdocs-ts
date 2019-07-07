@@ -1,1 +1,1 @@
-export const moveCharLeft: Command = view => moveSelection(view, "left", "character")
+export const moveCharLeft: RegExp = /x/

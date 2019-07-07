@@ -1,100 +1,66 @@
 {
   "StateField": {
+    "kind": "class",
     "type": "class",
-    "constructor": {
+    "construct": {
+      "kind": "constructor",
       "type": "Function",
       "params": [
         {
+          "name": "__0",
           "type": "Object",
           "properties": {
             "init": {
+              "kind": "property",
               "type": "Function",
               "params": [
                 {
-                  "type": "EditorState",
-                  "loc": {
-                    "line": 3,
-                    "column": 11,
-                    "file": "test/cases/object_pattern.ts"
-                  },
-                  "id": "StateField.constructor^init^state",
+                  "type": "Array",
+                  "typeArgs": [{"type": "number"}],
                   "name": "state"
                 }
               ],
               "returns": {
                 "type": "T",
-                "typeParamUsage": true,
-                "loc": {
-                  "line": 3,
-                  "column": 34,
-                  "file": "test/cases/object_pattern.ts"
-                },
-                "id": "StateField.constructor^init^returns"
+                "typeParamSource": "StateField"
               },
               "loc": {
                 "line": 3,
                 "column": 4,
                 "file": "test/cases/object_pattern.ts"
               },
-              "id": "StateField.constructor^init"
+              "id": "StateField.constructor^__0.init"
             },
             "apply": {
+              "kind": "property",
               "type": "Function",
               "params": [
                 {
-                  "type": "Transaction",
-                  "loc": {
-                    "line": 4,
-                    "column": 12,
-                    "file": "test/cases/object_pattern.ts"
-                  },
-                  "id": "StateField.constructor^apply^tr",
+                  "type": "Object",
                   "name": "tr"
                 },
                 {
                   "type": "T",
-                  "typeParamUsage": true,
-                  "loc": {
-                    "line": 4,
-                    "column": 29,
-                    "file": "test/cases/object_pattern.ts"
-                  },
-                  "id": "StateField.constructor^apply^value",
+                  "typeParamSource": "StateField",
                   "name": "value"
                 },
                 {
-                  "type": "EditorState",
-                  "loc": {
-                    "line": 4,
-                    "column": 39,
-                    "file": "test/cases/object_pattern.ts"
-                  },
-                  "id": "StateField.constructor^apply^newState",
+                  "type": "Array",
+                  "typeArgs": [{"type": "number"}],
                   "name": "newState"
                 }
               ],
               "returns": {
                 "type": "T",
-                "typeParamUsage": true,
-                "loc": {
-                  "line": 4,
-                  "column": 65,
-                  "file": "test/cases/object_pattern.ts"
-                },
-                "id": "StateField.constructor^apply^returns"
+                "typeParamSource": "StateField"
               },
               "loc": {
                 "line": 4,
                 "column": 4,
                 "file": "test/cases/object_pattern.ts"
               },
-              "id": "StateField.constructor^apply"
+              "id": "StateField.constructor^__0.apply"
             }
-          },
-          "loc": {
-            "line": 2,
-            "column": 14,
-            "file": "test/cases/object_pattern.ts"
           }
         }
       ],
@@ -107,12 +73,8 @@
     },
     "typeParams": [
       {
-        "type": "T",
-        "loc": {
-          "line": 1,
-          "column": 24,
-          "file": "test/cases/object_pattern.ts"
-        }
+        "name": "T",
+        "type": "typeparam"
       }
     ],
     "loc": {
@@ -120,7 +82,6 @@
       "column": 0,
       "file": "test/cases/object_pattern.ts"
     },
-    "id": "StateField",
-    "exported": true
+    "id": "StateField"
   }
 }

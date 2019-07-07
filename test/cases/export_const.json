@@ -1,12 +1,13 @@
 {
   "moveCharLeft": {
-    "type": "Command",
+    "kind": "variable",
+    "type": "RegExp",
+    "typeSource": "node_modules/typescript/lib/lib.es5.d.ts",
     "loc": {
       "line": 1,
       "column": 13,
       "file": "test/cases/export_const.ts"
     },
-    "id": "moveCharLeft",
-    "exported": true
+    "id": "moveCharLeft"
   }
 }
