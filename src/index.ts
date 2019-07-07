@@ -6,7 +6,8 @@ import {
   TypeChecker,
   Symbol, SymbolFlags, ModifierFlags,
   Type, TypeFlags, ObjectType, TypeReference, ObjectFlags, LiteralType, UnionOrIntersectionType, Signature,
-  Node, SyntaxKind, TypeParameterDeclaration, EnumDeclaration, VariableDeclaration, UnionOrIntersectionTypeNode
+  Node, SyntaxKind, TypeParameterDeclaration, UnionOrIntersectionTypeNode,
+  Declaration, EnumDeclaration, VariableDeclaration
 } from "typescript"
 
 const {resolve, dirname, relative} = require("path")
@@ -66,7 +67,7 @@ class Context {
   }
 
   gatherSymbols(symbols: readonly Symbol[], target: {[name: string]: any}, sep = ".") {
-    for (const symbol of symbols) {
+    for (const symbol of symbols.slice().sort(compareSymbols)) {
       let item = this.extend(symbol, sep).itemForSymbol(symbol)
       if (item) target[name(symbol)] = item
     }
@@ -89,7 +90,7 @@ class Context {
     else throw new Error(`Can not determine a kind for symbol ${symbol.escapedName} with flags ${symbol.flags}`)
 
     let binding: Binding = {kind, id: this.id}, type = this.symbolType(symbol)
-    if (hasDecl(symbol)) this.addSourceData(symbol.declarations, binding)
+    if (maybeDecl(symbol)) this.addSourceData(symbol.declarations, binding)
 
     let mods = symbol.valueDeclaration ? getCombinedModifierFlags(symbol.valueDeclaration) : 0
     if (mods & ModifierFlags.Abstract) binding.abstract = true
@@ -148,9 +149,9 @@ class Context {
 
     // FIXME TypeScript seems to reverse the type args to unions. Check whether this is reliable, and re-reverse them if so
     if (type.flags & TypeFlags.UnionOrIntersection) {
-      let types = (type as UnionOrIntersectionType).types
-      if (forSymbol && hasDecl(forSymbol)) {
-        let typeNode = (decl(forSymbol) as VariableDeclaration).type
+      let types = (type as UnionOrIntersectionType).types, decl
+      if (forSymbol && (decl = maybeDecl(forSymbol))) {
+        let typeNode = (decl as VariableDeclaration).type
         if (typeNode && (typeNode.kind == SyntaxKind.UnionType || typeNode.kind == SyntaxKind.IntersectionType))
           types = (typeNode as UnionOrIntersectionTypeNode).types.map(node => this.tc.getTypeAtLocation(node))
       }
@@ -308,19 +309,26 @@ class Context {
 
 function name(symbol: Symbol) { return symbol.escapedName as string }
 
+function maybeDecl(symbol: Symbol): Declaration | undefined {
+  return symbol.valueDeclaration || symbol.declarations[0]
+}
+
 function decl(symbol: Symbol) {
-  if (!symbol.declarations) console.log(symbol)
-  let result = symbol.valueDeclaration || symbol.declarations[0]
+  let result = maybeDecl(symbol)
   if (!result) throw new Error(`No declaration available for symbole ${symbol.escapedName}`)
   return result
 }
 
-function hasDecl(symbol: Symbol) {
-  return !!symbol.valueDeclaration || symbol.declarations.length > 0
-}
-
 function isBuiltin(path: string) {
   return /typescript\/lib\/.*\.es\d+\.d\.ts$/.test(path)
+}
+
+function compareSymbols(a: Symbol, b: Symbol) {
+  let da = maybeDecl(a), db = maybeDecl(b)
+  if (!da) return db ? -1 : 0
+  if (!db) return 1
+  let fa = da.getSourceFile().fileName, fb = db.getSourceFile().fileName
+  return fa == fb ? da.pos - db.pos : fa < fb ? -1 : 1
 }
 
 function getComment(node: Node) {
