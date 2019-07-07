@@ -6,13 +6,13 @@ import {
   TypeChecker,
   Symbol, SymbolFlags, ModifierFlags,
   Type, TypeFlags, ObjectType, TypeReference, ObjectFlags, LiteralType, UnionOrIntersectionType, Signature,
-  Node, SyntaxKind, TypeParameterDeclaration, EnumDeclaration,
+  Node, SyntaxKind, TypeParameterDeclaration, EnumDeclaration, VariableDeclaration, UnionOrIntersectionTypeNode
 } from "typescript"
 
 const {resolve, dirname, relative} = require("path")
 
 type BindingKind = "class" | "enum" | "enummember" | "interface" | "variable" | "property" | "method" |
-  "typealias" | "typeparam" | "constructor" | "parameter"
+  "typealias" | "typeparam" | "constructor"
 
 type Loc = {file: string, line: number, column: number}
 
@@ -107,9 +107,9 @@ class Context {
     
     return {
       ...binding,
-      ...kind == "typealias" ? cx.getTypeInner(type)
+      ...kind == "typealias" ? cx.getTypeInner(type, symbol)
         : kind == "enum" ? this.getEnumType(symbol)
-        : cx.getType(type, !["variable", "property", "method"].includes(kind))
+        : cx.getType(type, symbol)
     }
   }
 
@@ -124,17 +124,17 @@ class Context {
     return {type: "enum", properties}
   }
 
-  getType(type: Type, define = false): BindingType {
+  getType(type: Type, forSymbol?: Symbol): BindingType {
     if (type.aliasSymbol) {
       let result: BindingType = {type: name(type.aliasSymbol)}
       if (type.aliasTypeArguments) result.typeArgs = type.aliasTypeArguments.map(arg => this.getType(arg))
       return result
     } else {
-      return this.getTypeInner(type, define)
+      return this.getTypeInner(type, forSymbol)
     }
   }
 
-  getTypeInner(type: Type, define = false): BindingType {
+  getTypeInner(type: Type, forSymbol?: Symbol): BindingType {
     if (type.flags & TypeFlags.Any) return {type: "any"}
     if (type.flags & TypeFlags.String) return {type: "string"}
     if (type.flags & TypeFlags.Number) return {type: "number"}
@@ -147,9 +147,17 @@ class Context {
     if (type.flags & TypeFlags.Never) return {type: "never"}
 
     // FIXME TypeScript seems to reverse the type args to unions. Check whether this is reliable, and re-reverse them if so
-    if (type.flags & TypeFlags.UnionOrIntersection) return {
-      type: type.flags & TypeFlags.Union ? "union" : "intersection",
-      typeArgs: (type as UnionOrIntersectionType).types.map(type => this.getType(type))
+    if (type.flags & TypeFlags.UnionOrIntersection) {
+      let types = (type as UnionOrIntersectionType).types
+      if (forSymbol && hasDecl(forSymbol)) {
+        let typeNode = (decl(forSymbol) as VariableDeclaration).type
+        if (typeNode && (typeNode.kind == SyntaxKind.UnionType || typeNode.kind == SyntaxKind.IntersectionType))
+          types = (typeNode as UnionOrIntersectionTypeNode).types.map(node => this.tc.getTypeAtLocation(node))
+      }
+      return {
+        type: type.flags & TypeFlags.Union ? "union" : "intersection",
+        typeArgs: types.map(type => this.getType(type))
+      }
     }
 
     if (type.flags & TypeFlags.TypeParameter) {
@@ -159,38 +167,35 @@ class Context {
     }
 
     if (type.flags & TypeFlags.Object) {
-      // FIXME need a better way to distinguish when to use only a type name
       let objFlags = (type as ObjectType).objectFlags
-      if (((objFlags & ObjectFlags.Reference) || (type.symbol && !define)) && !(objFlags & ObjectFlags.Anonymous)) {
-        let result: BindingType = {type: name(type.symbol)}
-        let typeSource = this.nodePath(decl(type.symbol))
-        if (!isBuiltin(typeSource)) result.typeSource = typeSource
-        let typeArgs = (type as TypeReference).typeArguments
-        if (typeArgs) {
-          let targetParams = (type as TypeReference).target.typeParameters
-          let arity = targetParams ? targetParams.length : 0
-          if (arity > 0) result.typeArgs = typeArgs.slice(0, arity).map(arg => this.getType(arg))
-        }
-        return result
+
+      if (!(objFlags & ObjectFlags.Reference)) {
+        if (type.symbol.flags & SymbolFlags.Class) return this.getClassType(type as ObjectType)
+
+        let call = type.getCallSignatures(), strIndex = type.getStringIndexType(), numIndex = type.getNumberIndexType()
+        if (call.length) return this.addCallSignature(call[0], {type: "Function"})
+        if (strIndex) return {type: "Object", typeArgs: [this.extend("0").getType(strIndex)]}
+        if (numIndex) return {type: "Array", typeArgs: [this.extend("0").getType(numIndex)]}
+        if (objFlags & ObjectFlags.Anonymous) return this.getObjectType(type as ObjectType)
       }
 
-      // FIXME signatures with both index/call stuff and properties
-      let call = type.getCallSignatures(), strIndex = type.getStringIndexType(), numIndex = type.getNumberIndexType()
-      if (call.length) return this.addCallSignature(call[0], {type: "Function"})
-      if (strIndex) return {type: "Object", typeArgs: [this.extend("0").getType(strIndex)]}
-      if (numIndex) return {type: "Array", typeArgs: [this.extend("0").getType(numIndex)]}
-      return this.getTypeDesc(type as ObjectType)
+      let result: BindingType = {type: name(type.symbol)}
+      let typeSource = this.nodePath(decl(type.symbol))
+      if (!isBuiltin(typeSource)) result.typeSource = typeSource
+      let typeArgs = (type as TypeReference).typeArguments
+      if (typeArgs) {
+        let targetParams = (type as TypeReference).target.typeParameters
+        let arity = targetParams ? targetParams.length : 0
+        if (arity > 0) result.typeArgs = typeArgs.slice(0, arity).map(arg => this.getType(arg))
+      }
+      return result
     }
 
     throw new Error(`Unsupported type ${this.tc.typeToString(type)}`)
   }
 
-  getTypeDesc(type: ObjectType): BindingType {
+  getObjectType(type: ObjectType): BindingType {
     let call = type.getCallSignatures(), props = type.getProperties()
-    // FIXME array/function types
-    // FIXME figure out how type params vs type args are represented
-    if (type.symbol.flags & SymbolFlags.Class) return this.getClassType(type)
-
     let out: BindingType = {type: type.symbol.flags & SymbolFlags.Interface ? "interface" : "Object"}
     if (call.length) this.addCallSignature(call[0], out)
     if (props.length) this.gatherSymbols(props, out.properties = {})
@@ -243,7 +248,7 @@ class Context {
 
   getParams(signature: Signature): ParamType[] {
     return signature.getParameters().map(param => {
-      let result = this.extend(param).getType(this.symbolType(param)) as ParamType
+      let result = this.extend(param).getType(this.symbolType(param), param) as ParamType
       result.name = name(param)
       let deflt: Node = param.valueDeclaration && (param.valueDeclaration as any).initializer
       if (deflt) result.default = deflt.getSourceFile().text.slice(deflt.pos, deflt.end).trim()
@@ -269,7 +274,7 @@ class Context {
   addCallSignature(signature: Signature, target: BindingType) {
     target.params = this.getParams(signature)
     let ret = signature.getReturnType()
-    if (!(ret.flags & TypeFlags.Void)) target.returns = this.getType(ret)
+    if (!(ret.flags & TypeFlags.Void)) target.returns = this.extend("returns").getType(ret)
     return target
   }
 
@@ -304,6 +309,7 @@ class Context {
 function name(symbol: Symbol) { return symbol.escapedName as string }
 
 function decl(symbol: Symbol) {
+  if (!symbol.declarations) console.log(symbol)
   let result = symbol.valueDeclaration || symbol.declarations[0]
   if (!result) throw new Error(`No declaration available for symbole ${symbol.escapedName}`)
   return result

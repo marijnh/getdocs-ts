@@ -1,32 +1,43 @@
 {
   "x": {
-    "exported": true,
+    "kind": "variable",
     "type": "Function",
     "returns": {
       "type": "union",
-      "typeParams": [
+      "typeArgs": [
+        {
+          "type": "null"
+        },
         {
           "type": "Object",
           "properties": {
             "ch": {
+              "kind": "property",
               "type": "string",
+              "loc": {
+                  "column": 15,
+                  "file": "test/cases/infer_object_type.ts",
+                  "line": 4
+              },
               "id": "x^returns.ch"
             },
             "a": {
+              "kind": "property",
               "type": "number",
+              "loc": {
+                  "column": 22,
+                  "file": "test/cases/infer_object_type.ts",
+                  "line": 4
+              },
               "id": "x^returns.a"
             }
           }
-        },
-        {
-          "type": "null"
         }
       ]
     },
     "params": [
       {
         "type": "string",
-        "id": "x.y",
         "name": "y"
       }
     ],

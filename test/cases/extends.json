@@ -7,8 +7,7 @@
       "file": "test/cases/extends.ts"
     },
     "extends": {
-      "type": "Error",
-      "typeSource": "node_modules/typescript/lib/lib.es5.d.ts"
+      "type": "Error"
     },
     "type": "class",
     "id": "ChangeDesc"

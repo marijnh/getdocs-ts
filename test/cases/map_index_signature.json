@@ -29,11 +29,9 @@
             "type": "ReadonlyArray",
             "typeArgs": [
               {
-                "type": "RegExp",
-                "typeSource": "node_modules/typescript/lib/lib.es5.d.ts"
+                "type": "RegExp"
               }
             ],
-            "typeSource": "node_modules/typescript/lib/lib.es5.d.ts",
             "name": "field"
           }
         ],

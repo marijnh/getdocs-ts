@@ -2,7 +2,6 @@
   "X": {
     "kind": "class",
     "type": "class",
-    "source": "infer_field.ts",
     "properties": {
       "y": {
         "kind": "property",

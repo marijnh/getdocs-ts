@@ -18,8 +18,7 @@
     ],
     "implements": [
       {
-        "type": "RegExp",
-        "typeSource": "node_modules/typescript/lib/lib.es5.d.ts"
+        "type": "RegExp"
       }
     ],
     "loc": {
