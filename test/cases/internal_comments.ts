@@ -1,9 +1,9 @@
 export class X {
-  // @internal
-  // comment
+  /// @internal
+  /// comment
   f() {
   }
 
-  // actual comment
+  /// actual comment
   g() {}
 }

@@ -1,7 +1,7 @@
 export class X {
-  // comment
+  /// comment
   private f() {}
 
-  // actual comment
+  /// actual comment
   g() {}
 }

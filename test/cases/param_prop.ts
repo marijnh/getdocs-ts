@@ -1,6 +1,6 @@
 export class Line {
   constructor(
-    // Doc comment
+    /// Doc comment
     readonly start: number
   ) {}
 }

@@ -365,8 +365,8 @@ class Context {
     if (comments) {
       let comment = ""
       for (let node of nodes) {
-        let c = getComment(node.kind == SyntaxKind.VariableDeclaration ? node.parent.parent : node)
-        if (c) comment += (comment ? " " : "") + c
+        let c = getComments(node.kind == SyntaxKind.VariableDeclaration ? node.parent.parent : node)
+        if (c) comment += (comment ? "\n\n" : "") + c
       }
       if (comment) target.description = comment
     }
@@ -416,7 +416,7 @@ function compareSymbols(a: Symbol, b: Symbol) {
   return fa == fb ? da.pos - db.pos : fa < fb ? -1 : 1
 }
 
-function getComment(node: Node) {
+function getComments(node: Node) {
   let {pos} = node
   const sourceFile = node.getSourceFile()
   if (!sourceFile) return "" // Synthetic node
@@ -427,30 +427,32 @@ function getComment(node: Node) {
     if (ch === 47) { // slash
       const nextCh = text.charCodeAt(pos + 1)
       if (nextCh === 47) {
-        if (blankLine) {
-          blankLine = false
-          result = ""
-        }
-        let start = -1
-        pos += 2
+        let start = -1, doc = text.charCodeAt(pos + 2) == 47
+        pos += doc ? 3 : 2
         for (; pos < text.length; ++pos) {
           const ch = text.charCodeAt(pos)
           if (start < 0 && !isWhiteSpaceSingleLine(ch)) start = pos
           if (isLineBreak(ch)) break
         }
-        if (start > 0) {
+        if (doc && start > 0) {
+          if (blankLine) {
+            blankLine = false
+            if (result) result += "\n\n"
+          }
           let line = text.substr(start, pos - start)
           result += (result && !/\s$/.test(result) ? " " : "") + line
         }
       } else if (nextCh === 42) { // asterisk
-        if (blankLine) {
-          blankLine = false
-          result = ""
-        }
-        const start = pos + 2
+        const doc = text.charCodeAt(pos + 2) == 42, start = pos + (doc ? 3 : 2)
         for (pos = start; pos < text.length; ++pos)
           if (text.charCodeAt(pos) === 42 /* asterisk */ && text.charCodeAt(pos + 1) === 47 /* slash */) break
-        result += text.substr(start, pos - start)
+        if (doc) {
+          if (blankLine) {
+            blankLine = false
+            if (result) result += "\n\n"
+          }
+          result += text.substr(start, pos - start).trim()
+        }
         pos += 2
       }
     } else if (isWhiteSpaceLike(ch)) {

@@ -1,7 +1,7 @@
 export enum MapMode  {
   Simple,
   TrackDel,
-  // (Before)
+  /// (Before)
   TrackBefore,
   TrackAfter
 }

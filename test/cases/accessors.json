@@ -24,7 +24,7 @@
           "file": "test/cases/accessors.ts"
         },
         "id": "X.y",
-        "description": "This is get y This is set y"
+        "description": "This is get y\n\nThis is set y"
       }
     },
     "properties": {

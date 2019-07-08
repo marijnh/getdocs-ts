@@ -24,6 +24,17 @@
           "column": 2
         },
         "id": "X.x"
+      },
+      "y": {
+        "kind": "property",
+        "type": "boolean",
+        "description": "Several comments\n\nWith blank lines\n\nBetween them",
+        "loc": {
+          "file": "test/cases/comments.ts",
+          "line": 12,
+          "column": 2
+        },
+        "id": "X.y"
       }
     },
     "loc": {

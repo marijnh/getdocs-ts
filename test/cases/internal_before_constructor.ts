@@ -1,7 +1,7 @@
 export abstract class Text {
-  // @internal
+  /// @internal
   abstract firstLineLength(): number
 
-  // @internal
+  /// @internal
   protected constructor() {}
 }
