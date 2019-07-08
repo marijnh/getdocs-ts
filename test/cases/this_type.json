@@ -20,11 +20,8 @@
         "params": [
           {
             "name": "skip",
-            "type": "union",
-            "typeArgs": [
-              {"type": "undefined"},
-              {"type": "number"}
-            ],
+            "type": "number",
+            "optional": true,
             "id": "TextIterator.next^skip",
             "loc": {
               "column": 7,

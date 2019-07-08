@@ -303,17 +303,21 @@ class Context {
 
   getParams(signature: Signature): Param[] {
     return signature.getParameters().map(param => {
-      let cx = this.extend(param)
+      let cx = this.extend(param), optional = false, type = cx.symbolType(param)
+      let decl = param.valueDeclaration as (ParameterDeclaration | undefined)
+      if (decl && decl.questionToken) {
+        optional = true
+        type = this.tc.getNonNullableType(type)
+      }
       let result: Param = {
         name: name(param),
         id: cx.id,
-        ...cx.getType(cx.symbolType(param), param)
+        ...cx.getType(type, param)
       }
-      let decl = param.valueDeclaration as (ParameterDeclaration | undefined)
       if (decl) this.addSourceData([decl], result, !(getCombinedModifierFlags(decl) & (ModifierFlags.Public | ModifierFlags.Readonly)))
       let deflt: Node = decl && (decl as any).initializer
       if (deflt) result.default = deflt.getSourceFile().text.slice(deflt.pos, deflt.end).trim()
-      if (deflt || (param.flags & SymbolFlags.Optional)) result.optional = true
+      if (deflt || optional) result.optional = true
       if (decl && decl.dotDotDotToken) result.rest = true
       return result
     })
