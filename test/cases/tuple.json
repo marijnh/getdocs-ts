@@ -1,0 +1,13 @@
+{
+  "x": {
+    "kind": "variable",
+    "type": "tuple",
+    "typeArgs": [{"type": "number"}, {"type": "boolean"}],
+    "id": "x",
+    "loc": {
+      "file": "test/cases/tuple.ts",
+      "line": 1,
+      "column": 13
+    }
+  }
+}

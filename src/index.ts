@@ -189,7 +189,13 @@ class Context {
       if (forSymbol && (forSymbol.flags & SymbolFlags.Class)) return this.getClassType(type as ObjectType)
       if (forSymbol && (forSymbol.flags & SymbolFlags.Interface)) return this.getObjectType(type as ObjectType, forSymbol)
 
-      if (!((objFlags & ObjectFlags.Reference) && this.isAvailable(type.symbol))) {
+      if (!((objFlags & ObjectFlags.Reference) && type.symbol && this.isAvailable(type.symbol))) {
+        // Tuples have a weird structure where they point as references at a generic tuple type
+        if (objFlags & ObjectFlags.Reference) {
+          let target = (type as TypeReference).target
+          if ((target.flags & TypeFlags.Object) && ((target as ObjectType).objectFlags & ObjectFlags.Tuple))
+            return {type: "tuple", typeArgs: (type as TypeReference).typeArguments!.map(t => this.getType(t))}
+        }
         if (objFlags & ObjectFlags.Mapped) {
           let decl = maybeDecl(type.symbol), innerType = decl && (decl as MappedTypeNode).type
           return {type: "Object", typeArgs: [innerType ? this.getType(this.tc.getTypeAtLocation(innerType)) : {type: "any"}]}

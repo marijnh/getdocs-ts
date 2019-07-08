@@ -1,0 +1,14 @@
+{
+  "x": {
+    "kind": "variable",
+    "type": "ReadonlyArray",
+    "typeArgs": [{"type": "number"}],
+    "id": "x",
+    "loc": {
+      "file": "test/cases/readonlyarray.ts",
+      "line": 1,
+      "column": 11
+    }
+  }
+}
+      
