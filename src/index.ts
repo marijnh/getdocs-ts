@@ -22,8 +22,6 @@ type Binding = {
   id: string,
   description?: string,
   loc?: Loc,
-  typeParams?: readonly Param[],
-  exported?: boolean,
   abstract?: boolean,
   readonly?: boolean,
 }
@@ -35,6 +33,7 @@ type BindingType = {
   properties?: {[name: string]: Item},
   instanceProperties?: {[name: string]: Item},
   typeArgs?: readonly BindingType[],
+  typeParams?: readonly Param[],
   params?: readonly Param[],
   returns?: BindingType,
   extends?: BindingType,
@@ -59,14 +58,14 @@ class Context {
               readonly exports: readonly Symbol[],
               readonly basedir: string,
               readonly id: string,
-              readonly typeParams: {name: string, id: string}[]) {}
+              readonly typeParams: Param[]) {}
 
   extend(symbol: Symbol | string, sep = "^") {
     let nm = typeof symbol == "string" ? symbol : name(symbol)
     return new Context(this.tc, this.exports, this.basedir, this.id ? this.id + sep + nm : nm, this.typeParams)
   }
 
-  addParams(typeParams: {name: string, id: string}[]) {
+  addParams(typeParams: Param[]) {
     return new Context(this.tc, this.exports, this.basedir, this.id, typeParams.concat(this.typeParams))
   }
 
@@ -103,7 +102,7 @@ class Context {
     else throw new Error(`Can not determine a kind for symbol ${symbol.escapedName} with flags ${symbol.flags}`)
 
     let binding: Binding = {kind, id: this.id}, type = this.symbolType(symbol)
-    if (maybeDecl(symbol)) this.addSourceData(symbol.declarations, binding)
+    this.addSourceData(symbol.declarations || [], binding)
 
     let mods = symbol.valueDeclaration ? getCombinedModifierFlags(symbol.valueDeclaration) : 0
     if (mods & ModifierFlags.Abstract) binding.abstract = true
@@ -114,17 +113,11 @@ class Context {
 
     let cx: Context = this
     let params = this.getTypeParams(decl(symbol))
-    if (params) {
-      binding.typeParams = params
-      cx = cx.addParams(params.map(p => ({name: p.name, id: p.id})))
-    }
-    
-    return {
-      ...binding,
-      ...kind == "typealias" ? cx.getTypeInner(type, symbol)
-        : kind == "enum" ? this.getEnumType(symbol)
-        : cx.getType(type, symbol)
-    }
+    if (params) cx = cx.addParams(params)
+    let typeDesc = kind == "enum" ? cx.getEnumType(symbol) : cx.getType(type, symbol)
+    if (params) typeDesc.typeParams = params
+
+    return {...binding, ...typeDesc}
   }
 
   getEnumType(symbol: Symbol): BindingType {
@@ -139,12 +132,9 @@ class Context {
   }
 
   getType(type: Type, forSymbol?: Symbol): BindingType {
-    if (type.aliasSymbol && this.isAvailable(type.aliasSymbol))
+    if (type.aliasSymbol && !(forSymbol && (forSymbol.flags & SymbolFlags.TypeAlias)) && this.isAvailable(type.aliasSymbol))
       return this.getReferenceType(type.aliasSymbol, type.aliasTypeArguments)
-    return this.getTypeInner(type, forSymbol)
-  }
 
-  getTypeInner(type: Type, forSymbol?: Symbol): BindingType {
     if (type.flags & TypeFlags.Any) return {type: "any"}
     if (type.flags & TypeFlags.String) return {type: "string"}
     if (type.flags & TypeFlags.Number) return {type: "number"}
@@ -334,15 +324,21 @@ class Context {
         result.implements = [localCx.getType(type)]
       if (param.default)
         result.default = param.getSourceFile().text.slice(param.default.pos, param.default.end).trim()
-      cx = cx.addParams([{name: name(sym), id: localCx.id}])
+      cx = cx.addParams([result])
       return result
     })
   }
 
   addCallSignature(signature: Signature, target: BindingType) {
-    target.params = this.getParams(signature)
+    let cx: Context = this
+    let typeParams = signature.typeParameters && this.getTypeParams(signature.getDeclaration())
+    if (typeParams) {
+      cx = cx.addParams(typeParams)
+      target.typeParams = typeParams
+    }
+    target.params = cx.getParams(signature)
     let ret = signature.getReturnType()
-    if (!(ret.flags & TypeFlags.Void)) target.returns = this.extend("returns").getType(ret)
+    if (!(ret.flags & TypeFlags.Void)) target.returns = cx.extend("returns").getType(ret)
     return target
   }
 

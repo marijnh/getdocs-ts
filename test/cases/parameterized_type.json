@@ -1,0 +1,45 @@
+{
+  "makeID": {
+    "kind": "function",
+    "type": "Function",
+    "loc": {
+      "file": "test/cases/parameterized_type.ts",
+      "line": 1,
+      "column": 0
+    },
+    "id": "makeID",
+    "params": [],
+    "returns": {
+      "type": "Function",
+      "typeParams": [
+        {
+          "name": "T",
+          "type": "typeparam",
+          "id": "makeID^returns^T",
+          "loc": {
+            "file": "test/cases/parameterized_type.ts",
+            "line": 1,
+            "column": 27
+          }
+        }
+      ],
+      "params": [
+        {
+          "name": "x",
+          "type": "T",
+          "typeParamSource": "makeID^returns^T",
+          "id": "makeID^returns^x",
+          "loc": {
+            "file": "test/cases/parameterized_type.ts",
+            "line": 1,
+            "column": 30
+          }
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "typeParamSource": "makeID^returns^T"
+      }
+    }
+  }
+}
