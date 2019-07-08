@@ -8,16 +8,34 @@
     "params": [
       {
         "type": "number",
-        "name": "from"
+        "name": "from",
+        "id": "RangeFilter^from",
+        "loc": {
+          "column": 30,
+          "file": "test/cases/type_alias.ts",
+          "line": 1
+        }
       },
       {
         "type": "number",
-        "name": "to"
+        "name": "to",
+        "id": "RangeFilter^to",
+        "loc": {
+          "column": 44,
+          "file": "test/cases/type_alias.ts",
+          "line": 1
+        }
       },
       {
         "type": "T",
-        "typeParamSource": "RangeFilter",
-        "name": "value"
+        "typeParamSource": "RangeFilter^T",
+        "name": "value",
+        "id": "RangeFilter^value",
+        "loc": {
+          "column": 56,
+          "file": "test/cases/type_alias.ts",
+          "line": 1
+        }
       }
     ],
     "loc": {
@@ -28,7 +46,13 @@
     "typeParams": [
       {
         "name": "T",
-        "type": "typeparam"
+        "type": "typeparam",
+        "id": "RangeFilter^T",
+        "loc": {
+          "column": 24,
+          "file": "test/cases/type_alias.ts",
+          "line": 1
+        }
       }
     ],
     "loc": {

@@ -31,7 +31,13 @@
       {
         "name": "spec",
         "type": "Config",
-        "typeSource": "test/cases/infer_instantiation.ts"
+        "typeSource": "test/cases/infer_instantiation.ts",
+        "id": "f^spec",
+        "loc": {
+          "column": 73,
+          "file": "test/cases/infer_instantiation.ts",
+          "line": 1
+        }
       }
     ],
     "loc": {

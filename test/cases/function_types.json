@@ -22,8 +22,8 @@
             "properties": {
               "fromJSON": {
                 "loc": {
-                  "line": 2,
-                  "column": 31,
+                  "line": 4,
+                  "column": 17,
                   "file": "test/cases/function_types.ts"
                 },
                 "kind": "property",
@@ -31,8 +31,14 @@
                 "params": [
                   {
                     "type": "any",
-                    "name": "json"
-                  }
+                    "name": "json",
+                    "id": "ChangeSet^fromJSON^ChangeType.fromJSON^json",
+                    "loc": {
+                      "column": 28,
+                      "file": "test/cases/function_types.ts",
+                      "line": 4
+                    }
+                   }
                 ],
                 "returns": {
                   "type": "ChangeSet",
@@ -41,11 +47,25 @@
                 "id": "ChangeSet^fromJSON^ChangeType.fromJSON"
               }
             },
-            "name": "ChangeType"
+            "name": "ChangeType",
+            "description": "The change type",
+            "id": "ChangeSet^fromJSON^ChangeType",
+            "loc": {
+              "column": 4,
+              "file": "test/cases/function_types.ts",
+              "line": 3
+            }
           },
           {
             "type": "any",
-            "name": "json"
+            "name": "json",
+            "description": "The json",
+            "id": "ChangeSet^fromJSON^json",
+            "loc": {
+              "column": 4,
+              "file": "test/cases/function_types.ts",
+              "line": 5
+            }
           }
         ],
         "returns": {

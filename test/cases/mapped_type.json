@@ -5,17 +5,29 @@
     "typeParams": [
       {
         "name": "A",
-        "type": "typeparam"
+        "type": "typeparam",
+        "id": "T^A",
+        "loc": {
+          "column": 14,
+          "file": "test/cases/mapped_type.ts",
+          "line": 1
+        }
       },
       {
         "name": "B",
-        "type": "typeparam"
+        "type": "typeparam",
+        "id": "T^B",
+        "loc": {
+          "column": 17,
+          "file": "test/cases/mapped_type.ts",
+          "line": 1
+        }
       }
     ],
     "typeArgs": [
       {
         "type": "B",
-        "typeParamSource": "T"
+        "typeParamSource": "T^B"
       }
     ],
     "loc": {

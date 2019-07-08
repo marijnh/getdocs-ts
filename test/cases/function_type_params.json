@@ -14,7 +14,7 @@
             },
             {
               "type": "T",
-              "typeParamSource": "X.getMeta"
+              "typeParamSource": "X.getMeta^T"
             }
           ]
         },
@@ -24,16 +24,28 @@
             "typeArgs": [
               {
                 "type": "T",
-                "typeParamSource": "X.getMeta"
+                "typeParamSource": "X.getMeta^T"
               }
             ],
-            "name": "type"
+            "name": "type",
+            "id": "X.getMeta^type",
+            "loc": {
+              "column": 13,
+              "file": "test/cases/function_type_params.ts",
+              "line": 2
+            }
           }
         ],
         "typeParams": [
           {
             "name": "T",
-            "type": "typeparam"
+            "type": "typeparam",
+            "id": "X.getMeta^T",
+            "loc": {
+              "column": 10,
+              "file": "test/cases/function_type_params.ts",
+              "line": 2
+            }
           }
         ],
         "loc": {

@@ -19,7 +19,13 @@
             ],
             "optional": true,
             "default": "1",
-            "name": "dir"
+            "name": "dir",
+            "id": "X.iter^dir",
+            "loc": {
+              "column": 7,
+              "file": "test/cases/literal_type.ts",
+              "line": 2
+            }
           }
         ],
         "returns": {
@@ -42,7 +48,13 @@
         "params": [
           {
             "type": "number",
-            "name": "start"
+            "name": "start",
+            "id": "X.movePos^start",
+            "loc": {
+              "column": 10,
+              "file": "test/cases/literal_type.ts",
+              "line": 3
+            }
           },
           {
             "type": "union",
@@ -60,7 +72,13 @@
                 "type": "\"right\""
               }
             ],
-            "name": "direction"
+            "name": "direction",
+            "id": "X.movePos^direction",
+            "loc": {
+              "column": 25,
+              "file": "test/cases/literal_type.ts",
+              "line": 3
+            }
           },
           {
             "type": "union",
@@ -80,7 +98,13 @@
             ],
             "default": "\"character\"",
             "optional": true,
-            "name": "granularity"
+            "name": "granularity",
+            "id": "X.movePos^granularity",
+            "loc": {
+              "column": 10,
+              "file": "test/cases/literal_type.ts",
+              "line": 4
+            }
           },
           {
             "type": "union",
@@ -94,7 +118,13 @@
             ],
             "default": "\"move\"",
             "optional": true,
-            "name": "action"
+            "name": "action",
+            "id": "X.movePos^action",
+            "loc": {
+              "column": 10,
+              "file": "test/cases/literal_type.ts",
+              "line": 5
+            }
           }
         ],
         "loc": {

@@ -5,6 +5,7 @@
     "typeParams": [
       {
         "name": "C",
+        "id": "ChangeSet^C",
         "type": "typeparam",
         "implements": [
           {
@@ -12,7 +13,12 @@
             "typeArgs": [{"type": "any"}]
           }
         ],
-        "default": "Array<number>"
+        "default": "Array<number>",
+        "loc": {
+          "column": 23,
+          "file": "test/cases/type_param.ts",
+          "line": 1
+        }
       }
     ],
     "implements": [

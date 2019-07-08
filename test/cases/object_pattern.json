@@ -17,12 +17,18 @@
                 {
                   "type": "Array",
                   "typeArgs": [{"type": "number"}],
-                  "name": "state"
+                  "name": "state",
+                  "id": "StateField.constructor^__0.init^state",
+                  "loc": {
+                    "column": 11,
+                    "file": "test/cases/object_pattern.ts",
+                    "line": 3
+                  }
                 }
               ],
               "returns": {
                 "type": "T",
-                "typeParamSource": "StateField"
+                "typeParamSource": "StateField^T"
               },
               "loc": {
                 "line": 3,
@@ -37,22 +43,40 @@
               "params": [
                 {
                   "type": "Object",
-                  "name": "tr"
+                  "name": "tr",
+                  "id": "StateField.constructor^__0.apply^tr",
+                  "loc": {
+                    "column": 12,
+                    "file": "test/cases/object_pattern.ts",
+                    "line": 4
+                  }
                 },
                 {
                   "type": "T",
-                  "typeParamSource": "StateField",
-                  "name": "value"
+                  "typeParamSource": "StateField^T",
+                  "name": "value",
+                  "id": "StateField.constructor^__0.apply^value",
+                  "loc": {
+                    "column": 24,
+                    "file": "test/cases/object_pattern.ts",
+                    "line": 4
+                  }
                 },
                 {
                   "type": "Array",
                   "typeArgs": [{"type": "number"}],
-                  "name": "newState"
+                  "name": "newState",
+                  "id": "StateField.constructor^__0.apply^newState",
+                  "loc": {
+                    "column": 34,
+                    "file": "test/cases/object_pattern.ts",
+                    "line": 4
+                  }
                 }
               ],
               "returns": {
                 "type": "T",
-                "typeParamSource": "StateField"
+                "typeParamSource": "StateField^T"
               },
               "loc": {
                 "line": 4,
@@ -61,6 +85,12 @@
               },
               "id": "StateField.constructor^__0.apply"
             }
+          },
+          "id": "StateField.constructor^__0",
+          "loc": {
+            "column": 14,
+            "file": "test/cases/object_pattern.ts",
+            "line": 2
           }
         }
       ],
@@ -74,7 +104,13 @@
     "typeParams": [
       {
         "name": "T",
-        "type": "typeparam"
+        "type": "typeparam",
+        "id": "StateField^T",
+        "loc": {
+          "column": 24,
+          "file": "test/cases/object_pattern.ts",
+          "line": 1
+        }
       }
     ],
     "loc": {

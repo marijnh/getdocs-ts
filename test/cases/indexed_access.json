@@ -5,7 +5,13 @@
     "typeParams": [
       {
         "name": "T",
-        "type": "typeparam"
+        "type": "typeparam",
+        "id": "getProperty^T",
+        "loc": {
+          "column": 28,
+          "file": "test/cases/indexed_access.ts",
+          "line": 1
+        }
       },
       {
         "name": "K",
@@ -16,23 +22,41 @@
             "typeArgs": [
               {
                 "type": "T",
-                "typeParamSource": "getProperty"
+                "typeParamSource": "getProperty^T"
               }
             ]
           }
-        ]
+        ],
+        "id": "getProperty^K",
+        "loc": {
+          "column": 31,
+          "file": "test/cases/indexed_access.ts",
+          "line": 1
+        }
       }
     ],
     "params": [
       {
         "type": "T",
-        "typeParamSource": "getProperty",
-        "name": "o"
+        "typeParamSource": "getProperty^T",
+        "name": "o",
+        "id": "getProperty^o",
+        "loc": {
+          "column": 50,
+          "file": "test/cases/indexed_access.ts",
+          "line": 1
+        }
       },
       {
         "type": "K",
-        "typeParamSource": "getProperty",
-        "name": "name"
+        "typeParamSource": "getProperty^K",
+        "name": "name",
+        "id": "getProperty^name",
+        "loc": {
+          "column": 56,
+          "file": "test/cases/indexed_access.ts",
+          "line": 1
+        }
       }
     ],
     "returns": {
@@ -40,11 +64,11 @@
       "typeArgs": [
         {
           "type": "T",
-          "typeParamSource": "getProperty"
+          "typeParamSource": "getProperty^T"
         },
         {
           "type": "K",
-          "typeParamSource": "getProperty"
+          "typeParamSource": "getProperty^K"
         }
       ]
     },

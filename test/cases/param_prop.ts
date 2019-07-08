@@ -1,3 +1,6 @@
 export class Line {
-  constructor(readonly start: number) {}
+  constructor(
+    // Doc comment
+    readonly start: number
+  ) {}
 }

@@ -24,7 +24,13 @@
             "typeArgs": [
               {"type": "undefined"},
               {"type": "number"}
-            ]
+            ],
+            "id": "TextIterator.next^skip",
+            "loc": {
+              "column": 7,
+              "file": "test/cases/this_type.ts",
+              "line": 2
+            }
           }
         ],
         "returns": {

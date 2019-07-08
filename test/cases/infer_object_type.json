@@ -38,7 +38,13 @@
     "params": [
       {
         "type": "string",
-        "name": "y"
+        "name": "y",
+        "id": "x^y",
+        "loc": {
+          "column": 18,
+          "file": "test/cases/infer_object_type.ts",
+          "line": 1
+        }
       }
     ],
     "loc": {

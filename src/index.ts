@@ -13,7 +13,7 @@ import {
 const {resolve, dirname, relative} = require("path")
 
 type BindingKind = "class" | "enum" | "enummember" | "interface" | "variable" | "property" | "method" |
-  "typealias" | "typeparam" | "constructor" | "function"
+  "typealias" | "typeparam" | "constructor" | "function" | "parameter"
 
 type Loc = {file: string, line: number, column: number}
 
@@ -22,7 +22,7 @@ type Binding = {
   id: string,
   description?: string,
   loc?: Loc,
-  typeParams?: readonly ParamType[],
+  typeParams?: readonly Param[],
   exported?: boolean,
   abstract?: boolean,
   readonly?: boolean,
@@ -35,15 +35,18 @@ type BindingType = {
   properties?: {[name: string]: Item},
   instanceProperties?: {[name: string]: Item},
   typeArgs?: readonly BindingType[],
-  params?: readonly ParamType[],
+  params?: readonly Param[],
   returns?: BindingType,
   extends?: BindingType,
   implements?: readonly BindingType[],
   construct?: Item
 }
 
-type ParamType = BindingType & {
+type Param = BindingType & {
   name: string,
+  id: string,
+  description?: string,
+  loc?: Loc,
   optional?: boolean,
   rest?: boolean,
   default?: string
@@ -110,7 +113,7 @@ class Context {
     let params = this.getTypeParams(decl(symbol))
     if (params) {
       binding.typeParams = params
-      cx = cx.addParams(params.map(p => ({name: p.name, id: cx.id})))
+      cx = cx.addParams(params.map(p => ({name: p.name, id: p.id})))
     }
     
     return {
@@ -248,7 +251,8 @@ class Context {
     for (let ctor of ctors) {
       let signature = type.getConstructSignatures().find(sig => sig.getDeclaration() == ctor)
       if (!signature || (getCombinedModifierFlags(ctor) & ModifierFlags.Private)) continue
-      let item = this.addSourceData([ctor], {kind: "constructor", id: this.id + ".constructor"})
+      let item: Binding = {kind: "constructor", id: this.id + ".constructor"}
+      this.addSourceData([ctor], item)
       if (item.description && /@internal\b/.test(item.description)) continue
       out.construct = {...item, type: "Function", params: this.extend("constructor", ".").getParams(signature)}
       break
@@ -290,11 +294,16 @@ class Context {
     return result
   }
 
-  getParams(signature: Signature): ParamType[] {
+  getParams(signature: Signature): Param[] {
     return signature.getParameters().map(param => {
-      let result = this.extend(param).getType(this.symbolType(param), param) as ParamType
-      result.name = name(param)
+      let cx = this.extend(param)
+      let result: Param = {
+        name: name(param),
+        id: cx.id,
+        ...cx.getType(cx.symbolType(param), param)
+      }
       let decl = param.valueDeclaration as (ParameterDeclaration | undefined)
+      if (decl) this.addSourceData([decl], result, !(getCombinedModifierFlags(decl) & (ModifierFlags.Public | ModifierFlags.Readonly)))
       let deflt: Node = decl && (decl as any).initializer
       if (deflt) result.default = deflt.getSourceFile().text.slice(deflt.pos, deflt.end).trim()
       if (deflt || (param.flags & SymbolFlags.Optional)) result.optional = true
@@ -303,19 +312,21 @@ class Context {
     })
   }
 
-  getTypeParams(decl: Node): ParamType[] | null {
+  getTypeParams(decl: Node): Param[] | null {
     let params = (decl as any).typeParameters as TypeParameterDeclaration[]
     let cx: Context = this
     return !params ? null : params.map(param => {
       let sym = cx.tc.getSymbolAtLocation(param.name)!
-      let type: ParamType = {type: "typeparam", name: name(sym)}
-      let constraint = getEffectiveConstraintOfTypeParameter(param), cType
-      if (constraint && (cType = cx.tc.getTypeAtLocation(constraint)))
-        type.implements = [cx.getType(cType)]
+      let localCx = cx.extend(sym)
+      let result: Param = {type: "typeparam", name: name(sym), id: localCx.id}
+      this.addSourceData([param], result)
+      let constraint = getEffectiveConstraintOfTypeParameter(param), type
+      if (constraint && (type = localCx.tc.getTypeAtLocation(constraint)))
+        result.implements = [localCx.getType(type)]
       if (param.default)
-        type.default = param.getSourceFile().text.slice(param.default.pos, param.default.end).trim()
-      cx = cx.addParams([{name: name(sym), id: cx.id}])
-      return type
+        result.default = param.getSourceFile().text.slice(param.default.pos, param.default.end).trim()
+      cx = cx.addParams([{name: name(sym), id: localCx.id}])
+      return result
     })
   }
 
@@ -337,20 +348,21 @@ class Context {
     return relative(process.cwd(), node.getSourceFile().fileName)
   }
 
-  addSourceData(nodes: readonly Node[], target: Binding) {
-    let comment = ""
-    for (let node of nodes) {
-      let c = getComment(node.kind == SyntaxKind.VariableDeclaration ? node.parent.parent : node)
-      if (c) comment += (comment ? " " : "") + c
+  addSourceData(nodes: readonly Node[], target: Binding | Param, comments = true) {
+    if (comments) {
+      let comment = ""
+      for (let node of nodes) {
+        let c = getComment(node.kind == SyntaxKind.VariableDeclaration ? node.parent.parent : node)
+        if (c) comment += (comment ? " " : "") + c
+      }
+      if (comment) target.description = comment
     }
-    if (comment) target.description = comment
     const sourceFile = nodes[0].getSourceFile()
-    if (!sourceFile) return target // Synthetic node
+    if (!sourceFile) return // Synthetic node
     let {pos} = nodes[0]
     while (isWhiteSpaceLike(sourceFile.text.charCodeAt(pos))) ++pos
     const {line, character} = getLineAndCharacterOfPosition(sourceFile, pos)
     target.loc = {file: this.nodePath(nodes[0]), line: line + 1, column: character}
-    return target
   }
 
   // Tells whether a symbol is either exported or external, and thus

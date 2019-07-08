@@ -32,7 +32,13 @@
                 "type": "RegExp"
               }
             ],
-            "name": "field"
+            "name": "field",
+            "id": "ViewField.editorAttributeEffect^field",
+            "loc": {
+              "column": 33,
+              "file": "test/cases/map_index_signature.ts",
+              "line": 4
+            }
           }
         ],
         "loc": {

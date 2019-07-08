@@ -8,7 +8,13 @@
       "params": [
         {
           "name": "start",
-          "type": "number"
+          "type": "number",
+          "id": "Line.constructor^start",
+          "loc": {
+            "column": 4,
+            "file": "test/cases/param_prop.ts",
+            "line": 3
+          }
         }
       ],
       "loc": {
@@ -22,9 +28,10 @@
       "start": {
         "kind": "property",
         "type": "number",
+        "description": "Doc comment",
         "loc": {
-          "line": 2,
-          "column": 14,
+          "line": 3,
+          "column": 4,
           "file": "test/cases/param_prop.ts"
         },
         "id": "Line.start",

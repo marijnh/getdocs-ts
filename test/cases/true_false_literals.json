@@ -5,7 +5,13 @@
     "params": [
       {
         "type": "any",
-        "name": "a"
+        "name": "a",
+        "id": "x^a",
+        "loc": {
+          "column": 17,
+          "file": "test/cases/true_false_literals.ts",
+          "line": 1
+        }
       }
     ],
     "returns": {
@@ -32,7 +38,13 @@
     "params": [
       {
         "type": "any",
-        "name": "a"
+        "name": "a",
+        "id": "y^a",
+        "loc": {
+          "column": 17,
+          "file": "test/cases/true_false_literals.ts",
+          "line": 2
+        }
       }
     ],
     "returns": {

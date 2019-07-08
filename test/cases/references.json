@@ -11,14 +11,20 @@
     "typeParams": [
       {
         "name": "T",
-        "type": "typeparam"
+        "type": "typeparam",
+        "id": "Point^T",
+        "loc": {
+          "column": 18,
+          "file": "test/cases/references.ts",
+          "line": 1
+        }
       }
     ],
     "properties": {
       "x": {
         "kind": "property",
         "type": "T",
-        "typeParamSource": "Point",
+        "typeParamSource": "Point^T",
         "id": "Point.x",
         "loc": {
           "file": "test/cases/references.ts",
@@ -29,7 +35,7 @@
       "y": {
         "kind": "property",
         "type": "T",
-        "typeParamSource": "Point",
+        "typeParamSource": "Point^T",
         "id": "Point.y",
         "loc": {
           "file": "test/cases/references.ts",
@@ -121,7 +127,13 @@
     "typeParams": [
       {
         "name": "T",
-        "type": "typeparam"
+        "type": "typeparam",
+        "id": "Bar^T",
+        "loc": {
+          "column": 21,
+          "file": "test/cases/references.ts",
+          "line": 13
+        }
       }
     ],
     "loc": {
@@ -133,7 +145,7 @@
       "a": {
         "kind": "property",
         "type": "T",
-        "typeParamSource": "Bar",
+        "typeParamSource": "Bar^T",
         "id": "Bar.a",
         "loc": {
           "file": "test/cases/references.ts",

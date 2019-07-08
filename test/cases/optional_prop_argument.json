@@ -11,7 +11,13 @@
           "type": "ReadonlyArray",
           "typeArgs": [{"type": "number"}],
           "optional": true,
-          "default": "[]"
+          "default": "[]",
+          "id": "X.constructor^mirror",
+          "loc": {
+            "column": 14,
+            "file": "test/cases/optional_prop_argument.ts",
+            "line": 2
+          }
         }
       ],
       "loc": {
