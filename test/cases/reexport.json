@@ -20,5 +20,16 @@
         }
       }
     }
+  },
+  "Type": {
+    "kind": "reexport",
+    "id": "Type",
+    "loc": {
+      "file": "test/cases/reexport.ts",
+      "line": 7,
+      "column": 8
+    },
+    "type": "Type",
+    "typeSource": "node_modules/typescript/lib/typescript.d.ts"
   }
 }

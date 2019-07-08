@@ -13,7 +13,7 @@ import {
 const {resolve, dirname, relative} = require("path")
 
 type BindingKind = "class" | "enum" | "enummember" | "interface" | "variable" | "property" | "method" |
-  "typealias" | "typeparam" | "constructor" | "function" | "parameter"
+  "typealias" | "typeparam" | "constructor" | "function" | "parameter" | "reexport"
 
 type Loc = {file: string, line: number, column: number}
 
@@ -83,11 +83,14 @@ class Context {
   }
 
   itemForSymbol(symbol: Symbol): Item | null {
-    if (symbol.flags & SymbolFlags.Alias)
-      return this.itemForSymbol(this.tc.getAliasedSymbol(symbol))
-
     let kind: BindingKind
-    if (symbol.flags & SymbolFlags.PropertyOrAccessor) kind = "property"
+
+    if (symbol.flags & SymbolFlags.Alias) {
+      let aliased = this.tc.getAliasedSymbol(symbol)
+      if (this.isExternal(aliased)) kind = "reexport"
+      else return this.itemForSymbol(aliased)
+    }
+    else if (symbol.flags & SymbolFlags.PropertyOrAccessor) kind = "property"
     else if (symbol.flags & SymbolFlags.Method) kind = "method"
     else if (symbol.flags & SymbolFlags.Enum) kind = "enum"
     else if (symbol.flags & SymbolFlags.EnumMember) kind = "enummember"
@@ -374,11 +377,14 @@ class Context {
   // Tells whether a symbol is either exported or external, and thus
   // can be used in the output
   isAvailable(symbol: Symbol) {
-    if (this.exports.includes(symbol)) return true
+    return this.exports.includes(symbol) || this.isExternal(symbol)
+  }
+
+  isExternal(symbol: Symbol) {
     let decl = maybeDecl(symbol)
     if (!decl) return true
     let path = resolve(decl.getSourceFile().fileName)
-    return !(path.startsWith(this.basedir) && !/\bnode_modules\b/.test(path.slice(this.basedir.length)))
+    return !path.startsWith(this.basedir) || /\bnode_modules\b/.test(path.slice(this.basedir.length))
   }
 }
 

@@ -3,3 +3,5 @@ class Foo {
 }
 
 export {Foo}
+
+export {Type} from "typescript"
