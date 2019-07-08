@@ -150,13 +150,14 @@ class Context {
     if (type.flags & TypeFlags.Boolean) return {type: "boolean"}
     if (type.flags & TypeFlags.Undefined) return {type: "undefined"}
     if (type.flags & TypeFlags.Null) return {type: "null"}
-    if (type.flags & TypeFlags.BooleanLiteral) return {type: (type as any).intrinsicName} // FIXME TypeScript doesn't export this
+    // FIXME TypeScript doesn't export this. See https://github.com/microsoft/TypeScript/issues/26075, where they intend to fix that
+    if (type.flags & TypeFlags.BooleanLiteral) return {type: (type as any).intrinsicName}
     if (type.flags & TypeFlags.Literal) return {type: JSON.stringify((type as LiteralType).value)}
     if (type.flags & TypeFlags.Never) return {type: "never"}
 
-    // FIXME TypeScript seems to reverse the type args to unions. Check whether this is reliable, and re-reverse them if so
     if (type.flags & TypeFlags.UnionOrIntersection) {
       let types = (type as UnionOrIntersectionType).types, decl
+      // If we have a decl, use the order from that, since TypeScript 'normalizes' it in the type object
       if (forSymbol && (decl = maybeDecl(forSymbol))) {
         let typeNode = (decl as VariableDeclaration).type
         if (typeNode && (typeNode.kind == SyntaxKind.UnionType || typeNode.kind == SyntaxKind.IntersectionType))
