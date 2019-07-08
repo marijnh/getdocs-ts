@@ -476,8 +476,15 @@ export function gather({filename, items = Object.create(null)}: {filename: strin
   const tc = program.getTypeChecker()
   const exports = tc.getExportsOfModule(tc.getSymbolAtLocation(program.getSourceFile(filename)!)!)
   const basedir = resolve(dirname(configPath || filename))
-  const module = new Context(tc, exports, basedir, "", [])
-  module.gatherSymbols(exports, items, "")
-  
+
+  // Add all symbols aliased by exports to the set of things that
+  // should be considered exported
+  const closedExports = exports.slice()
+  for (let i = 0; i < closedExports.length; i++) {
+    let sym = closedExports[i], alias = (sym.flags & SymbolFlags.Alias) ? tc.getAliasedSymbol(sym) : null
+    if (alias && !closedExports.includes(alias)) closedExports.push(alias)
+  }
+
+  new Context(tc, closedExports, basedir, "", []).gatherSymbols(exports, items, "")
   return items
 }
