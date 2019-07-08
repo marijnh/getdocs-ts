@@ -1,0 +1,35 @@
+{
+  "I": {
+    "id": "I",
+    "kind": "interface",
+    "loc": {
+      "column": 0,
+      "file": "test/cases/readonlyprop.ts",
+      "line": 1
+    },
+    "properties": {
+      "a": {
+        "id": "I.a",
+        "kind": "property",
+        "loc": {
+          "column": 2,
+          "file": "test/cases/readonlyprop.ts",
+          "line": 2
+        },
+        "type": "number"
+      },
+      "b": {
+        "id": "I.b",
+        "kind": "property",
+        "loc": {
+          "column": 2,
+          "file": "test/cases/readonlyprop.ts",
+          "line": 3
+        },
+        "optional": true,
+        "type": "string"
+      }
+    },
+    "type": "interface"
+  }
+}

@@ -24,6 +24,7 @@ type Binding = {
   loc?: Loc,
   abstract?: boolean,
   readonly?: boolean,
+  optional?: boolean
 }
 
 type BindingType = {
@@ -110,6 +111,10 @@ class Context {
         ((symbol.flags & (SymbolFlags.GetAccessor | SymbolFlags.SetAccessor)) == SymbolFlags.GetAccessor))
       binding.readonly = true
     if ((mods & ModifierFlags.Private) || binding.description && /@internal\b/.test(binding.description)) return null
+    if (symbol.flags & SymbolFlags.Optional) {
+      binding.optional = true
+      type = this.tc.getNonNullableType(type)
+    }
 
     let cx: Context = this
     let params = this.getTypeParams(decl(symbol))
