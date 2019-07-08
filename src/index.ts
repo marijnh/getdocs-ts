@@ -114,7 +114,9 @@ class Context {
     let cx: Context = this
     let params = this.getTypeParams(decl(symbol))
     if (params) cx = cx.addParams(params)
-    let typeDesc = kind == "enum" ? cx.getEnumType(symbol) : cx.getType(type, symbol)
+    let typeDesc = kind == "enum" ? cx.getEnumType(symbol)
+      : kind == "reexport" ? cx.getReferenceType(this.tc.getAliasedSymbol(symbol))
+      : cx.getType(type, symbol)
     if (params) typeDesc.typeParams = params
 
     return {...binding, ...typeDesc}
@@ -387,12 +389,12 @@ class Context {
 function name(symbol: Symbol) { return symbol.escapedName as string }
 
 function maybeDecl(symbol: Symbol): Declaration | undefined {
-  return symbol.valueDeclaration || symbol.declarations[0]
+  return symbol.valueDeclaration || (symbol.declarations && symbol.declarations[0])
 }
 
 function decl(symbol: Symbol) {
   let result = maybeDecl(symbol)
-  if (!result) throw new Error(`No declaration available for symbole ${symbol.escapedName}`)
+  if (!result) throw new Error(`No declaration available for symbol ${symbol.escapedName}`)
   return result
 }
 
