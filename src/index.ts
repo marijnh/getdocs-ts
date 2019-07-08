@@ -62,7 +62,7 @@ class Context {
               readonly typeParams: Param[]) {}
 
   extend(symbol: Symbol | string, sep = "^") {
-    let nm = typeof symbol == "string" ? symbol : name(symbol)
+    let nm = typeof symbol == "string" ? symbol : symbol.name
     return new Context(this.tc, this.exports, this.basedir, this.id ? this.id + sep + nm : nm, this.typeParams)
   }
 
@@ -75,7 +75,7 @@ class Context {
     for (const symbol of symbols.slice().sort(compareSymbols)) {
       let item = this.extend(symbol, sep).itemForSymbol(symbol)
       if (item) {
-        target[name(symbol)] = item
+        target[symbol.name] = item
         gathered++
       }
     }
@@ -132,7 +132,7 @@ class Context {
     this.gatherSymbols((decl(symbol) as EnumDeclaration).members
                        .map(member => this.tc.getSymbolAtLocation(member.name)!), properties)
     for (let n in properties) {
-      properties[n].type = name(symbol)
+      properties[n].type = symbol.name
       properties[n].typeSource = this.nodePath(decl(symbol))
     }
     return {type: "enum", properties}
@@ -170,9 +170,9 @@ class Context {
     }
 
     if (type.flags & TypeFlags.TypeParameter) {
-      let nm = name(type.symbol), found = this.typeParams.find(p => p.name == nm)
-      if (!found) throw new Error(`Unknown type parameter ${nm}`)
-      return {type: nm, typeParamSource: found.id}
+      let name = type.symbol.name, found = this.typeParams.find(p => p.name == name)
+      if (!found) throw new Error(`Unknown type parameter ${name}`)
+      return {type: name, typeParamSource: found.id}
     }
 
     if (type.flags & TypeFlags.Index) {
@@ -222,8 +222,8 @@ class Context {
     let call = type.getCallSignatures(), props = type.getProperties()
     let intDecl = interfaceSymbol && maybeDecl(interfaceSymbol)
     if (intDecl && isInterfaceDeclaration(intDecl)) {
-      let declared = intDecl.members.map(member => name(this.tc.getSymbolAtLocation(member.name!)!))
-      props = props.filter(prop => declared.includes(name(prop)))
+      let declared = intDecl.members.map(member => this.tc.getSymbolAtLocation(member.name!)!.name)
+      props = props.filter(prop => declared.includes(prop.name))
       if (intDecl.heritageClauses && intDecl.heritageClauses.length)
         out.implements = intDecl.heritageClauses[0].types.map(node => this.getType(this.tc.getTypeAtLocation(node)))
     }
@@ -246,12 +246,12 @@ class Context {
         ctors.push(member)
         for (let param of (member as ConstructorDeclaration).parameters) {
           if (getCombinedModifierFlags(param) & (ModifierFlags.Public | ModifierFlags.Readonly))
-            definedProps.push(name(this.tc.getSymbolAtLocation(param.name)!))
+            definedProps.push(this.tc.getSymbolAtLocation(param.name)!.name)
         }
       } else if (getCombinedModifierFlags(member) & ModifierFlags.Static) {
-        definedStatic.push(name(symbol))
+        definedStatic.push(symbol.name)
       } else {
-        definedProps.push(name(symbol))
+        definedProps.push(symbol.name)
       }
     }
     
@@ -268,12 +268,12 @@ class Context {
     // FIXME I haven't found a less weird way to get the instance type
     let ctorType = type.getConstructSignatures()[0]
     if (ctorType) {
-      let protoProps = ctorType.getReturnType().getProperties().filter(prop => definedProps.includes(name(prop)))
+      let protoProps = ctorType.getReturnType().getProperties().filter(prop => definedProps.includes(prop.name))
       let instanceObj = this.gatherSymbols(protoProps)
       if (instanceObj) out.instanceProperties = instanceObj
     }
 
-    let props = type.getProperties().filter(prop => definedStatic.includes(name(prop)))
+    let props = type.getProperties().filter(prop => definedStatic.includes(prop.name))
     let propObj = this.gatherSymbols(props, undefined, "^")
     if (propObj) out.properties = propObj
 
@@ -288,7 +288,7 @@ class Context {
   }
 
   getReferenceType(symbol: Symbol, typeArgs?: readonly Type[], arityType?: Type) {
-    let result: BindingType = {type: name(symbol)}
+    let result: BindingType = {type: symbol.name}
     let typeSource = this.nodePath(decl(symbol))
     if (!isBuiltin(typeSource)) result.typeSource = typeSource
     if (typeArgs) {
@@ -310,7 +310,7 @@ class Context {
         type = this.tc.getNonNullableType(type)
       }
       let result: Param = {
-        name: name(param),
+        name: param.name,
         id: cx.id,
         ...cx.getType(type, param)
       }
@@ -329,7 +329,7 @@ class Context {
     return !params ? null : params.map(param => {
       let sym = cx.tc.getSymbolAtLocation(param.name)!
       let localCx = cx.extend(sym)
-      let result: Param = {type: "typeparam", name: name(sym), id: localCx.id}
+      let result: Param = {type: "typeparam", name: sym.name, id: localCx.id}
       this.addSourceData([param], result)
       let constraint = getEffectiveConstraintOfTypeParameter(param), type
       if (constraint && (type = localCx.tc.getTypeAtLocation(constraint)))
@@ -395,8 +395,6 @@ class Context {
     return !path.startsWith(this.basedir) || /\bnode_modules\b/.test(path.slice(this.basedir.length))
   }
 }
-
-function name(symbol: Symbol) { return symbol.escapedName as string }
 
 function maybeDecl(symbol: Symbol): Declaration | undefined {
   return symbol.valueDeclaration || (symbol.declarations && symbol.declarations[0])
