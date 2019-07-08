@@ -135,6 +135,8 @@ class Context {
   getType(type: Type, forSymbol?: Symbol): BindingType {
     if (type.aliasSymbol) {
       let result: BindingType = {type: name(type.aliasSymbol)}
+      let typeSource = this.nodePath(decl(type.aliasSymbol))
+      if (!isBuiltin(typeSource)) result.typeSource = typeSource
       if (type.aliasTypeArguments) result.typeArgs = type.aliasTypeArguments.map(arg => this.getType(arg))
       return result
     } else {

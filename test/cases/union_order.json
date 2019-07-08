@@ -26,5 +26,27 @@
        }},
       {"type": "undefined"}
     ]
+  },
+  "U": {
+    "kind": "typealias",
+    "type": "union",
+    "typeArgs": [{"type": "boolean"}, {"type": "undefined"}],
+    "id": "U",
+    "loc": {
+      "file": "test/cases/union_order.ts",
+      "line": 3,
+      "column": 0
+    }
+  },
+  "y": {
+    "kind": "variable",
+    "type": "U",
+    "typeSource": "test/cases/union_order.ts",
+    "id": "y",
+    "loc": {
+      "file": "test/cases/union_order.ts",
+      "line": 5,
+      "column": 11
+    }
   }
 }
