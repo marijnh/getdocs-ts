@@ -1,0 +1,38 @@
+{
+  "a": {
+    "kind": "variable",
+    "type": "union",
+    "typeArgs": [
+      {"type": "string"},
+      {"type": "number"}
+    ],
+    "id": "a",
+    "loc": {
+      "file": "test/cases/inline_reference.ts",
+      "line": 3,
+      "column": 13
+    }
+  },
+  "b": {
+    "kind": "variable",
+    "type": "Object",
+    "properties": {
+      "x": {
+        "kind": "property",
+        "type": "number",
+        "id": "b.x",
+        "loc": {
+          "file": "test/cases/inline_reference.ts",
+          "line": 5,
+          "column": 13
+        }
+      }
+    },
+    "id": "b",
+    "loc": {
+      "file": "test/cases/inline_reference.ts",
+      "line": 7,
+      "column": 13
+    }
+  }
+}

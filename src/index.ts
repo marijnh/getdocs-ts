@@ -133,15 +133,9 @@ class Context {
   }
 
   getType(type: Type, forSymbol?: Symbol): BindingType {
-    if (type.aliasSymbol) {
-      let result: BindingType = {type: name(type.aliasSymbol)}
-      let typeSource = this.nodePath(decl(type.aliasSymbol))
-      if (!isBuiltin(typeSource)) result.typeSource = typeSource
-      if (type.aliasTypeArguments) result.typeArgs = type.aliasTypeArguments.map(arg => this.getType(arg))
-      return result
-    } else {
-      return this.getTypeInner(type, forSymbol)
-    }
+    if (type.aliasSymbol && this.isAvailable(type.aliasSymbol))
+      return this.getReferenceType(type.aliasSymbol, type.aliasTypeArguments)
+    return this.getTypeInner(type, forSymbol)
   }
 
   getTypeInner(type: Type, forSymbol?: Symbol): BindingType {
@@ -192,7 +186,7 @@ class Context {
       if (forSymbol && (forSymbol.flags & SymbolFlags.Class)) return this.getClassType(type as ObjectType)
       if (forSymbol && (forSymbol.flags & SymbolFlags.Interface)) return this.getObjectType(type as ObjectType, forSymbol)
 
-      if (!(objFlags & ObjectFlags.Reference)) {
+      if (!((objFlags & ObjectFlags.Reference) && this.isAvailable(type.symbol))) {
         if (objFlags & ObjectFlags.Mapped) {
           let decl = maybeDecl(type.symbol), innerType = decl && (decl as MappedTypeNode).type
           return {type: "Object", typeArgs: [innerType ? this.getType(this.tc.getTypeAtLocation(innerType)) : {type: "any"}]}
@@ -203,20 +197,10 @@ class Context {
         if (strIndex) return {type: "Object", typeArgs: [this.getType(strIndex)]}
         if (numIndex) return {type: "Array", typeArgs: [this.getType(numIndex)]}
 
-        
         if (objFlags & ObjectFlags.Anonymous) return this.getObjectType(type as ObjectType)
       }
 
-      let result: BindingType = {type: name(type.symbol)}
-      let typeSource = this.nodePath(decl(type.symbol))
-      if (!isBuiltin(typeSource)) result.typeSource = typeSource
-      let typeArgs = (type as TypeReference).typeArguments
-      if (typeArgs) {
-        let targetParams = (type as TypeReference).target.typeParameters
-        let arity = targetParams ? targetParams.length : 0
-        if (arity > 0) result.typeArgs = typeArgs.slice(0, arity).map(arg => this.getType(arg))
-      }
-      return result
+      return this.getReferenceType(type.symbol, (type as TypeReference).typeArguments, type)
     }
 
     throw new Error(`Unsupported type ${this.tc.typeToString(type)} with flags ${type.flags}`)
@@ -292,6 +276,20 @@ class Context {
     return out
   }
 
+  getReferenceType(symbol: Symbol, typeArgs?: readonly Type[], arityType?: Type) {
+    let result: BindingType = {type: name(symbol)}
+    let typeSource = this.nodePath(decl(symbol))
+    if (!isBuiltin(typeSource)) result.typeSource = typeSource
+    if (typeArgs) {
+      if (arityType) {
+        let targetParams = (arityType as TypeReference).target.typeParameters
+        typeArgs = typeArgs.slice(0, targetParams ? targetParams.length : 0)
+      }
+      if (typeArgs.length) result.typeArgs = typeArgs.map(arg => this.getType(arg))
+    }
+    return result
+  }
+
   getParams(signature: Signature): ParamType[] {
     return signature.getParameters().map(param => {
       let result = this.extend(param).getType(this.symbolType(param), param) as ParamType
@@ -353,6 +351,16 @@ class Context {
     const {line, character} = getLineAndCharacterOfPosition(sourceFile, pos)
     target.loc = {file: this.nodePath(nodes[0]), line: line + 1, column: character}
     return target
+  }
+
+  // Tells whether a symbol is either exported or external, and thus
+  // can be used in the output
+  isAvailable(symbol: Symbol) {
+    if (this.exports.includes(symbol)) return true
+    let decl = maybeDecl(symbol)
+    if (!decl) return true
+    let path = resolve(decl.getSourceFile().fileName)
+    return !(path.startsWith(this.basedir) && !/\bnode_modules\b/.test(path.slice(this.basedir.length)))
   }
 }
 
