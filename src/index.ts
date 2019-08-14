@@ -207,7 +207,13 @@ class Context {
         if (strIndex) return {type: "Object", typeArgs: [this.getType(strIndex)]}
         if (numIndex) return {type: "Array", typeArgs: [this.getType(numIndex)]}
 
-        if (objFlags & ObjectFlags.Anonymous) return this.getObjectType(type as ObjectType)
+        if (objFlags & ObjectFlags.Anonymous) {
+          // See `createAnonymousTypeNode` for more fine-grained `typeof` conditionals
+          if (type.symbol.flags & (SymbolFlags.Class | SymbolFlags.Enum | SymbolFlags.ValueModule)) {
+            return {type: "typeof", typeArgs: [this.getReferenceType(type.symbol)]}
+          }
+          return this.getObjectType(type as ObjectType)
+        }
       }
 
       return this.getReferenceType(type.symbol, (type as TypeReference).typeArguments, type)

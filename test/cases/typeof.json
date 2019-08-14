@@ -1,0 +1,40 @@
+{
+  "X": {
+    "kind": "class",
+    "id": "X",
+    "loc": {
+      "file": "test/cases/typeof.ts",
+      "line": 1,
+      "column": 0
+    },
+    "type": "class"
+  },
+  "x": {
+    "kind": "function",
+    "id": "x",
+    "loc": {
+      "file": "test/cases/typeof.ts",
+      "line": 3,
+      "column": 0
+    },
+    "type": "Function",
+    "params": [
+      {
+        "name": "LocalX",
+        "id": "x^LocalX",
+        "type": "typeof",
+        "typeArgs": [
+          {
+            "type": "X",
+            "typeSource": "test/cases/typeof.ts"
+          }
+        ],
+        "loc": {
+          "file": "test/cases/typeof.ts",
+          "line": 3,
+          "column": 18
+        }
+      }
+    ]
+  }
+}
