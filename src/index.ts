@@ -254,7 +254,7 @@ class Context {
         definedProps.push(symbol.name)
       }
     }
-    
+
     for (let ctor of ctors) {
       let signature = type.getConstructSignatures().find(sig => sig.getDeclaration() == ctor)
       if (!signature || (getCombinedModifierFlags(ctor) & ModifierFlags.Private)) continue
