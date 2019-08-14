@@ -472,9 +472,11 @@ export function gather({filename, items = Object.create(null)}: {filename: strin
   const host = createCompilerHost({})
   const options = configPath ? getParsedCommandLineOfConfigFile(configPath, {}, host as any)!.options : {}
   const program = createProgram({rootNames: [filename], options, host})
+  const sourceFile = program.getSourceFile(filename)
+  if (!sourceFile) throw new Error(`Source file "${filename}" not found`)
 
   const tc = program.getTypeChecker()
-  const exports = tc.getExportsOfModule(tc.getSymbolAtLocation(program.getSourceFile(filename)!)!)
+  const exports = tc.getExportsOfModule(tc.getSymbolAtLocation(sourceFile)!)
   const basedir = resolve(dirname(configPath || filename))
 
   // Add all symbols aliased by exports to the set of things that
