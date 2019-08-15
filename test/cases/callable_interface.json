@@ -1,0 +1,16 @@
+{
+  "Callable": {
+    "kind": "interface",
+    "id": "Callable",
+    "loc": {
+      "file": "test/cases/callable_interface.ts",
+      "line": 1,
+      "column": 0
+    },
+    "type": "interface",
+    "params": [],
+    "returns": {
+      "type": "any"
+    }
+  }
+}

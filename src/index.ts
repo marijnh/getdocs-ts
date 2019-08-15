@@ -228,7 +228,7 @@ class Context {
     let call = type.getCallSignatures(), props = type.getProperties()
     let intDecl = interfaceSymbol && maybeDecl(interfaceSymbol)
     if (intDecl && isInterfaceDeclaration(intDecl)) {
-      let declared = intDecl.members.map(member => this.tc.getSymbolAtLocation(member.name!)!.name)
+      let declared = intDecl.members.filter(member => member.name).map(member => this.tc.getSymbolAtLocation(member.name!)!.name)
       props = props.filter(prop => declared.includes(prop.name))
       if (intDecl.heritageClauses && intDecl.heritageClauses.length)
         out.implements = intDecl.heritageClauses[0].types.map(node => this.getType(this.tc.getTypeAtLocation(node)))
