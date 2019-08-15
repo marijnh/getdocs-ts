@@ -7,7 +7,7 @@ import {
   Symbol, SymbolFlags, ModifierFlags,
   Type, TypeFlags, ObjectType, TypeReference, ObjectFlags, LiteralType, UnionOrIntersectionType, Signature, IndexType, IndexedAccessType,
   Node, SyntaxKind, UnionOrIntersectionTypeNode, MappedTypeNode,
-  Declaration, TypeParameterDeclaration, ParameterDeclaration, EnumDeclaration, VariableDeclaration, ConstructorDeclaration
+  Declaration, NamedDeclaration, TypeParameterDeclaration, ParameterDeclaration, EnumDeclaration, VariableDeclaration, ConstructorDeclaration
 } from "typescript"
 
 const {resolve, dirname, relative} = require("path")
@@ -43,7 +43,7 @@ type BindingType = {
 }
 
 type Param = BindingType & {
-  name: string,
+  name?: string,
   id: string,
   description?: string,
   loc?: Loc,
@@ -316,15 +316,16 @@ class Context {
         type = this.tc.getNonNullableType(type)
       }
       let result: Param = {
-        name: param.name,
         id: cx.id,
         ...cx.getType(type, param)
       }
+
       if (decl) this.addSourceData([decl], result, !(getCombinedModifierFlags(decl) & (ModifierFlags.Public | ModifierFlags.Readonly)))
       let deflt: Node = decl && (decl as any).initializer
       if (deflt) result.default = deflt.getSourceFile().text.slice(deflt.pos, deflt.end).trim()
       if (deflt || optional) result.optional = true
       if (decl && decl.dotDotDotToken) result.rest = true
+      if ((param.valueDeclaration as NamedDeclaration).name!.kind == SyntaxKind.Identifier) result.name = param.name
       return result
     })
   }
