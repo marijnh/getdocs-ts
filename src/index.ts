@@ -399,7 +399,7 @@ class Context {
     let decl = maybeDecl(symbol)
     if (!decl) return true
     let path = resolve(decl.getSourceFile().fileName)
-    return !path.startsWith(this.basedir) || /\bnode_modules\b/.test(path.slice(this.basedir.length))
+    return !path.startsWith(this.basedir + path.sep) || /\bnode_modules\b/.test(path.slice(this.basedir.length))
   }
 }
 
