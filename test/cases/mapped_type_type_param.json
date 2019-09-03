@@ -1,0 +1,39 @@
+{
+  "Full": {
+    "kind": "typealias",
+    "id": "Full",
+    "loc": {
+      "file": "test/cases/mapped_type_type_param.ts",
+      "line": 1,
+      "column": 0
+    },
+    "type": "Object",
+    "typeArgs": [
+      {
+        "type": "indexed",
+        "typeArgs": [
+          {
+            "type": "T",
+            "typeParamSource": "Full^T"
+          },
+          {
+            "type": "K",
+            "typeParamSource": "Full^K"
+          }
+        ]
+      }
+    ],
+    "typeParams": [
+      {
+        "type": "typeparam",
+        "name": "T",
+        "id": "Full^T",
+        "loc": {
+          "file": "test/cases/mapped_type_type_param.ts",
+          "line": 1,
+          "column": 17
+        }
+      }
+    ]
+  }
+}

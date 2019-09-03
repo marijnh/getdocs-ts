@@ -198,8 +198,11 @@ class Context {
             return {type: "tuple", typeArgs: (type as TypeReference).typeArguments!.map(t => this.getType(t))}
         }
         if (objFlags & ObjectFlags.Mapped) {
-          let decl = maybeDecl(type.symbol), innerType = decl && (decl as MappedTypeNode).type
-          return {type: "Object", typeArgs: [innerType ? this.getType(this.tc.getTypeAtLocation(innerType)) : {type: "any"}]}
+          let decl = maybeDecl(type.symbol) as MappedTypeNode, innerType = decl && decl.type
+          let typeParam = decl && decl.typeParameter ? this.getTypeParam(decl.typeParameter) : null
+          // This type parameter is not part of the output, but possibly used by the inner type
+          let cx = typeParam ? this.addParams([typeParam]) : this
+          return {type: "Object", typeArgs: [innerType ? cx.getType(this.tc.getTypeAtLocation(innerType)) : {type: "any"}]}
         }
 
         let call = type.getCallSignatures(), strIndex = type.getStringIndexType(), numIndex = type.getNumberIndexType()
@@ -332,20 +335,23 @@ class Context {
 
   getTypeParams(decl: Node): Param[] | null {
     let params = (decl as any).typeParameters as TypeParameterDeclaration[]
-    let cx: Context = this
-    return !params ? null : params.map(param => {
-      let sym = cx.tc.getSymbolAtLocation(param.name)!
-      let localCx = cx.extend(sym)
-      let result: Param = {type: "typeparam", name: sym.name, id: localCx.id}
-      this.addSourceData([param], result)
-      let constraint = getEffectiveConstraintOfTypeParameter(param), type
-      if (constraint && (type = localCx.tc.getTypeAtLocation(constraint)))
-        result.implements = [localCx.getType(type)]
-      if (param.default)
-        result.default = param.getSourceFile().text.slice(param.default.pos, param.default.end).trim()
-      cx = cx.addParams([result])
-      return result
-    })
+    return !params ? null : params.reduce(([res, cx]: [Param[], Context], param): [Param[], Context] => {
+      let p = cx.getTypeParam(param)
+      return [res.concat(p), cx.addParams([p])]
+    }, [[], this])[0]
+  }
+
+  getTypeParam(param: TypeParameterDeclaration): Param {
+    let sym = this.tc.getSymbolAtLocation(param.name)!
+    let localCx = this.extend(sym)
+    let result: Param = {type: "typeparam", name: sym.name, id: localCx.id}
+    this.addSourceData([param], result)
+    let constraint = getEffectiveConstraintOfTypeParameter(param), type
+    if (constraint && (type = localCx.tc.getTypeAtLocation(constraint)))
+      result.implements = [localCx.getType(type)]
+    if (param.default)
+      result.default = param.getSourceFile().text.slice(param.default.pos, param.default.end).trim()
+    return result
   }
 
   addCallSignature(signature: Signature, target: BindingType) {
