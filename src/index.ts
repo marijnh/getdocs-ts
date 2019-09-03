@@ -165,7 +165,7 @@ class Context {
       }
       return {
         type: type.flags & TypeFlags.Union ? "union" : "intersection",
-        typeArgs: types.map(type => this.getType(type))
+        typeArgs: types.map(type => (type.flags & TypeFlags.Void) ? {type: "undefined"} : this.getType(type))
       }
     }
 

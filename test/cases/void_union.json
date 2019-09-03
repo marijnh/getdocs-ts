@@ -1,0 +1,24 @@
+{
+  "x": {
+    "kind": "variable",
+    "id": "x",
+    "loc": {
+      "file": "test/cases/void_union.ts",
+      "line": 1,
+      "column": 13
+    },
+    "type": "Function",
+    "params": [],
+    "returns": {
+      "type": "union",
+      "typeArgs": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "undefined"
+        }
+      ]
+    }
+  }
+}
