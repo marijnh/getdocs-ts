@@ -10,7 +10,7 @@ import {
   Declaration, NamedDeclaration, TypeParameterDeclaration, ParameterDeclaration, EnumDeclaration, VariableDeclaration, ConstructorDeclaration
 } from "typescript"
 
-const {resolve, dirname, relative} = require("path")
+const {resolve, dirname, relative, sep} = require("path")
 
 type BindingKind = "class" | "enum" | "enummember" | "interface" | "variable" | "property" | "method" |
   "typealias" | "typeparam" | "constructor" | "function" | "parameter" | "reexport"
@@ -399,7 +399,7 @@ class Context {
     let decl = maybeDecl(symbol)
     if (!decl) return true
     let path = resolve(decl.getSourceFile().fileName)
-    return !path.startsWith(this.basedir + path.sep) || /\bnode_modules\b/.test(path.slice(this.basedir.length))
+    return !path.startsWith(this.basedir + sep) || /\bnode_modules\b/.test(path.slice(this.basedir.length))
   }
 }
 
