@@ -38,6 +38,7 @@ type BindingType = {
   typeParams?: readonly Param[],
   params?: readonly Param[],
   returns?: BindingType,
+  overloaded?: readonly BindingType[],
   extends?: BindingType,
   implements?: readonly BindingType[],
   construct?: Item
@@ -223,7 +224,11 @@ class Context {
         }
 
         let call = type.getCallSignatures(), strIndex = type.getStringIndexType(), numIndex = type.getNumberIndexType()
-        if (call.length) return this.addCallSignature(call[0], {type: "Function"})
+        if (call.length) {
+          let main = this.addCallSignature(call[0], {type: "Function"})
+          if (call.length > 1) main.overloaded = call.slice(1).map(sig => this.addCallSignature(sig, {type: "Function"}))
+          return main
+        }
         if (strIndex) return {type: "Object", typeArgs: [this.getType(strIndex)]}
         if (numIndex) return {type: "Array", typeArgs: [this.getType(numIndex)]}
 

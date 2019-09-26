@@ -1,0 +1,117 @@
+{
+  "Foo": {
+    "id": "Foo",
+    "instanceProperties": {
+      "m": {
+        "id": "Foo.m",
+        "kind": "method",
+        "loc": {
+          "column": 2,
+          "file": "test/cases/overload.ts",
+          "line": 2
+        },
+        "overloaded": [
+          {
+            "params": [
+              {
+                "id": "Foo.m^x",
+                "loc": {
+                  "column": 7,
+                  "file": "test/cases/overload.ts",
+                  "line": 3
+                },
+                "name": "x",
+                "type": "T",
+                "typeParamSource": "Foo.m^T"
+              }
+            ],
+            "returns": {
+              "type": "T",
+              "typeParamSource": "Foo.m^T"
+            },
+            "type": "Function",
+            "typeParams": [
+              {
+                "id": "Foo.m^T",
+                "loc": {
+                  "column": 4,
+                  "file": "test/cases/overload.ts",
+                  "line": 3
+                },
+                "name": "T",
+                "type": "typeparam"
+              }
+            ]
+          }
+        ],
+        "params": [],
+        "returns": {
+          "type": "undefined"
+        },
+        "type": "Function"
+      }
+    },
+    "kind": "class",
+    "loc": {
+      "column": 0,
+      "file": "test/cases/overload.ts",
+      "line": 1
+    },
+    "type": "class"
+  },
+  "f": {
+    "id": "f",
+    "kind": "function",
+    "loc": {
+      "column": 0,
+      "file": "test/cases/overload.ts",
+      "line": 7
+    },
+    "overloaded": [
+      {
+        "params": [
+          {
+            "id": "f^a",
+            "loc": {
+              "column": 18,
+              "file": "test/cases/overload.ts",
+              "line": 8
+            },
+            "name": "a",
+            "type": "number"
+          },
+          {
+            "id": "f^b",
+            "loc": {
+              "column": 29,
+              "file": "test/cases/overload.ts",
+              "line": 8
+            },
+            "name": "b",
+            "type": "number"
+          }
+        ],
+        "returns": {
+          "type": "number"
+        },
+        "type": "Function"
+      }
+    ],
+    "params": [
+      {
+        "id": "f^a",
+        "loc": {
+          "column": 18,
+          "file": "test/cases/overload.ts",
+          "line": 7
+        },
+        "name": "a",
+        "type": "number"
+      }
+    ],
+    "returns": {
+      "type": "string"
+    },
+    "type": "Function"
+  }
+}
