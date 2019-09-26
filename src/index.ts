@@ -213,9 +213,13 @@ class Context {
         if (objFlags & ObjectFlags.Mapped) {
           let decl = maybeDecl(type.symbol) as MappedTypeNode, innerType = decl && decl.type
           let typeParam = decl && decl.typeParameter ? this.getTypeParam(decl.typeParameter) : null
-          // This type parameter is not part of the output, but possibly used by the inner type
           let cx = typeParam ? this.addParams([typeParam]) : this
-          return {type: "Object", typeArgs: [innerType ? cx.getType(this.tc.getTypeAtLocation(innerType)) : {type: "any"}]}
+          let result: BindingType = {
+            type: "Object",
+            typeArgs: [innerType ? cx.getType(this.tc.getTypeAtLocation(innerType)) : {type: "any"}]
+          }
+          if (typeParam) result.typeParams = [typeParam]
+          return result
         }
 
         let call = type.getCallSignatures(), strIndex = type.getStringIndexType(), numIndex = type.getNumberIndexType()
