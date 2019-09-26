@@ -502,7 +502,8 @@ function getComments(node: Node) {
   return result
 }
 
-export function gather({filename, items = Object.create(null)}: {filename: string, items?: {[name: string]: any}}) {
+export function gather({filename, items = Object.create(null), basedir}:
+                       {filename: string, items?: {[name: string]: any}, basedir?: string}) {
   const configPath = findConfigFile(filename, sys.fileExists)
   const host = createCompilerHost({})
   const options = configPath ? getParsedCommandLineOfConfigFile(configPath, {}, host as any)!.options : {}
@@ -512,7 +513,6 @@ export function gather({filename, items = Object.create(null)}: {filename: strin
 
   const tc = program.getTypeChecker()
   const exports = tc.getExportsOfModule(tc.getSymbolAtLocation(sourceFile)!)
-  const basedir = resolve(dirname(configPath || filename))
 
   // Add all symbols aliased by exports to the set of things that
   // should be considered exported
@@ -522,6 +522,6 @@ export function gather({filename, items = Object.create(null)}: {filename: strin
     if (alias && !closedExports.includes(alias)) closedExports.push(alias)
   }
 
-  new Context(tc, closedExports, basedir, "", []).gatherSymbols(exports, items, "")
+  new Context(tc, closedExports, resolve(basedir || dirname(configPath || filename)), "", []).gatherSymbols(exports, items, "")
   return items
 }
