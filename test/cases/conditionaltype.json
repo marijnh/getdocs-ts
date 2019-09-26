@@ -1,0 +1,34 @@
+{
+  "NonUndefined": {
+    "id": "NonUndefined",
+    "kind": "typealias",
+    "loc": {
+      "column": 0,
+      "file": "test/cases/conditionaltype.ts",
+      "line": 1
+    },
+    "type": "conditional",
+    "typeArgs": [
+      {
+        "type": "never"
+      },
+      {
+        "type": "T",
+        "typeParamSource": "NonUndefined^T"
+      }
+    ],
+    "typeParams": [
+      {
+        "id": "NonUndefined^T",
+        "loc": {
+          "column": 25,
+          "file": "test/cases/conditionaltype.ts",
+          "line": 1
+        },
+        "name": "T",
+        "type": "typeparam"
+      }
+    ]
+  }
+}
+

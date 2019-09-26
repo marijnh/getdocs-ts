@@ -5,7 +5,8 @@ import {
   isClassLike, isInterfaceDeclaration,
   TypeChecker,
   Symbol, SymbolFlags, ModifierFlags,
-  Type, TypeFlags, ObjectType, TypeReference, ObjectFlags, LiteralType, UnionOrIntersectionType, Signature, IndexType, IndexedAccessType,
+  Type, TypeFlags, ObjectType, TypeReference, ObjectFlags, LiteralType, UnionOrIntersectionType, ConditionalType,
+  Signature, IndexType, IndexedAccessType,
   Node, SyntaxKind, UnionOrIntersectionTypeNode, MappedTypeNode,
   Declaration, NamedDeclaration, TypeParameterDeclaration, ParameterDeclaration, EnumDeclaration, VariableDeclaration, ConstructorDeclaration
 } from "typescript"
@@ -182,6 +183,18 @@ class Context {
     if (type.flags & TypeFlags.IndexedAccess) {
       return {type: "indexed", typeArgs: [this.getType((type as IndexedAccessType).objectType),
                                           this.getType((type as IndexedAccessType).indexType)]}
+    }
+
+    if (type.flags & TypeFlags.Conditional) {
+      let {root} = type as ConditionalType
+      let paramSym = root.checkType.symbol, paramCx = this.extend(paramSym)
+      let typeParam: Param = {type: "typeparam", name: paramSym.name, id: paramCx.id,
+                              implements: [paramCx.getType(root.extendsType)]}
+      this.addSourceData(paramSym.declarations, typeParam)
+      let innerCx = this.addParams([typeParam])
+      return {type: "conditional",
+              typeParams: [typeParam],
+              typeArgs: [innerCx.getType(root.trueType), innerCx.getType(root.falseType)]}
     }
 
     if (type.flags & TypeFlags.Object) {
