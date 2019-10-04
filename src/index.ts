@@ -72,11 +72,12 @@ class Context {
     return new Context(this.tc, this.exports, this.basedir, this.id, typeParams.concat(this.typeParams))
   }
 
-  gatherSymbols(symbols: readonly Symbol[], target: {[name: string]: any} = {}, sep = ".") {
+  gatherSymbols(symbols: readonly Symbol[], target: {[name: string]: Item} = {}, sep = ".",
+                filter?: (name: string, value: Item) => boolean) {
     let gathered = 0
     for (const symbol of symbols.slice().sort(compareSymbols)) {
       let item = this.extend(symbol, sep).itemForSymbol(symbol)
-      if (item) {
+      if (item && (!filter || filter(symbol.name, item))) {
         target[symbol.name] = item
         gathered++
       }
@@ -270,6 +271,19 @@ class Context {
     let classDecl = type.symbol.valueDeclaration
     if (!isClassLike(classDecl)) throw new Error("Class decl isn't class-like")
 
+    let parentProps: string[] = []
+    if (classDecl.heritageClauses) {
+      for (let heritage of classDecl.heritageClauses) {
+        let parents = heritage.types.map(node => {
+          let type = this.tc.getTypeAtLocation(node)
+          for (let sym of type.getProperties()) parentProps.push(sym.name)
+          return this.getType(type)
+        })
+        if (heritage.token == SyntaxKind.ExtendsKeyword) out.extends = parents[0]
+        else out.implements = parents
+      }
+    }
+
     let definedProps: string[] = [], definedStatic: string[] = [], ctors: Declaration[] = []
     for (let member of classDecl.members) {
       let symbol = this.tc.getSymbolAtLocation(member.name || member)!
@@ -300,7 +314,9 @@ class Context {
     let ctorType = type.getConstructSignatures()[0]
     if (ctorType) {
       let protoProps = ctorType.getReturnType().getProperties().filter(prop => definedProps.includes(prop.name))
-      let instanceObj = this.gatherSymbols(protoProps)
+      let instanceObj = this.gatherSymbols(protoProps, undefined, undefined, (name, value) => {
+        return !!value.description || !parentProps.includes(name)
+      })
       if (instanceObj) out.instanceProperties = instanceObj
     }
 
@@ -308,13 +324,6 @@ class Context {
     let propObj = this.gatherSymbols(props, undefined, "^")
     if (propObj) out.properties = propObj
 
-    if (classDecl.heritageClauses) {
-      for (let heritage of classDecl.heritageClauses) {
-        let parents = heritage.types.map(node => this.getType(this.tc.getTypeAtLocation(node)))
-        if (heritage.token == SyntaxKind.ExtendsKeyword) out.extends = parents[0]
-        else out.implements = parents
-      }
-    }
     return out
   }
 

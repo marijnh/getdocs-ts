@@ -1,0 +1,103 @@
+{
+  "Bar": {
+    "id": "Bar",
+    "extends": {
+      "type": "Foo",
+      "typeSource": "test/cases/subclass_methods.ts"
+    },
+    "instanceProperties": {
+      "d": {
+        "description": "With a doc comment",
+        "id": "Bar.d",
+        "kind": "method",
+        "loc": {
+          "column": 2,
+          "file": "test/cases/subclass_methods.ts",
+          "line": 11
+        },
+        "params": [],
+        "returns": {
+          "type": "number"
+        },
+        "type": "Function"
+      }
+    },
+    "kind": "class",
+    "loc": {
+      "column": 0,
+      "file": "test/cases/subclass_methods.ts",
+      "line": 8
+    },
+    "type": "class"
+  },
+  "Foo": {
+    "abstract": true,
+    "id": "Foo",
+    "instanceProperties": {
+      "a": {
+        "id": "Foo.a",
+        "kind": "method",
+        "loc": {
+          "column": 2,
+          "file": "test/cases/subclass_methods.ts",
+          "line": 2
+        },
+        "params": [],
+        "returns": {
+          "type": "number"
+        },
+        "type": "Function"
+      },
+      "b": {
+        "id": "Foo.b",
+        "abstract": true,
+        "kind": "method",
+        "loc": {
+          "column": 2,
+          "file": "test/cases/subclass_methods.ts",
+          "line": 3
+        },
+        "params": [],
+        "returns": {
+          "type": "number"
+        },
+        "type": "Function"
+      },
+      "c": {
+        "id": "Foo.c",
+        "kind": "method",
+        "loc": {
+          "column": 2,
+          "file": "test/cases/subclass_methods.ts",
+          "line": 4
+        },
+        "params": [],
+        "returns": {
+          "type": "number"
+        },
+        "type": "Function"
+      },
+      "d": {
+        "id": "Foo.d",
+        "kind": "method",
+        "loc": {
+          "column": 2,
+          "file": "test/cases/subclass_methods.ts",
+          "line": 5
+        },
+        "params": [],
+        "returns": {
+          "type": "number"
+        },
+        "type": "Function"
+      }
+    },
+    "kind": "class",
+    "loc": {
+      "column": 0,
+      "file": "test/cases/subclass_methods.ts",
+      "line": 1
+    },
+    "type": "class"
+  }
+}
