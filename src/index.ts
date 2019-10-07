@@ -38,6 +38,8 @@ type BindingType = {
   typeParams?: readonly Param[],
   params?: readonly Param[],
   returns?: BindingType,
+  // Used by mapped types
+  key?: Param,
   overloaded?: readonly BindingType[],
   extends?: BindingType,
   implements?: readonly BindingType[],
@@ -218,10 +220,10 @@ class Context {
         let typeParam = decl && decl.typeParameter ? this.getTypeParam(decl.typeParameter) : null
         let cx = typeParam ? this.addParams([typeParam]) : this
         let result: BindingType = {
-          type: "Object",
+          type: typeParam ? "mapped" : "Object",
           typeArgs: [innerType ? cx.getType(this.tc.getTypeAtLocation(innerType)) : {type: "any"}]
         }
-        if (typeParam) result.typeParams = [typeParam]
+        if (typeParam) result.key = typeParam
         return result
       }
 

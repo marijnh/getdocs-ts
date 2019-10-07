@@ -1,7 +1,28 @@
 {
   "T": {
     "kind": "typealias",
-    "type": "Object",
+    "key": {
+      "id": "T^K",
+      "implements": [
+        {
+          "type": "keyof",
+          "typeArgs": [
+            {
+              "type": "A",
+              "typeParamSource": "T^A"
+            }
+          ]
+        }
+      ],
+      "loc": {
+        "column": 24,
+        "file": "test/cases/mapped_type.ts",
+        "line": 1
+      },
+      "name": "K",
+      "type": "typeparam"
+    },
+    "type": "mapped",
     "typeParams": [
       {
         "name": "A",

@@ -7,7 +7,28 @@
       "line": 1,
       "column": 0
     },
-    "type": "Object",
+    "key": {
+      "id": "Full^K",
+      "implements": [
+        {
+          "type": "keyof",
+          "typeArgs": [
+            {
+              "type": "T",
+              "typeParamSource": "Full^T"
+            }
+          ]
+        }
+      ],
+      "loc": {
+        "column": 24,
+        "file": "test/cases/mapped_type_type_param.ts",
+        "line": 1
+      },
+      "name": "K",
+      "type": "typeparam"
+    },
+    "type": "mapped",
     "typeArgs": [
       {
         "type": "indexed",
