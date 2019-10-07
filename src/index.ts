@@ -1,7 +1,7 @@
 import {
   getCombinedModifierFlags, findConfigFile, createCompilerHost, getParsedCommandLineOfConfigFile, createProgram, sys,
   getEffectiveConstraintOfTypeParameter,
-  getLineAndCharacterOfPosition, isWhiteSpaceLike, isWhiteSpaceSingleLine, isLineBreak,
+  getLineAndCharacterOfPosition, isWhiteSpaceLike, isLineBreak,
   isClassLike, isInterfaceDeclaration,
   TypeChecker,
   Symbol, SymbolFlags, ModifierFlags,
@@ -467,38 +467,29 @@ function getComments(node: Node) {
   const sourceFile = node.getSourceFile()
   if (!sourceFile) return "" // Synthetic node
   const {text} = sourceFile
-  let result = "", blankLine = false
+  let lines: string[] = [], blankLine = false
+  function add(line: string) {
+    if (blankLine) {
+      blankLine = false
+      if (lines.length && /\S/.test(lines[lines.length - 1])) lines.push("")
+    }
+    lines.push(line)
+  }
+
   while (pos < text.length) {
     const ch = text.charCodeAt(pos)
     if (ch === 47) { // slash
       const nextCh = text.charCodeAt(pos + 1)
       if (nextCh === 47) {
-        let start = -1, doc = text.charCodeAt(pos + 2) == 47
-        pos += doc ? 3 : 2
-        for (; pos < text.length; ++pos) {
-          const ch = text.charCodeAt(pos)
-          if (start < 0 && !isWhiteSpaceSingleLine(ch)) start = pos
-          if (isLineBreak(ch)) break
-        }
-        if (doc && start > 0) {
-          if (blankLine) {
-            blankLine = false
-            if (result) result += "\n\n"
-          }
-          let line = text.substr(start, pos - start)
-          result += (result && !/\s$/.test(result) ? " " : "") + line
-        }
+        let doc = text.charCodeAt(pos + 2) == 47
+        let start = pos += doc ? 3 : 2
+        while (pos < text.length && !isLineBreak(text.charCodeAt(pos))) pos++
+        if (doc) add(text.slice(start, pos))
       } else if (nextCh === 42) { // asterisk
         const doc = text.charCodeAt(pos + 2) == 42, start = pos + (doc ? 3 : 2)
         for (pos = start; pos < text.length; ++pos)
           if (text.charCodeAt(pos) === 42 /* asterisk */ && text.charCodeAt(pos + 1) === 47 /* slash */) break
-        if (doc) {
-          if (blankLine) {
-            blankLine = false
-            if (result) result += "\n\n"
-          }
-          result += text.substr(start, pos - start).trim()
-        }
+        if (doc) add(text.slice(start, pos))
         pos += 2
       }
     } else if (isWhiteSpaceLike(ch)) {
@@ -508,7 +499,51 @@ function getComments(node: Node) {
       break
     }
   }
-  return result
+  return stripComment(lines)
+}
+
+function stripComment(lines: string[]) {
+  for (var head, i = 1; i < lines.length; i++) {
+    var line = lines[i], lineHead = line.match(/^[\s\*]*/)![0]
+    if (lineHead != line) {
+      if (head == null) {
+        head = lineHead
+      } else {
+        var same = 0
+        while (same < head.length && head.charCodeAt(same) == lineHead.charCodeAt(same)) ++same
+        if (same < head.length) head = head.slice(0, same)
+      }
+    }
+  }
+  if (head != null) {
+    var startIndent = /^\s*/.exec(lines[0])![0]
+    var trailing = /\s*$/.exec(head)![0]
+    var extra = trailing.length - startIndent.length
+    if (extra > 0) head = head.slice(0, head.length - extra)
+  }
+
+  outer: for (var i = 0; i < lines.length; i++) {
+    var line = lines[i].replace(/\s+$/, "")
+    if (i == 0 && head != null) {
+      for (var j = 0; j < head.length; j++) {
+        var found = line.indexOf(head.slice(j))
+        if (found == 0) {
+          lines[i] = line.slice(head.length - j)
+          continue outer
+        }
+      }
+    }
+    if (head == null || i == 0)
+      lines[i] = line.replace(/^[\s\*]*/, "")
+    else if (line.length < head.length)
+      lines[i] = ""
+    else
+      lines[i] = line.slice(head.length)
+  }
+
+  while (lines.length && !lines[lines.length - 1]) lines.pop()
+  while (lines.length && !lines[0]) lines.shift()
+  return lines.join("\n")
 }
 
 export function gather({filename, items = Object.create(null), basedir}:

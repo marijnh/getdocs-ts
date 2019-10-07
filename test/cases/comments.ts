@@ -6,7 +6,7 @@ export const y = a
 
 export class X {
   /// Should be
-  ///separate words
+  ///separate lines
   x: number
 
   /// Several comments

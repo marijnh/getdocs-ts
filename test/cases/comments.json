@@ -17,7 +17,7 @@
       "x": {
         "kind": "property",
         "type": "number",
-        "description": "Should be separate words",
+        "description": "Should be\nseparate lines",
         "loc": {
           "file": "test/cases/comments.ts",
           "line": 8,

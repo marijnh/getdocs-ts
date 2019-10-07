@@ -1,0 +1,14 @@
+{
+  "x": {
+    "description": "This is a comment\n\nWith blank lines and some markdown stuff:\n\n - A list\n - Of items\n\nAnd a code block:\n\n    Line 1\n    Line 2",
+    "id": "x",
+    "kind": "variable",
+    "loc": {
+      "column": 13,
+      "file": "test/cases/linebreaks.ts",
+      "line": 12
+    },
+    "type": "1"
+  }
+}
+
