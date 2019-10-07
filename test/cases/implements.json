@@ -4,8 +4,8 @@
     "type": "class",
     "implements": [
       {
-        "type": "TextIterator",
-        "typeSource": "test/cases/this_type.ts"
+        "type": "I",
+        "typeSource": "test/cases/implements.ts"
       }
     ],
     "loc": {
@@ -14,5 +14,27 @@
       "file": "test/cases/implements.ts"
     },
     "id": "ChangeDesc"
+  },
+  "I": {
+    "id": "I",
+    "kind": "interface",
+    "loc": {
+      "column": 0,
+      "file": "test/cases/implements.ts",
+      "line": 1
+    },
+    "properties": {
+      "foo": {
+        "id": "I.foo",
+        "kind": "property",
+        "loc": {
+          "column": 21,
+          "file": "test/cases/implements.ts",
+          "line": 1
+        },
+        "type": "number"
+      }
+    },
+    "type": "interface"
   }
 }

@@ -1,4 +1,4 @@
-import {TextIterator} from "./this_type"
+export interface I { foo: number }
 
-export class ChangeDesc implements TextIterator {
+export class ChangeDesc implements I {
 }

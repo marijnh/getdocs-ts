@@ -205,44 +205,42 @@ class Context {
       if (forSymbol && (forSymbol.flags & SymbolFlags.Class)) return this.getClassType(type as ObjectType)
       if (forSymbol && (forSymbol.flags & SymbolFlags.Interface)) return this.getObjectType(type as ObjectType, forSymbol)
 
-      if (!((objFlags & ObjectFlags.Reference) && type.symbol && this.isAvailable(type.symbol))) {
-        // Tuples have a weird structure where they point as references at a generic tuple type
-        if (objFlags & ObjectFlags.Reference) {
-          let target = (type as TypeReference).target
-          if ((target.flags & TypeFlags.Object) && ((target as ObjectType).objectFlags & ObjectFlags.Tuple))
-            return {type: "tuple", typeArgs: (type as TypeReference).typeArguments!.map(t => this.getType(t))}
-        }
-        if (objFlags & ObjectFlags.Mapped) {
-          let decl = maybeDecl(type.symbol) as MappedTypeNode, innerType = decl && decl.type
-          let typeParam = decl && decl.typeParameter ? this.getTypeParam(decl.typeParameter) : null
-          let cx = typeParam ? this.addParams([typeParam]) : this
-          let result: BindingType = {
-            type: "Object",
-            typeArgs: [innerType ? cx.getType(this.tc.getTypeAtLocation(innerType)) : {type: "any"}]
-          }
-          if (typeParam) result.typeParams = [typeParam]
-          return result
-        }
+      if ((objFlags & (ObjectFlags.Reference | ObjectFlags.Interface)) &&
+          type.symbol && this.isAvailable(type.symbol))
+        return this.getReferenceType(type.symbol, (type as TypeReference).typeArguments, type)
 
-        let call = type.getCallSignatures(), strIndex = type.getStringIndexType(), numIndex = type.getNumberIndexType()
-        if (call.length) {
-          let main = this.addCallSignature(call[0], {type: "Function"})
-          if (call.length > 1) main.overloaded = call.slice(1).map(sig => this.addCallSignature(sig, {type: "Function"}))
-          return main
+      // Tuples have a weird structure where they point as references at a generic tuple type
+      if (objFlags & ObjectFlags.Reference) {
+        let target = (type as TypeReference).target
+        if ((target.flags & TypeFlags.Object) && ((target as ObjectType).objectFlags & ObjectFlags.Tuple))
+          return {type: "tuple", typeArgs: (type as TypeReference).typeArguments!.map(t => this.getType(t))}
+      }
+      if (objFlags & ObjectFlags.Mapped) {
+        let decl = maybeDecl(type.symbol) as MappedTypeNode, innerType = decl && decl.type
+        let typeParam = decl && decl.typeParameter ? this.getTypeParam(decl.typeParameter) : null
+        let cx = typeParam ? this.addParams([typeParam]) : this
+        let result: BindingType = {
+          type: "Object",
+          typeArgs: [innerType ? cx.getType(this.tc.getTypeAtLocation(innerType)) : {type: "any"}]
         }
-        if (strIndex) return {type: "Object", typeArgs: [this.getType(strIndex)]}
-        if (numIndex) return {type: "Array", typeArgs: [this.getType(numIndex)]}
-
-        if (objFlags & ObjectFlags.Anonymous) {
-          // See `createAnonymousTypeNode` for more fine-grained `typeof` conditionals
-          if (type.symbol.flags & (SymbolFlags.Class | SymbolFlags.Enum | SymbolFlags.ValueModule)) {
-            return {type: "typeof", typeArgs: [this.getReferenceType(type.symbol)]}
-          }
-          return this.getObjectType(type as ObjectType)
-        }
+        if (typeParam) result.typeParams = [typeParam]
+        return result
       }
 
-      return this.getReferenceType(type.symbol, (type as TypeReference).typeArguments, type)
+      let call = type.getCallSignatures(), strIndex = type.getStringIndexType(), numIndex = type.getNumberIndexType()
+      if (call.length) {
+        let main = this.addCallSignature(call[0], {type: "Function"})
+        if (call.length > 1) main.overloaded = call.slice(1).map(sig => this.addCallSignature(sig, {type: "Function"}))
+        return main
+      }
+      if (strIndex) return {type: "Object", typeArgs: [this.getType(strIndex)]}
+      if (numIndex) return {type: "Array", typeArgs: [this.getType(numIndex)]}
+
+      // See `createAnonymousTypeNode` for more fine-grained `typeof` conditionals
+      if ((type.symbol.flags & (SymbolFlags.Class | SymbolFlags.Enum | SymbolFlags.ValueModule)) &&
+          this.isAvailable(type.symbol))
+        return {type: "typeof", typeArgs: [this.getReferenceType(type.symbol)]}
+      return this.getObjectType(type as ObjectType)
     }
 
     throw new Error(`Unsupported type ${this.tc.typeToString(type)} with flags ${type.flags}`)

@@ -29,8 +29,7 @@
           }
         ],
         "returns": {
-          "type": "TextIterator",
-          "typeSource": "test/cases/this_type.ts"
+          "type": "RegExp"
         },
         "loc": {
           "line": 2,

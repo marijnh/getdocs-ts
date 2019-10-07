@@ -34,5 +34,27 @@
       "line": 7,
       "column": 13
     }
+  },
+  "c": {
+    "id": "c",
+    "kind": "variable",
+    "loc": {
+      "column": 13,
+      "file": "test/cases/inline_reference.ts",
+      "line": 13
+    },
+    "properties": {
+      "x": {
+        "id": "c.x",
+        "kind": "property",
+        "loc": {
+          "column": 2,
+          "file": "test/cases/inline_reference.ts",
+          "line": 10
+        },
+        "type": "number"
+      }
+    },
+    "type": "Object"
   }
 }
