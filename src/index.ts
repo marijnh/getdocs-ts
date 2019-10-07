@@ -56,6 +56,9 @@ type Param = BindingType & {
 
 type Item = Binding & BindingType
 
+// Used for recursion check in getObjectType
+const gettingObjectTypes: Type[] = []
+
 class Context {
   constructor(readonly tc: TypeChecker,
               readonly exports: readonly Symbol[],
@@ -247,6 +250,8 @@ class Context {
   }
 
   getObjectType(type: ObjectType, interfaceSymbol?: Symbol): BindingType {
+    if (gettingObjectTypes.includes(type)) return {type: "Object"}
+    gettingObjectTypes.push(type)
     let out: BindingType = {type: interfaceSymbol ? "interface" : "Object"}
 
     let call = type.getCallSignatures(), props = type.getProperties()
@@ -261,6 +266,7 @@ class Context {
     if (call.length) this.addCallSignature(call[0], out)
     let propObj = this.gatherSymbols(props)
     if (propObj) out.properties = propObj
+    gettingObjectTypes.pop()
     return out
   }
 
