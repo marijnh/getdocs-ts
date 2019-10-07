@@ -192,14 +192,9 @@ class Context {
 
     if (type.flags & TypeFlags.Conditional) {
       let {root} = type as ConditionalType
-      let paramSym = root.checkType.symbol, paramCx = this.extend(paramSym)
-      let typeParam: Param = {type: "typeparam", name: paramSym.name, id: paramCx.id,
-                              implements: [paramCx.getType(root.extendsType)]}
-      this.addSourceData(paramSym.declarations, typeParam)
-      let innerCx = this.addParams([typeParam])
       return {type: "conditional",
-              typeParams: [typeParam],
-              typeArgs: [innerCx.getType(root.trueType), innerCx.getType(root.falseType)]}
+              typeArgs: [this.getType(root.checkType), this.getType(root.extendsType),
+                         this.getType(root.trueType), this.getType(root.falseType)]}
     }
 
     if (type.flags & TypeFlags.Object) {
