@@ -1,0 +1,34 @@
+{
+  "O": {
+    "id": "O",
+    "kind": "typealias",
+    "loc": {
+      "column": 0,
+      "file": "test/cases/symbolproperty.ts",
+      "line": 3
+    },
+    "properties": {
+      "[symbol iterator]": {
+        "id": "O.[symbol iterator]",
+        "kind": "property",
+        "loc": {
+          "column": 2,
+          "file": "test/cases/symbolproperty.ts",
+          "line": 5
+        },
+        "type": "string"
+      },
+      "[unique symbol]": {
+        "id": "O.[unique symbol]",
+        "kind": "property",
+        "loc": {
+          "column": 2,
+          "file": "test/cases/symbolproperty.ts",
+          "line": 4
+        },
+        "type": "number"
+      }
+    },
+    "type": "Object"
+  }
+}

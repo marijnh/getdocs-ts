@@ -81,13 +81,20 @@ class Context {
                 filter?: (name: string, value: Item) => boolean) {
     let gathered = 0
     for (const symbol of symbols.slice().sort(compareSymbols)) {
-      let item = this.extend(symbol, sep).itemForSymbol(symbol)
-      if (item && (!filter || filter(symbol.name, item))) {
-        target[symbol.name] = item
+      let name = this.symbolName(symbol)
+      let item = this.extend(name, sep).itemForSymbol(symbol)
+      if (item && (!filter || filter(name, item))) {
+        target[name] = item
         gathered++
       }
     }
     return gathered ? target : null
+  }
+
+  symbolName(symbol: Symbol) {
+    if (!/^__@/.test(symbol.name)) return symbol.name
+    let name = symbol.name.slice(3)
+    return /@/.test(name) ? "[unique symbol]" : `[symbol ${name}]`
   }
 
   itemForSymbol(symbol: Symbol): Item | null {
