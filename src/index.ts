@@ -249,6 +249,7 @@ class Context {
         return {type: "typeof", typeArgs: [this.getReferenceType(type.symbol)]}
       return this.getObjectType(type as ObjectType)
     }
+    if (type.flags & TypeFlags.Unknown) return {type: "unknown"}
 
     throw new Error(`Unsupported type ${this.tc.typeToString(type)} with flags ${type.flags}`)
   }
