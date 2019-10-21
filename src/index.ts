@@ -251,10 +251,12 @@ class Context {
     }
     if (type.flags & TypeFlags.Unknown) return {type: "unknown"}
 
-    let maybeS = forSymbol || type.symbol
-    let maybeD = maybeS && maybeDecl(maybeS)
-    let maybePos = maybeD && getLineAndCharacterOfPosition(maybeD.getSourceFile(), maybeD.pos)
-    let maybePath = maybeD && ` at ${this.nodePath(maybeD)}:${maybePos.line - 1}:${maybePos.character - 1}`
+    let maybePath = ""
+    let maybeD, maybeS = forSymbol || type.symbol
+    if (maybeD = maybeS && maybeDecl(maybeS)) {
+      let pos = getLineAndCharacterOfPosition(maybeD.getSourceFile(), maybeD.pos)
+      maybePath = ` at ${this.nodePath(maybeD)}:${pos.line - 1}:${pos.character - 1}`
+    }
     throw new Error(`Unsupported type ${this.tc.typeToString(type)} with flags ${type.flags}${maybePath}`)
   }
 
