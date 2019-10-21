@@ -251,7 +251,11 @@ class Context {
     }
     if (type.flags & TypeFlags.Unknown) return {type: "unknown"}
 
-    throw new Error(`Unsupported type ${this.tc.typeToString(type)} with flags ${type.flags}`)
+    let maybeS = forSymbol || type.symbol
+    let maybeD = maybeS && maybeDecl(maybeS)
+    let maybePos = maybeD && getLineAndCharacterOfPosition(maybeD.getSourceFile(), maybeD.pos)
+    let maybePath = maybeD && ` at ${this.nodePath(maybeD)}:${maybePos.line - 1}:${maybePos.character - 1}`
+    throw new Error(`Unsupported type ${this.tc.typeToString(type)} with flags ${type.flags}${maybePath}`)
   }
 
   getObjectType(type: ObjectType, interfaceSymbol?: Symbol): BindingType {
