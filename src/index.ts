@@ -351,7 +351,11 @@ class Context {
         let targetParams = (arityType as TypeReference).target.typeParameters
         typeArgs = typeArgs.slice(0, targetParams ? targetParams.length : 0)
       }
-      if (typeArgs.length) result.typeArgs = typeArgs.map(arg => this.getType(arg))
+      if (typeArgs.length) {
+        result.typeArgs = typeArgs.map(arg => this.getType(arg))
+        // Typescript assigns an extra 2 uninteresting type arguments to Iterator types. Erase these
+        if (typeArgs.length == 3 && symbol.name == "Iterator") result.typeArgs = result.typeArgs.slice(0, 1)
+      }
     }
     return result
   }
