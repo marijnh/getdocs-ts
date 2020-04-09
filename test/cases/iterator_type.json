@@ -1,0 +1,17 @@
+{
+  "foo": {
+    "kind": "variable",
+    "id": "foo",
+    "loc": {
+      "file": "test/cases/iterator_type.ts",
+      "line": 1,
+      "column": 13
+    },
+    "type": "Iterator",
+    "typeArgs": [
+      {
+        "type": "number"
+      }
+    ]
+  }
+}

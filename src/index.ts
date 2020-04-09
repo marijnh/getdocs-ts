@@ -11,7 +11,7 @@ import {
   Declaration, NamedDeclaration, TypeParameterDeclaration, ParameterDeclaration, EnumDeclaration, VariableDeclaration, ConstructorDeclaration
 } from "typescript"
 
-const {resolve, dirname, relative, sep} = require("path")
+import {resolve, dirname, relative, sep} from "path"
 
 type BindingKind = "class" | "enum" | "enummember" | "interface" | "variable" | "property" | "method" |
   "typealias" | "typeparam" | "constructor" | "function" | "parameter" | "reexport"
@@ -347,14 +347,28 @@ class Context {
     let typeSource = this.nodePath(decl(symbol))
     if (!isBuiltin(typeSource)) result.typeSource = typeSource
     if (typeArgs) {
-      if (arityType) {
-        let targetParams = (arityType as TypeReference).target.typeParameters
-        typeArgs = typeArgs.slice(0, targetParams ? targetParams.length : 0)
-      }
+      let targetParams = arityType ? (arityType as TypeReference).target.typeParameters : null
+      if (arityType) typeArgs = typeArgs.slice(0, targetParams ? targetParams.length : 0)
       if (typeArgs.length) {
-        result.typeArgs = typeArgs.map(arg => this.getType(arg))
-        // Typescript assigns an extra 2 uninteresting type arguments to Iterator types. Erase these
-        if (typeArgs.length == 3 && symbol.name == "Iterator") result.typeArgs = result.typeArgs.slice(0, 1)
+        let args = typeArgs.map(arg => this.getType(arg))
+        // If there are default types for the type parameters, drop
+        // types that match the default from the list of arguments to
+        // reduce noise.
+        if (targetParams) {
+          let cx: Context | null = null
+          for (let i = targetParams.length - 1; i >= 0; i--) {
+            let deflt = targetParams[i].getDefault()
+            if (!deflt) break
+            if (!cx) cx = this.addParams(args.map((a, i) => Object.assign({
+              name: targetParams![i].symbol.name,
+              id: String(i)
+            }, a)))
+            let compare = cx.getType(deflt)
+            if (compareTypes(args[i], compare, args as any)) args.pop()
+            else break
+          }
+        }
+        if (args.length) result.typeArgs = args
       }
     }
     return result
@@ -479,6 +493,24 @@ function compareSymbols(a: Symbol, b: Symbol) {
   if (!db) return 1
   let fa = da.getSourceFile().fileName, fb = db.getSourceFile().fileName
   return fa == fb ? da.pos - db.pos : fa < fb ? -1 : 1
+}
+
+function compareTypes(a: BindingType, b: BindingType, paramMap: {[id: string]: BindingType}) {
+  while (b.typeParamSource && paramMap[b.typeParamSource]) b = paramMap[b.typeParamSource]
+  if (a.type != b.type || a.typeSource != b.typeSource || a.typeParamSource != b.typeParamSource ||
+      !a.properties != !b.properties || a.instanceProperties || b.instanceProperties ||
+      !a.typeArgs != !b.typeArgs || !a.params != !b.params || !a.returns != !b.returns) return false
+  if (a.properties) {
+    let aK = Object.keys(a.properties), bK = Object.keys(b.properties!)
+    if (aK.length != bK.length || !aK.every(k => b.properties![k] || compareTypes(a.properties![k], b.properties![k], paramMap)))
+      return false
+  }
+  if (a.typeArgs && (a.typeArgs.length != b.typeArgs!.length ||
+                     !a.typeArgs.every((ta, i) => compareTypes(ta, b.typeArgs![i], paramMap)))) return false
+  if (a.params && (a.params.length != b.params!.length ||
+                   !a.params.every((p, i) => compareTypes(p, b.params![i], paramMap)))) return false
+  if (a.returns && !compareTypes(a.returns, b.returns!, paramMap)) return false
+  return true
 }
 
 function getComments(node: Node) {
