@@ -1,0 +1,70 @@
+{
+  "Foo": {
+    "kind": "typealias",
+    "id": "Foo",
+    "loc": {
+      "file": "test/cases/keyof.ts",
+      "line": 1,
+      "column": 0
+    },
+    "type": "Object",
+    "properties": {
+      "a": {
+        "kind": "property",
+        "id": "Foo.a",
+        "loc": {
+          "file": "test/cases/keyof.ts",
+          "line": 1,
+          "column": 19
+        },
+        "type": "number"
+      },
+      "b": {
+        "kind": "property",
+        "id": "Foo.b",
+        "loc": {
+          "file": "test/cases/keyof.ts",
+          "line": 1,
+          "column": 30
+        },
+        "type": "string"
+      }
+    }
+  },
+  "x": {
+    "kind": "variable",
+    "id": "x",
+    "loc": {
+      "file": "test/cases/keyof.ts",
+      "line": 3,
+      "column": 13
+    },
+    "type": "mapped",
+    "typeArgs": [
+      {
+        "type": "number"
+      }
+    ],
+    "key": {
+      "type": "typeparam",
+      "name": "Type",
+      "id": "x^Type",
+      "loc": {
+        "file": "test/cases/keyof.ts",
+        "line": 3,
+        "column": 18
+      },
+      "implements": [
+        {
+          "type": "keyof",
+          "typeArgs": [
+            {
+              "type": "Foo",
+              "typeSource": "test/cases/keyof.ts"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

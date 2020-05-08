@@ -7,7 +7,7 @@ import {
   Symbol, SymbolFlags, ModifierFlags,
   Type, TypeFlags, ObjectType, TypeReference, ObjectFlags, LiteralType, UnionOrIntersectionType, ConditionalType,
   Signature, IndexType, IndexedAccessType,
-  Node, SyntaxKind, UnionOrIntersectionTypeNode, MappedTypeNode,
+  Node, SyntaxKind, UnionOrIntersectionTypeNode, MappedTypeNode, TypeOperatorNode,
   Declaration, NamedDeclaration, TypeParameterDeclaration, ParameterDeclaration, EnumDeclaration, VariableDeclaration, ConstructorDeclaration
 } from "typescript"
 
@@ -411,7 +411,15 @@ class Context {
     let result: Param = {type: "typeparam", name: sym.name, id: localCx.id}
     this.addSourceData([param], result)
     let constraint = getEffectiveConstraintOfTypeParameter(param), type
-    if (constraint && (type = localCx.tc.getTypeAtLocation(constraint)))
+    // Directly querying getTypeAtLocation for the constraint will
+    // resolve keyof types for some reason, which can lead to very
+    // ugly and verbose output. So this inspects the type node for
+    // that case and manually handles it.
+    if (constraint && constraint.kind == SyntaxKind.TypeOperator &&
+        (constraint as TypeOperatorNode).operator == SyntaxKind.KeyOfKeyword &&
+        (type = localCx.tc.getTypeAtLocation((constraint as TypeOperatorNode).type)))
+      result.implements = [{type: "keyof", typeArgs: [this.getType(type)]}]
+    else if (constraint && (type = localCx.tc.getTypeAtLocation(constraint)))
       result.implements = [localCx.getType(type)]
     if (param.default)
       result.default = param.getSourceFile().text.slice(param.default.pos, param.default.end).trim()
