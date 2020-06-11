@@ -1,0 +1,36 @@
+{
+  "I": {
+    "kind": "interface",
+    "id": "I",
+    "loc": {
+      "file": "test/cases/string_index.ts",
+      "line": 1,
+      "column": 0
+    },
+    "type": "interface",
+    "properties": {
+      "a": {
+        "kind": "property",
+        "id": "I.a",
+        "description": "Doc for a",
+        "loc": {
+          "file": "test/cases/string_index.ts",
+          "line": 2,
+          "column": 2
+        },
+        "type": "number"
+      },
+      "[string]": {
+        "kind": "property",
+        "id": "I^string",
+        "description": "Doc for other",
+        "loc": {
+          "file": "test/cases/string_index.ts",
+          "line": 4,
+          "column": 2
+        },
+        "type": "any"
+      }
+    }
+  }
+}
