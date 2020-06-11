@@ -234,14 +234,12 @@ class Context {
         return result
       }
 
-      let call = type.getCallSignatures(), strIndex = type.getStringIndexType(), numIndex = type.getNumberIndexType()
+      let call = type.getCallSignatures()
       if (call.length) {
         let main = this.addCallSignature(call[0], {type: "Function"})
         if (call.length > 1) main.overloaded = call.slice(1).map(sig => this.addCallSignature(sig, {type: "Function"}))
         return main
       }
-      if (strIndex) return {type: "Object", typeArgs: [this.getType(strIndex)]}
-      if (numIndex) return {type: "Array", typeArgs: [this.getType(numIndex)]}
 
       // See `createAnonymousTypeNode` for more fine-grained `typeof` conditionals
       if ((type.symbol.flags & (SymbolFlags.Class | SymbolFlags.Enum | SymbolFlags.ValueModule)) &&
@@ -266,6 +264,7 @@ class Context {
     let out: BindingType = {type: interfaceSymbol ? "interface" : "Object"}
 
     let call = type.getCallSignatures(), props = type.getProperties()
+    let strIndex = type.getStringIndexType(), numIndex = type.getNumberIndexType()
     let intDecl = interfaceSymbol && maybeDecl(interfaceSymbol)
     if (intDecl && isInterfaceDeclaration(intDecl)) {
       let declared = intDecl.members.filter(member => member.name).map(member => this.tc.getSymbolAtLocation(member.name!)!.name)
@@ -273,9 +272,15 @@ class Context {
       if (intDecl.heritageClauses && intDecl.heritageClauses.length)
         out.implements = intDecl.heritageClauses[0].types.map(node => this.getType(this.tc.getTypeAtLocation(node)))
     }
+    if (!props.length && !call) {
+      if (strIndex) return {type: "Object", typeArgs: [this.getType(strIndex)]}
+      if (numIndex) return {type: "Array", typeArgs: [this.getType(numIndex)]}
+    }
 
     if (call.length) this.addCallSignature(call[0], out)
     let propObj = this.gatherSymbols(props)
+    if (strIndex) (propObj || (propObj = {}))["[string]"] = {...this.getType(strIndex), kind: "property", id: this.id + "^string"}
+    if (numIndex) (propObj || (propObj = {}))["[number]"] = {...this.getType(numIndex), kind: "property", id: this.id + "^number"}
     if (propObj) out.properties = propObj
     gettingObjectTypes.pop()
     return out
