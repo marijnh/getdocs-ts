@@ -266,34 +266,37 @@ class Context {
   getObjectType(type: ObjectType, interfaceSymbol?: Symbol): BindingType {
     if (gettingObjectTypes.includes(type)) return {type: "Object"}
     gettingObjectTypes.push(type)
-    let out: BindingType = {type: interfaceSymbol ? "interface" : "Object"}
+    try {
+      let out: BindingType = {type: interfaceSymbol ? "interface" : "Object"}
 
-    let call = type.getCallSignatures(), props = type.getProperties()
-    let strIndex = type.getStringIndexType(), numIndex = type.getNumberIndexType(), indexSym
-    let intDecl = interfaceSymbol && maybeDecl(interfaceSymbol)
-    if (intDecl && isInterfaceDeclaration(intDecl)) {
-      let declared = intDecl.members.filter(member => member.name).map(member => this.tc.getSymbolAtLocation(member.name!)!.name)
-      props = props.filter(prop => declared.includes(prop.name))
-      if (strIndex || numIndex) for (let member of intDecl.members)
-        if (member.kind == SyntaxKind.IndexSignature && (member as any).symbol)
-          indexSym = (member as any).symbol as Symbol
-      if (intDecl.heritageClauses && intDecl.heritageClauses.length)
-        out.implements = intDecl.heritageClauses[0].types.map(node => this.getType(this.tc.getTypeAtLocation(node)))
-    }
-    if (!props.length && !call.length && !out.implements) {
-      if (strIndex) return {type: "Object", typeArgs: [this.getType(strIndex)]}
-      if (numIndex) return {type: "Array", typeArgs: [this.getType(numIndex)]}
-    }
+      let call = type.getCallSignatures(), props = type.getProperties()
+      let strIndex = type.getStringIndexType(), numIndex = type.getNumberIndexType(), indexSym
+      let intDecl = interfaceSymbol && maybeDecl(interfaceSymbol)
+      if (intDecl && isInterfaceDeclaration(intDecl)) {
+        let declared = intDecl.members.filter(member => member.name).map(member => this.tc.getSymbolAtLocation(member.name!)!.name)
+        props = props.filter(prop => declared.includes(prop.name))
+        if (strIndex || numIndex) for (let member of intDecl.members)
+          if (member.kind == SyntaxKind.IndexSignature && (member as any).symbol)
+            indexSym = (member as any).symbol as Symbol
+        if (intDecl.heritageClauses && intDecl.heritageClauses.length)
+          out.implements = intDecl.heritageClauses[0].types.map(node => this.getType(this.tc.getTypeAtLocation(node)))
+      }
+      if (!props.length && !call.length && !out.implements) {
+        if (strIndex) return {type: "Object", typeArgs: [this.getType(strIndex)]}
+        if (numIndex) return {type: "Array", typeArgs: [this.getType(numIndex)]}
+      }
 
-    if (call.length) this.addCallSignature(call[0], out)
-    let propObj = this.gatherSymbols(props)
-    if (indexSym) {
-      let name = strIndex ? "string" : "number", item = this.extend(name).itemForSymbol(indexSym, "property")
-      if (item) (propObj || (propObj = {}))[`[${name}]`] = item
+      if (call.length) this.addCallSignature(call[0], out)
+      let propObj = this.gatherSymbols(props)
+      if (indexSym) {
+        let name = strIndex ? "string" : "number", item = this.extend(name).itemForSymbol(indexSym, "property")
+        if (item) (propObj || (propObj = {}))[`[${name}]`] = item
+      }
+      if (propObj) out.properties = propObj
+      return out
+    } finally {
+      gettingObjectTypes.pop()
     }
-    if (propObj) out.properties = propObj
-    gettingObjectTypes.pop()
-    return out
   }
 
   getClassType(type: ObjectType): BindingType {
