@@ -207,7 +207,8 @@ class Context {
       let {root} = type as ConditionalType
       return {type: "conditional",
               typeArgs: [this.getType(root.checkType), this.getType(root.extendsType),
-                         this.getType(root.trueType), this.getType(root.falseType)]}
+                         this.getType(this.tc.getTypeFromTypeNode(root.node.trueType)),
+                         this.getType(this.tc.getTypeFromTypeNode(root.node.falseType))]}
     }
 
     if (type.flags & TypeFlags.Object) {
