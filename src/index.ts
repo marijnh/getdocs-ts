@@ -279,7 +279,7 @@ class Context {
       if (intDecl.heritageClauses && intDecl.heritageClauses.length)
         out.implements = intDecl.heritageClauses[0].types.map(node => this.getType(this.tc.getTypeAtLocation(node)))
     }
-    if (!props.length && !call.length) {
+    if (!props.length && !call.length && !out.implements) {
       if (strIndex) return {type: "Object", typeArgs: [this.getType(strIndex)]}
       if (numIndex) return {type: "Array", typeArgs: [this.getType(numIndex)]}
     }
