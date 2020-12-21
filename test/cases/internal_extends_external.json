@@ -1,0 +1,52 @@
+{
+  "A": {
+    "id": "A",
+    "kind": "interface",
+    "loc": {
+      "column": 0,
+      "file": "test/cases/internal_extends_external.ts",
+      "line": 1
+    },
+    "properties": {
+      "a": {
+        "id": "A.a",
+        "kind": "property",
+        "loc": {
+          "column": 2,
+          "file": "test/cases/internal_extends_external.ts",
+          "line": 2
+        },
+        "type": "number"
+      }
+    },
+    "type": "interface"
+  },
+  "x": {
+    "id": "x",
+    "implements": [
+      {
+        "type": "A",
+        "typeSource": "test/cases/internal_extends_external.ts"
+      }
+    ],
+    "kind": "variable",
+    "loc": {
+      "column": 21,
+      "file": "test/cases/internal_extends_external.ts",
+      "line": 9
+    },
+    "properties": {
+      "b": {
+        "id": "x.b",
+        "kind": "property",
+        "loc": {
+          "column": 2,
+          "file": "test/cases/internal_extends_external.ts",
+          "line": 6
+        },
+        "type": "number"
+      }
+    },
+    "type": "interface"
+  }
+}

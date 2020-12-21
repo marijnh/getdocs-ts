@@ -245,7 +245,7 @@ class Context {
       if ((type.symbol.flags & (SymbolFlags.Class | SymbolFlags.Enum | SymbolFlags.ValueModule)) &&
           this.isAvailable(type.symbol))
         return {type: "typeof", typeArgs: [this.getReferenceType(type.symbol)]}
-      return this.getObjectType(type as ObjectType)
+      return this.getObjectType(type as ObjectType, objFlags & ObjectFlags.Interface ? type.symbol : undefined)
     }
     if (type.flags & TypeFlags.Unknown) return {type: "unknown"}
 
