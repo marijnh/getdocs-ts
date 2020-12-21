@@ -12,6 +12,7 @@ describe("gettypes", () => {
     it(isTS[1], () => {
       const expected = JSON.parse(fs.readFileSync(`${caseDir}/${isTS[1]}.json`, "utf8"))
       const returned = gettypes.gather({filename: `test/cases/${filename}`})
+      if (process.env.PRINT_JSON) console.log(JSON.stringify(returned, null, 2))
       assert.deepEqual(returned, expected)
     })
   })

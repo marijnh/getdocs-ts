@@ -178,9 +178,13 @@ class Context {
         if (typeNode && (typeNode.kind == SyntaxKind.UnionType || typeNode.kind == SyntaxKind.IntersectionType))
           types = (typeNode as UnionOrIntersectionTypeNode).types.map(node => this.tc.getTypeAtLocation(node))
       }
+      let union = type.flags & TypeFlags.Union
+      let args = types.map(type => (type.flags & TypeFlags.Void) ? {type: "undefined"} : this.getType(type))
+      if (union && args.some(a => a.type == "true") && args.some(a => a.type == "false"))
+        args = [{type: "boolean"}].concat(args.filter(a => a.type != "true" && a.type != "false"))
       return {
-        type: type.flags & TypeFlags.Union ? "union" : "intersection",
-        typeArgs: types.map(type => (type.flags & TypeFlags.Void) ? {type: "undefined"} : this.getType(type))
+        type: union ? "union" : "intersection",
+        typeArgs: args
       }
     }
 
