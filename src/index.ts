@@ -6,8 +6,8 @@ import {
   TypeChecker,
   Symbol, SymbolFlags, ModifierFlags,
   Type, TypeFlags, ObjectType, TypeReference, ObjectFlags, LiteralType, UnionOrIntersectionType, ConditionalType,
-  Signature, IndexType, IndexedAccessType,
-  Node, SyntaxKind, UnionOrIntersectionTypeNode, MappedTypeNode, TypeOperatorNode,
+  Signature, IndexType, IndexedAccessType, TypeElement,
+  Node, SyntaxKind, UnionOrIntersectionTypeNode, MappedTypeNode, TypeOperatorNode, TypeLiteralNode,
   Declaration, NamedDeclaration, TypeParameterDeclaration, ParameterDeclaration, EnumDeclaration, VariableDeclaration, ConstructorDeclaration
 } from "typescript"
 
@@ -270,28 +270,35 @@ class Context {
       let out: BindingType = {type: interfaceSymbol ? "interface" : "Object"}
 
       let call = type.getCallSignatures(), props = type.getProperties()
-      let strIndex = type.getStringIndexType(), numIndex = type.getNumberIndexType(), indexSym
+      let strIndex = type.getStringIndexType(), numIndex = type.getNumberIndexType(), indexItem: Item | undefined | null
       let intDecl = interfaceSymbol && maybeDecl(interfaceSymbol)
+      let members: readonly TypeElement[] | undefined
       if (intDecl && isInterfaceDeclaration(intDecl)) {
         let declared = intDecl.members.filter(member => member.name).map(member => this.tc.getSymbolAtLocation(member.name!)!.name)
         props = props.filter(prop => declared.includes(prop.name))
-        if (strIndex || numIndex) for (let member of intDecl.members)
-          if (member.kind == SyntaxKind.IndexSignature && (member as any).symbol)
-            indexSym = (member as any).symbol as Symbol
+        members = intDecl.members
         if (intDecl.heritageClauses && intDecl.heritageClauses.length)
           out.implements = intDecl.heritageClauses[0].types.map(node => this.getType(this.tc.getTypeAtLocation(node)))
       }
-      if (!props.length && !call.length && !out.implements) {
-        if (strIndex) return {type: "Object", typeArgs: [this.getType(strIndex)]}
-        if (numIndex) return {type: "Array", typeArgs: [this.getType(numIndex)]}
+
+      if (strIndex || numIndex) {
+        if (!members) {
+          let sym = type.getSymbol(), decl = sym && maybeDecl(sym)
+          if (decl && decl.kind == SyntaxKind.TypeLiteral) members = (decl as TypeLiteralNode).members
+        }
+        let indexSym: Symbol | undefined
+        if (members) for (let m of members) if (m.kind == SyntaxKind.IndexSignature) indexSym = (m as any).symbol
+        if (indexSym)
+          indexItem = this.extend(strIndex ? "string" : "number").itemForSymbol(indexSym, "property")
+        if (!props.length && !call.length && !out.implements && !indexItem?.description) {
+          if (strIndex) return {type: "Object", typeArgs: [this.getType(strIndex)]}
+          if (numIndex) return {type: "Array", typeArgs: [this.getType(numIndex)]}
+        }
       }
 
       if (call.length) this.addCallSignature(call[0], out)
       let propObj = this.gatherSymbols(props)
-      if (indexSym) {
-        let name = strIndex ? "string" : "number", item = this.extend(name).itemForSymbol(indexSym, "property")
-        if (item) (propObj || (propObj = {}))[`[${name}]`] = item
-      }
+      if (indexItem) (propObj || (propObj = {}))[`[${strIndex ? "string" : "number"}]`] = indexItem
       if (propObj) out.properties = propObj
       return out
     } finally {

@@ -1,0 +1,36 @@
+{
+  "Foo": {
+    "kind": "typealias",
+    "id": "Foo",
+    "loc": {
+      "file": "test/cases/objtype_strindex.ts",
+      "line": 1,
+      "column": 0
+    },
+    "type": "Object",
+    "properties": {
+      "a": {
+        "kind": "property",
+        "id": "Foo.a",
+        "description": "Doc1",
+        "loc": {
+          "file": "test/cases/objtype_strindex.ts",
+          "line": 2,
+          "column": 2
+        },
+        "type": "number"
+      },
+      "[string]": {
+        "kind": "property",
+        "id": "Foo^string",
+        "description": "Doc2",
+        "loc": {
+          "file": "test/cases/objtype_strindex.ts",
+          "line": 4,
+          "column": 2
+        },
+        "type": "any"
+      }
+    }
+  }
+}
