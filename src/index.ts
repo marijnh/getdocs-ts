@@ -288,8 +288,10 @@ class Context {
         }
         let indexSym: Symbol | undefined
         if (members) for (let m of members) if (m.kind == SyntaxKind.IndexSignature) indexSym = (m as any).symbol
-        if (indexSym)
+        if (indexSym) {
           indexItem = this.extend(strIndex ? "string" : "number").itemForSymbol(indexSym, "property")
+          if (indexItem && indexItem.type == "any") Object.assign(indexItem, this.getType(strIndex || numIndex!))
+        }
         if (!props.length && !call.length && !out.implements && !indexItem?.description) {
           if (strIndex) return {type: "Object", typeArgs: [this.getType(strIndex)]}
           if (numIndex) return {type: "Array", typeArgs: [this.getType(numIndex)]}
