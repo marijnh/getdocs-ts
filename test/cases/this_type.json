@@ -10,37 +10,46 @@
     "implements": [
       {
         "type": "Iterator",
-        "typeArgs": [{"type": "string"}]
+        "typeArgs": [
+          {
+            "type": "string"
+          }
+        ]
       }
     ],
     "properties": {
       "next": {
         "kind": "method",
         "type": "Function",
-        "params": [
-          {
-            "name": "skip",
-            "type": "number",
-            "kind": "parameter",
-            "optional": true,
-            "id": "TextIterator.next^skip",
-            "loc": {
-              "column": 7,
-              "file": "test/cases/this_type.ts",
-              "line": 2
-            }
-          }
-        ],
-        "returns": {
-          "type": "TextIterator",
-          "typeSource": "test/cases/this_type.ts"
-        },
         "loc": {
           "line": 2,
           "file": "test/cases/this_type.ts",
           "column": 2
         },
-        "id": "TextIterator.next"
+        "id": "TextIterator.next",
+        "signatures": [
+          {
+            "type": "function",
+            "params": [
+              {
+                "name": "skip",
+                "type": "number",
+                "kind": "parameter",
+                "optional": true,
+                "id": "TextIterator.next^skip",
+                "loc": {
+                  "column": 7,
+                  "file": "test/cases/this_type.ts",
+                  "line": 2
+                }
+              }
+            ],
+            "returns": {
+              "type": "TextIterator",
+              "typeSource": "test/cases/this_type.ts"
+            }
+          }
+        ]
       }
     },
     "id": "TextIterator"

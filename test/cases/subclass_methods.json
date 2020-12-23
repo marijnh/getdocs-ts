@@ -15,11 +15,16 @@
           "file": "test/cases/subclass_methods.ts",
           "line": 11
         },
-        "params": [],
-        "returns": {
-          "type": "number"
-        },
-        "type": "Function"
+        "type": "Function",
+        "signatures": [
+          {
+            "type": "function",
+            "params": [],
+            "returns": {
+              "type": "number"
+            }
+          }
+        ]
       }
     },
     "kind": "class",
@@ -42,11 +47,16 @@
           "file": "test/cases/subclass_methods.ts",
           "line": 2
         },
-        "params": [],
-        "returns": {
-          "type": "number"
-        },
-        "type": "Function"
+        "type": "Function",
+        "signatures": [
+          {
+            "type": "function",
+            "params": [],
+            "returns": {
+              "type": "number"
+            }
+          }
+        ]
       },
       "b": {
         "id": "Foo.b",
@@ -57,11 +67,16 @@
           "file": "test/cases/subclass_methods.ts",
           "line": 3
         },
-        "params": [],
-        "returns": {
-          "type": "number"
-        },
-        "type": "Function"
+        "type": "Function",
+        "signatures": [
+          {
+            "type": "function",
+            "params": [],
+            "returns": {
+              "type": "number"
+            }
+          }
+        ]
       },
       "c": {
         "id": "Foo.c",
@@ -71,11 +86,16 @@
           "file": "test/cases/subclass_methods.ts",
           "line": 4
         },
-        "params": [],
-        "returns": {
-          "type": "number"
-        },
-        "type": "Function"
+        "type": "Function",
+        "signatures": [
+          {
+            "type": "function",
+            "params": [],
+            "returns": {
+              "type": "number"
+            }
+          }
+        ]
       },
       "d": {
         "id": "Foo.d",
@@ -85,11 +105,16 @@
           "file": "test/cases/subclass_methods.ts",
           "line": 5
         },
-        "params": [],
-        "returns": {
-          "type": "number"
-        },
-        "type": "Function"
+        "type": "Function",
+        "signatures": [
+          {
+            "type": "function",
+            "params": [],
+            "returns": {
+              "type": "number"
+            }
+          }
+        ]
       }
     },
     "kind": "class",

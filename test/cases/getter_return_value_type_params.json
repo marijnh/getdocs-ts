@@ -6,7 +6,11 @@
       "desc": {
         "kind": "property",
         "type": "Iterator",
-        "typeArgs": [{"type": "boolean"}],
+        "typeArgs": [
+          {
+            "type": "boolean"
+          }
+        ],
         "loc": {
           "line": 2,
           "column": 2,

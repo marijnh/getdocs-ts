@@ -3,8 +3,12 @@
     "kind": "variable",
     "type": "union",
     "typeArgs": [
-      {"type": "string"},
-      {"type": "number"}
+      {
+        "type": "string"
+      },
+      {
+        "type": "number"
+      }
     ],
     "id": "a",
     "loc": {

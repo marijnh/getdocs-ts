@@ -8,40 +8,50 @@
       "column": 0
     },
     "id": "makeID",
-    "params": [],
-    "returns": {
-      "type": "Function",
-      "typeParams": [
-        {
-          "name": "T",
-          "type": "typeparam",
-          "kind": "typeparam",
-          "id": "makeID^returns^T",
-          "loc": {
-            "file": "test/cases/parameterized_type.ts",
-            "line": 1,
-            "column": 27
-          }
+    "signatures": [
+      {
+        "type": "function",
+        "params": [],
+        "returns": {
+          "type": "Function",
+          "signatures": [
+            {
+              "type": "function",
+              "params": [
+                {
+                  "name": "x",
+                  "type": "T",
+                  "kind": "parameter",
+                  "typeParamSource": "makeID^returns^T",
+                  "id": "makeID^returns^x",
+                  "loc": {
+                    "file": "test/cases/parameterized_type.ts",
+                    "line": 1,
+                    "column": 30
+                  }
+                }
+              ],
+              "typeParams": [
+                {
+                  "name": "T",
+                  "type": "typeparam",
+                  "kind": "typeparam",
+                  "id": "makeID^returns^T",
+                  "loc": {
+                    "file": "test/cases/parameterized_type.ts",
+                    "line": 1,
+                    "column": 27
+                  }
+                }
+              ],
+              "returns": {
+                "type": "T",
+                "typeParamSource": "makeID^returns^T"
+              }
+            }
+          ]
         }
-      ],
-      "params": [
-        {
-          "name": "x",
-          "type": "T",
-          "kind": "parameter",
-          "typeParamSource": "makeID^returns^T",
-          "id": "makeID^returns^x",
-          "loc": {
-            "file": "test/cases/parameterized_type.ts",
-            "line": 1,
-            "column": 30
-          }
-        }
-      ],
-      "returns": {
-        "type": "T",
-        "typeParamSource": "makeID^returns^T"
       }
-    }
+    ]
   }
 }

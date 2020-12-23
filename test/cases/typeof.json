@@ -18,23 +18,28 @@
       "column": 0
     },
     "type": "Function",
-    "params": [
+    "signatures": [
       {
-        "name": "LocalX",
-        "id": "x^LocalX",
-        "type": "typeof",
-        "kind": "parameter",
-        "typeArgs": [
+        "type": "function",
+        "params": [
           {
-            "type": "X",
-            "typeSource": "test/cases/typeof.ts"
+            "name": "LocalX",
+            "id": "x^LocalX",
+            "type": "typeof",
+            "kind": "parameter",
+            "typeArgs": [
+              {
+                "type": "X",
+                "typeSource": "test/cases/typeof.ts"
+              }
+            ],
+            "loc": {
+              "file": "test/cases/typeof.ts",
+              "line": 3,
+              "column": 18
+            }
           }
-        ],
-        "loc": {
-          "file": "test/cases/typeof.ts",
-          "line": 3,
-          "column": 18
-        }
+        ]
       }
     ]
   }

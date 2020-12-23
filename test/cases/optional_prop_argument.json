@@ -5,34 +5,47 @@
     "construct": {
       "kind": "constructor",
       "type": "Function",
-      "params": [
-        {
-          "name": "mirror",
-          "kind": "parameter",
-          "type": "ReadonlyArray",
-          "typeArgs": [{"type": "number"}],
-          "optional": true,
-          "default": "[]",
-          "id": "X.constructor^mirror",
-          "loc": {
-            "column": 14,
-            "file": "test/cases/optional_prop_argument.ts",
-            "line": 2
-          }
-        }
-      ],
       "loc": {
         "line": 2,
         "column": 2,
         "file": "test/cases/optional_prop_argument.ts"
       },
-      "id": "X.constructor"
+      "id": "X.constructor",
+      "signatures": [
+        {
+          "type": "constructor",
+          "params": [
+            {
+              "name": "mirror",
+              "kind": "parameter",
+              "type": "ReadonlyArray",
+              "typeArgs": [
+                {
+                  "type": "number"
+                }
+              ],
+              "optional": true,
+              "default": "[]",
+              "id": "X.constructor^mirror",
+              "loc": {
+                "column": 14,
+                "file": "test/cases/optional_prop_argument.ts",
+                "line": 2
+              }
+            }
+          ]
+        }
+      ]
     },
     "instanceProperties": {
       "mirror": {
         "kind": "property",
         "type": "ReadonlyArray",
-        "typeArgs": [{"type": "number"}],
+        "typeArgs": [
+          {
+            "type": "number"
+          }
+        ],
         "loc": {
           "line": 2,
           "column": 14,

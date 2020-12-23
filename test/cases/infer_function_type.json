@@ -2,15 +2,20 @@
   "x": {
     "kind": "variable",
     "type": "Function",
-    "returns": {
-      "type": "number"
-    },
-    "params": [],
     "loc": {
       "file": "test/cases/infer_function_type.ts",
       "line": 5,
       "column": 13
     },
-    "id": "x"
+    "id": "x",
+    "signatures": [
+      {
+        "type": "function",
+        "params": [],
+        "returns": {
+          "type": "number"
+        }
+      }
+    ]
   }
 }

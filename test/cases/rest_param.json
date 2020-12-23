@@ -6,36 +6,41 @@
       "all": {
         "kind": "method",
         "type": "Function",
-        "params": [
-          {
-            "type": "Array",
-            "kind": "parameter",
-            "typeArgs": [
-              {
-                "type": "Extension",
-                "typeSource": "test/cases/rest_param.ts"
-              }
-            ],
-            "rest": true,
-            "name": "extensions",
-            "id": "Extension^all^extensions",
-            "loc": {
-              "column": 13,
-              "file": "test/cases/rest_param.ts",
-              "line": 2
-            }
-          }
-        ],
-        "returns": {
-          "type": "Extension",
-          "typeSource": "test/cases/rest_param.ts"
-        },
         "loc": {
           "line": 2,
           "column": 2,
           "file": "test/cases/rest_param.ts"
         },
-        "id": "Extension^all"
+        "id": "Extension^all",
+        "signatures": [
+          {
+            "type": "function",
+            "params": [
+              {
+                "type": "Array",
+                "kind": "parameter",
+                "typeArgs": [
+                  {
+                    "type": "Extension",
+                    "typeSource": "test/cases/rest_param.ts"
+                  }
+                ],
+                "rest": true,
+                "name": "extensions",
+                "id": "Extension^all^extensions",
+                "loc": {
+                  "column": 13,
+                  "file": "test/cases/rest_param.ts",
+                  "line": 2
+                }
+              }
+            ],
+            "returns": {
+              "type": "Extension",
+              "typeSource": "test/cases/rest_param.ts"
+            }
+          }
+        ]
       }
     },
     "loc": {

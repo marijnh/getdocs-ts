@@ -6,14 +6,19 @@
       "g": {
         "kind": "method",
         "type": "Function",
-        "params": [],
         "loc": {
           "line": 7,
           "column": 2,
           "file": "test/cases/internal_comments.ts"
         },
         "description": "actual comment",
-        "id": "X.g"
+        "id": "X.g",
+        "signatures": [
+          {
+            "type": "function",
+            "params": []
+          }
+        ]
       }
     },
     "loc": {

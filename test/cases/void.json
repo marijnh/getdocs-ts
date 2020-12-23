@@ -2,12 +2,17 @@
   "x": {
     "kind": "variable",
     "type": "Function",
-    "params": [],
     "loc": {
       "file": "test/cases/void.ts",
       "line": 1,
       "column": 13
     },
-    "id": "x"
+    "id": "x",
+    "signatures": [
+      {
+        "type": "function",
+        "params": []
+      }
+    ]
   }
 }

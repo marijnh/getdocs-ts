@@ -5,25 +5,30 @@
     "construct": {
       "kind": "constructor",
       "type": "Function",
-      "params": [
-        {
-          "name": "start",
-          "type": "number",
-          "kind": "parameter",
-          "id": "Line.constructor^start",
-          "loc": {
-            "column": 4,
-            "file": "test/cases/param_prop.ts",
-            "line": 3
-          }
-        }
-      ],
       "loc": {
         "line": 2,
         "column": 2,
         "file": "test/cases/param_prop.ts"
       },
-      "id": "Line.constructor"
+      "id": "Line.constructor",
+      "signatures": [
+        {
+          "type": "constructor",
+          "params": [
+            {
+              "name": "start",
+              "type": "number",
+              "kind": "parameter",
+              "id": "Line.constructor^start",
+              "loc": {
+                "column": 4,
+                "file": "test/cases/param_prop.ts",
+                "line": 3
+              }
+            }
+          ]
+        }
+      ]
     },
     "instanceProperties": {
       "start": {

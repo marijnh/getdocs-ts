@@ -2,85 +2,90 @@
   "getProperty": {
     "kind": "function",
     "type": "Function",
-    "typeParams": [
-      {
-        "name": "T",
-        "type": "typeparam",
-        "kind": "typeparam",
-        "id": "getProperty^T",
-        "loc": {
-          "column": 28,
-          "file": "test/cases/indexed_access.ts",
-          "line": 1
-        }
-      },
-      {
-        "name": "K",
-        "type": "typeparam",
-        "kind": "typeparam",
-        "implements": [
-          {
-            "type": "keyof",
-            "typeArgs": [
-              {
-                "type": "T",
-                "typeParamSource": "getProperty^T"
-              }
-            ]
-          }
-        ],
-        "id": "getProperty^K",
-        "loc": {
-          "column": 31,
-          "file": "test/cases/indexed_access.ts",
-          "line": 1
-        }
-      }
-    ],
-    "params": [
-      {
-        "type": "T",
-        "kind": "parameter",
-        "typeParamSource": "getProperty^T",
-        "name": "o",
-        "id": "getProperty^o",
-        "loc": {
-          "column": 50,
-          "file": "test/cases/indexed_access.ts",
-          "line": 1
-        }
-      },
-      {
-        "type": "K",
-        "kind": "parameter",
-        "typeParamSource": "getProperty^K",
-        "name": "name",
-        "id": "getProperty^name",
-        "loc": {
-          "column": 56,
-          "file": "test/cases/indexed_access.ts",
-          "line": 1
-        }
-      }
-    ],
-    "returns": {
-      "type": "indexed",
-      "typeArgs": [
-        {
-          "type": "T",
-          "typeParamSource": "getProperty^T"
-        },
-        {
-          "type": "K",
-          "typeParamSource": "getProperty^K"
-        }
-      ]
-    },
     "loc": {
       "file": "test/cases/indexed_access.ts",
       "line": 1,
       "column": 0
     },
-    "id": "getProperty"
+    "id": "getProperty",
+    "signatures": [
+      {
+        "type": "function",
+        "params": [
+          {
+            "type": "T",
+            "kind": "parameter",
+            "typeParamSource": "getProperty^T",
+            "name": "o",
+            "id": "getProperty^o",
+            "loc": {
+              "column": 50,
+              "file": "test/cases/indexed_access.ts",
+              "line": 1
+            }
+          },
+          {
+            "type": "K",
+            "kind": "parameter",
+            "typeParamSource": "getProperty^K",
+            "name": "name",
+            "id": "getProperty^name",
+            "loc": {
+              "column": 56,
+              "file": "test/cases/indexed_access.ts",
+              "line": 1
+            }
+          }
+        ],
+        "typeParams": [
+          {
+            "name": "T",
+            "type": "typeparam",
+            "kind": "typeparam",
+            "id": "getProperty^T",
+            "loc": {
+              "column": 28,
+              "file": "test/cases/indexed_access.ts",
+              "line": 1
+            }
+          },
+          {
+            "name": "K",
+            "type": "typeparam",
+            "kind": "typeparam",
+            "implements": [
+              {
+                "type": "keyof",
+                "typeArgs": [
+                  {
+                    "type": "T",
+                    "typeParamSource": "getProperty^T"
+                  }
+                ]
+              }
+            ],
+            "id": "getProperty^K",
+            "loc": {
+              "column": 31,
+              "file": "test/cases/indexed_access.ts",
+              "line": 1
+            }
+          }
+        ],
+        "returns": {
+          "type": "indexed",
+          "typeArgs": [
+            {
+              "type": "T",
+              "typeParamSource": "getProperty^T"
+            },
+            {
+              "type": "K",
+              "typeParamSource": "getProperty^K"
+            }
+          ]
+        }
+      }
+    ]
   }
 }

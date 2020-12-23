@@ -16,6 +16,8 @@ import {resolve, dirname, relative, sep} from "path"
 type BindingKind = "class" | "enum" | "enummember" | "interface" | "variable" | "property" | "method" |
   "typealias" | "typeparam" | "constructor" | "function" | "parameter" | "reexport"
 
+const ItemsWithParams = ["class", "enum", "interface", "typealias"]
+
 type Loc = {file: string, line: number, column: number}
 
 type Binding = {
@@ -36,20 +38,25 @@ type BindingType = {
   instanceProperties?: {[name: string]: Item},
   typeArgs?: readonly BindingType[],
   typeParams?: readonly Param[],
-  params?: readonly Param[],
-  returns?: BindingType,
   // Used by mapped types
   key?: Param,
-  overloaded?: readonly BindingType[],
+  signatures?: readonly CallSignature[],
   extends?: BindingType,
-  implements?: readonly BindingType[],
-  construct?: Item
+  construct?: Item,
+  implements?: readonly BindingType[]
+}
+
+type CallSignature = {
+  type: "function" | "constructor",
+  params: readonly Param[],
+  returns?: BindingType,
+  typeParams?: readonly Param[]
 }
 
 type Param = BindingType & {
   name?: string,
   id: string,
-  kind: BindingKind,
+  kind: "parameter" | "typeparam",
   description?: string,
   loc?: Loc,
   optional?: boolean,
@@ -133,7 +140,7 @@ class Context {
     }
 
     let cx: Context = this
-    let params = this.getTypeParams(decl(symbol))
+    let params = ItemsWithParams.includes(binding.kind) ? this.getTypeParams(decl(symbol)) : null
     if (params) cx = cx.addParams(params)
     let typeDesc = kind == "enum" ? cx.getEnumType(symbol)
       : kind == "reexport" ? cx.getReferenceType(this.tc.getAliasedSymbol(symbol))
@@ -247,11 +254,8 @@ class Context {
       }
 
       let call = type.getCallSignatures()
-      if (call.length) {
-        let main = this.addCallSignature(call[0], {type: "Function"})
-        if (call.length > 1) main.overloaded = call.slice(1).map(sig => this.addCallSignature(sig, {type: "Function"}))
-        return main
-      }
+      if (call.length)
+        return {type: "Function", signatures: call.map(c => this.getCallSignature(c, "function"))}
 
       // See `createAnonymousTypeNode` for more fine-grained `typeof` conditionals
       if ((type.symbol.flags & (SymbolFlags.Class | SymbolFlags.Enum | SymbolFlags.ValueModule)) &&
@@ -276,7 +280,8 @@ class Context {
     try {
       let out: BindingType = {type: interfaceSymbol ? "interface" : "Object"}
 
-      let call = type.getCallSignatures(), props = type.getProperties()
+      let call = type.getCallSignatures(), ctor = type.getConstructSignatures()
+      let props = type.getProperties()
       let strIndex = type.getStringIndexType(), numIndex = type.getNumberIndexType(), indexItem: Item | undefined | null
       let intDecl = interfaceSymbol && maybeDecl(interfaceSymbol)
       let members: readonly TypeElement[] | undefined
@@ -299,13 +304,16 @@ class Context {
           indexItem = this.extend(strIndex ? "string" : "number").itemForSymbol(indexSym, "property")
           if (indexItem && indexItem.type == "any") Object.assign(indexItem, this.getType(strIndex || numIndex!))
         }
-        if (!props.length && !call.length && !out.implements && !indexItem?.description) {
+        if (!props.length && !call.length && !ctor.length && !out.implements && !indexItem?.description) {
           if (strIndex) return {type: "Object", typeArgs: [this.getType(strIndex)]}
           if (numIndex) return {type: "Array", typeArgs: [this.getType(numIndex)]}
         }
       }
 
-      if (call.length) this.addCallSignature(call[0], out)
+      if (call.length || ctor.length)
+        out.signatures = call.map(s => this.getCallSignature(s, "function"))
+          .concat(ctor.map(s => this.getCallSignature(s, "constructor")))
+
       let propObj = this.gatherSymbols(props)
       if (indexItem) (propObj || (propObj = {}))[`[${strIndex ? "string" : "number"}]`] = indexItem
       if (propObj) out.properties = propObj
@@ -349,14 +357,21 @@ class Context {
       }
     }
 
+    let ctorItem, ctorSignatures = []
     for (let ctor of ctors) {
       let signature = type.getConstructSignatures().find(sig => sig.getDeclaration() == ctor)
       if (!signature || (getCombinedModifierFlags(ctor) & ModifierFlags.Private)) continue
-      let item: Binding = {kind: "constructor", id: this.id + ".constructor"}
+      let item: Binding & BindingType = {kind: "constructor", id: this.id + ".constructor", type: "Function"}
       this.addSourceData([ctor], item)
       if (item.description && /@internal\b/.test(item.description)) continue
-      out.construct = {...item, type: "Function", params: this.extend("constructor", ".").getParams(signature)}
+      if (!ctorItem || item.description) ctorItem = item
+      ctorSignatures.push(this.extend("constructor", ".").getCallSignature(signature, "constructor"))
       break
+    }
+
+    if (ctorItem) {
+      ctorItem.signatures = ctorSignatures
+      out.construct = ctorItem
     }
 
     // FIXME I haven't found a less weird way to get the instance type
@@ -396,7 +411,7 @@ class Context {
             if (!cx) cx = this.addParams(args.map((a, i) => Object.assign({
               name: targetParams![i].symbol.name,
               id: String(i),
-              kind: "typeparam" as BindingKind
+              kind: "typeparam" as "typeparam"
             }, a)))
             let compare = cx.getType(deflt)
             if (compareTypes(args[i], compare, args as any)) args.pop()
@@ -462,17 +477,20 @@ class Context {
     return result
   }
 
-  addCallSignature(signature: Signature, target: BindingType) {
+  getCallSignature(signature: Signature, type: "constructor" | "function") {
     let cx: Context = this
     let typeParams = signature.typeParameters && this.getTypeParams(signature.getDeclaration())
+    let out = {type} as CallSignature
     if (typeParams) {
       cx = cx.addParams(typeParams)
-      target.typeParams = typeParams
+      out.typeParams = typeParams
     }
-    target.params = cx.getParams(signature)
-    let ret = signature.getReturnType()
-    if (!(ret.flags & TypeFlags.Void)) target.returns = cx.extend("returns").getType(ret)
-    return target
+    out.params = cx.getParams(signature)
+    if (type == "function") {
+      let ret = signature.getReturnType()
+      if (!(ret.flags & TypeFlags.Void)) out.returns = cx.extend("returns").getType(ret)
+    }
+    return out
   }
 
   symbolType(symbol: Symbol) {
@@ -543,7 +561,7 @@ function compareTypes(a: BindingType, b: BindingType, paramMap: {[id: string]: B
   while (b.typeParamSource && paramMap[b.typeParamSource]) b = paramMap[b.typeParamSource]
   if (a.type != b.type || a.typeSource != b.typeSource || a.typeParamSource != b.typeParamSource ||
       !a.properties != !b.properties || a.instanceProperties || b.instanceProperties ||
-      !a.typeArgs != !b.typeArgs || !a.params != !b.params || !a.returns != !b.returns) return false
+      !a.typeArgs != !b.typeArgs || !a.signatures != !b.signatures) return false
   if (a.properties) {
     let aK = Object.keys(a.properties), bK = Object.keys(b.properties!)
     if (aK.length != bK.length || !aK.every(k => b.properties![k] || compareTypes(a.properties![k], b.properties![k], paramMap)))
@@ -551,8 +569,15 @@ function compareTypes(a: BindingType, b: BindingType, paramMap: {[id: string]: B
   }
   if (a.typeArgs && (a.typeArgs.length != b.typeArgs!.length ||
                      !a.typeArgs.every((ta, i) => compareTypes(ta, b.typeArgs![i], paramMap)))) return false
-  if (a.params && (a.params.length != b.params!.length ||
-                   !a.params.every((p, i) => compareTypes(p, b.params![i], paramMap)))) return false
+  if (a.signatures && (a.signatures.length != b.signatures!.length ||
+                       !a.signatures.every((s, i) => compareSignature(s, b.signatures![i], paramMap)))) return false
+  return true
+}
+
+function compareSignature(a: CallSignature, b: CallSignature, paramMap: {[id: string]: BindingType}) {
+  if (!a.returns != !b.returns || a.type != b.type || !a.typeParams != !b.typeParams) return false
+  if (a.params.length != b.params!.length ||
+      !a.params.every((p, i) => compareTypes(p, b.params![i], paramMap))) return false
   if (a.returns && !compareTypes(a.returns, b.returns!, paramMap)) return false
   return true
 }

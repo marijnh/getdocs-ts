@@ -2,48 +2,9 @@
   "RangeFilter": {
     "kind": "typealias",
     "type": "Function",
-    "returns": {
-      "type": "boolean"
-    },
-    "params": [
-      {
-        "type": "number",
-        "kind": "parameter",
-        "name": "from",
-        "id": "RangeFilter^from",
-        "loc": {
-          "column": 30,
-          "file": "test/cases/type_alias.ts",
-          "line": 1
-        }
-      },
-      {
-        "type": "number",
-        "kind": "parameter",
-        "name": "to",
-        "id": "RangeFilter^to",
-        "loc": {
-          "column": 44,
-          "file": "test/cases/type_alias.ts",
-          "line": 1
-        }
-      },
-      {
-        "type": "T",
-        "typeParamSource": "RangeFilter^T",
-        "kind": "parameter",
-        "name": "value",
-        "id": "RangeFilter^value",
-        "loc": {
-          "column": 56,
-          "file": "test/cases/type_alias.ts",
-          "line": 1
-        }
-      }
-    ],
     "loc": {
       "line": 1,
-      "column": 29,
+      "column": 0,
       "file": "test/cases/type_alias.ts"
     },
     "typeParams": [
@@ -59,11 +20,50 @@
         }
       }
     ],
-    "loc": {
-      "line": 1,
-      "column": 0,
-      "file": "test/cases/type_alias.ts"
-    },
-    "id": "RangeFilter"
+    "id": "RangeFilter",
+    "signatures": [
+      {
+        "type": "function",
+        "params": [
+          {
+            "type": "number",
+            "kind": "parameter",
+            "name": "from",
+            "id": "RangeFilter^from",
+            "loc": {
+              "column": 30,
+              "file": "test/cases/type_alias.ts",
+              "line": 1
+            }
+          },
+          {
+            "type": "number",
+            "kind": "parameter",
+            "name": "to",
+            "id": "RangeFilter^to",
+            "loc": {
+              "column": 44,
+              "file": "test/cases/type_alias.ts",
+              "line": 1
+            }
+          },
+          {
+            "type": "T",
+            "typeParamSource": "RangeFilter^T",
+            "kind": "parameter",
+            "name": "value",
+            "id": "RangeFilter^value",
+            "loc": {
+              "column": 56,
+              "file": "test/cases/type_alias.ts",
+              "line": 1
+            }
+          }
+        ],
+        "returns": {
+          "type": "boolean"
+        }
+      }
+    ]
   }
 }

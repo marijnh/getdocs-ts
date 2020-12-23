@@ -17,11 +17,16 @@
           "column": 2,
           "file": "test/cases/abstract_method.ts"
         },
-        "params": [],
-        "returns": {
-          "type": "number"
-        },
-        "id": "X.firstLineLength"
+        "id": "X.firstLineLength",
+        "signatures": [
+          {
+            "type": "function",
+            "params": [],
+            "returns": {
+              "type": "number"
+            }
+          }
+        ]
       }
     },
     "id": "X"

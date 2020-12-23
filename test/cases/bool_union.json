@@ -8,29 +8,39 @@
       "column": 21
     },
     "type": "Function",
-    "params": [
+    "signatures": [
       {
-        "id": "f^g",
-        "type": "Function",
-        "kind": "parameter",
-        "params": [],
-        "returns": {
-          "type": "union",
-          "typeArgs": [
-            {
-              "type": "boolean"
+        "type": "function",
+        "params": [
+          {
+            "id": "f^g",
+            "type": "Function",
+            "kind": "parameter",
+            "loc": {
+              "file": "test/cases/bool_union.ts",
+              "line": 1,
+              "column": 25
             },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "loc": {
-          "file": "test/cases/bool_union.ts",
-          "line": 1,
-          "column": 25
-        },
-        "name": "g"
+            "name": "g",
+            "signatures": [
+              {
+                "type": "function",
+                "params": [],
+                "returns": {
+                  "type": "union",
+                  "typeArgs": [
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
       }
     ]
   }

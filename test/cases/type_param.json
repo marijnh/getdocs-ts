@@ -11,7 +11,11 @@
         "implements": [
           {
             "type": "Array",
-            "typeArgs": [{"type": "any"}]
+            "typeArgs": [
+              {
+                "type": "any"
+              }
+            ]
           }
         ],
         "default": "Array<number>",

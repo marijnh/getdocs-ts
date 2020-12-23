@@ -16,66 +16,76 @@
         },
         "kind": "method",
         "type": "Function",
-        "params": [
+        "id": "ChangeSet^fromJSON",
+        "signatures": [
           {
-            "type": "Object",
-            "kind": "parameter",
-            "properties": {
-              "fromJSON": {
-                "loc": {
-                  "line": 4,
-                  "column": 17,
-                  "file": "test/cases/function_types.ts"
-                },
-                "kind": "property",
-                "type": "Function",
-                "params": [
-                  {
-                    "type": "any",
-                    "kind": "parameter",
-                    "name": "json",
-                    "id": "ChangeSet^fromJSON^ChangeType.fromJSON^json",
+            "type": "function",
+            "params": [
+              {
+                "type": "Object",
+                "kind": "parameter",
+                "properties": {
+                  "fromJSON": {
                     "loc": {
-                      "column": 28,
-                      "file": "test/cases/function_types.ts",
-                      "line": 4
-                    }
-                   }
-                ],
-                "returns": {
-                  "type": "ChangeSet",
-                  "typeSource": "test/cases/function_types.ts"
+                      "line": 4,
+                      "column": 17,
+                      "file": "test/cases/function_types.ts"
+                    },
+                    "kind": "property",
+                    "type": "Function",
+                    "id": "ChangeSet^fromJSON^ChangeType.fromJSON",
+                    "signatures": [
+                      {
+                        "type": "function",
+                        "params": [
+                          {
+                            "type": "any",
+                            "kind": "parameter",
+                            "name": "json",
+                            "id": "ChangeSet^fromJSON^ChangeType.fromJSON^json",
+                            "loc": {
+                              "column": 28,
+                              "file": "test/cases/function_types.ts",
+                              "line": 4
+                            }
+                          }
+                        ],
+                        "returns": {
+                          "type": "ChangeSet",
+                          "typeSource": "test/cases/function_types.ts"
+                        }
+                      }
+                    ]
+                  }
                 },
-                "id": "ChangeSet^fromJSON^ChangeType.fromJSON"
+                "name": "ChangeType",
+                "description": "The change type",
+                "id": "ChangeSet^fromJSON^ChangeType",
+                "loc": {
+                  "column": 4,
+                  "file": "test/cases/function_types.ts",
+                  "line": 3
+                }
+              },
+              {
+                "type": "any",
+                "kind": "parameter",
+                "name": "json",
+                "description": "The json",
+                "id": "ChangeSet^fromJSON^json",
+                "loc": {
+                  "column": 4,
+                  "file": "test/cases/function_types.ts",
+                  "line": 5
+                }
               }
-            },
-            "name": "ChangeType",
-            "description": "The change type",
-            "id": "ChangeSet^fromJSON^ChangeType",
-            "loc": {
-              "column": 4,
-              "file": "test/cases/function_types.ts",
-              "line": 3
-            }
-          },
-          {
-            "type": "any",
-            "kind": "parameter",
-            "name": "json",
-            "description": "The json",
-            "id": "ChangeSet^fromJSON^json",
-            "loc": {
-              "column": 4,
-              "file": "test/cases/function_types.ts",
-              "line": 5
+            ],
+            "returns": {
+              "type": "ChangeSet",
+              "typeSource": "test/cases/function_types.ts"
             }
           }
-        ],
-        "returns": {
-          "type": "ChangeSet",
-          "typeSource": "test/cases/function_types.ts"
-        },
-        "id": "ChangeSet^fromJSON"
+        ]
       }
     },
     "id": "ChangeSet"

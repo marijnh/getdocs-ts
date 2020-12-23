@@ -8,17 +8,22 @@
       "column": 13
     },
     "type": "Function",
-    "params": [],
-    "returns": {
-      "type": "union",
-      "typeArgs": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "undefined"
+    "signatures": [
+      {
+        "type": "function",
+        "params": [],
+        "returns": {
+          "type": "union",
+          "typeArgs": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "undefined"
+            }
+          ]
         }
-      ]
-    }
+      }
+    ]
   }
 }

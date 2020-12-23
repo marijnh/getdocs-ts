@@ -6,24 +6,29 @@
       "peek": {
         "kind": "method",
         "type": "Function",
-        "returns": {
-          "type": "union",
-          "typeArgs": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "number"
-            }
-          ]
-        },
-        "params": [],
         "loc": {
           "line": 2,
           "column": 2,
           "file": "test/cases/union_inference.ts"
         },
-        "id": "X.peek"
+        "id": "X.peek",
+        "signatures": [
+          {
+            "type": "function",
+            "params": [],
+            "returns": {
+              "type": "union",
+              "typeArgs": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     "loc": {

@@ -2,69 +2,79 @@
   "x": {
     "kind": "variable",
     "type": "Function",
-    "params": [
-      {
-        "type": "any",
-        "kind": "parameter",
-        "name": "a",
-        "id": "x^a",
-        "loc": {
-          "column": 17,
-          "file": "test/cases/true_false_literals.ts",
-          "line": 1
-        }
-      }
-    ],
-    "returns": {
-      "type": "union",
-      "typeArgs": [
-        {
-          "type": "true"
-        },
-        {
-          "type": "\"no\""
-        }
-      ]
-    },
     "loc": {
       "file": "test/cases/true_false_literals.ts",
       "line": 1,
       "column": 13
     },
-    "id": "x"
+    "id": "x",
+    "signatures": [
+      {
+        "type": "function",
+        "params": [
+          {
+            "type": "any",
+            "kind": "parameter",
+            "name": "a",
+            "id": "x^a",
+            "loc": {
+              "column": 17,
+              "file": "test/cases/true_false_literals.ts",
+              "line": 1
+            }
+          }
+        ],
+        "returns": {
+          "type": "union",
+          "typeArgs": [
+            {
+              "type": "true"
+            },
+            {
+              "type": "\"no\""
+            }
+          ]
+        }
+      }
+    ]
   },
   "y": {
     "kind": "variable",
     "type": "Function",
-    "params": [
-      {
-        "type": "any",
-        "kind": "parameter",
-        "name": "a",
-        "id": "y^a",
-        "loc": {
-          "column": 17,
-          "file": "test/cases/true_false_literals.ts",
-          "line": 2
-        }
-      }
-    ],
-    "returns": {
-      "type": "union",
-      "typeArgs": [
-        {
-          "type": "false"
-        },
-        {
-          "type": "\"no\""
-        }
-      ]
-    },
     "loc": {
       "file": "test/cases/true_false_literals.ts",
       "line": 2,
       "column": 13
     },
-    "id": "y"
+    "id": "y",
+    "signatures": [
+      {
+        "type": "function",
+        "params": [
+          {
+            "type": "any",
+            "kind": "parameter",
+            "name": "a",
+            "id": "y^a",
+            "loc": {
+              "column": 17,
+              "file": "test/cases/true_false_literals.ts",
+              "line": 2
+            }
+          }
+        ],
+        "returns": {
+          "type": "union",
+          "typeArgs": [
+            {
+              "type": "false"
+            },
+            {
+              "type": "\"no\""
+            }
+          ]
+        }
+      }
+    ]
   }
 }

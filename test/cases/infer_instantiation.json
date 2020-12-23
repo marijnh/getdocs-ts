@@ -24,28 +24,33 @@
   "f": {
     "kind": "variable",
     "type": "Function",
-    "returns": {
-      "type": "boolean"
-    },
-    "params": [
-      {
-        "name": "spec",
-        "type": "Config",
-        "kind": "parameter",
-        "typeSource": "test/cases/infer_instantiation.ts",
-        "id": "f^spec",
-        "loc": {
-          "column": 73,
-          "file": "test/cases/infer_instantiation.ts",
-          "line": 1
-        }
-      }
-    ],
     "loc": {
       "file": "test/cases/infer_instantiation.ts",
       "line": 7,
       "column": 13
     },
-    "id": "f"
+    "id": "f",
+    "signatures": [
+      {
+        "type": "function",
+        "params": [
+          {
+            "name": "spec",
+            "type": "Config",
+            "kind": "parameter",
+            "typeSource": "test/cases/infer_instantiation.ts",
+            "id": "f^spec",
+            "loc": {
+              "column": 73,
+              "file": "test/cases/infer_instantiation.ts",
+              "line": 1
+            }
+          }
+        ],
+        "returns": {
+          "type": "boolean"
+        }
+      }
+    ]
   }
 }

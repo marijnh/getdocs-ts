@@ -10,8 +10,17 @@
           "file": "test/cases/overload.ts",
           "line": 2
         },
-        "overloaded": [
+        "type": "Function",
+        "signatures": [
           {
+            "type": "function",
+            "params": [],
+            "returns": {
+              "type": "undefined"
+            }
+          },
+          {
+            "type": "function",
             "params": [
               {
                 "id": "Foo.m^x",
@@ -26,11 +35,6 @@
                 "typeParamSource": "Foo.m^T"
               }
             ],
-            "returns": {
-              "type": "T",
-              "typeParamSource": "Foo.m^T"
-            },
-            "type": "Function",
             "typeParams": [
               {
                 "id": "Foo.m^T",
@@ -43,14 +47,13 @@
                 "type": "typeparam",
                 "kind": "typeparam"
               }
-            ]
+            ],
+            "returns": {
+              "type": "T",
+              "typeParamSource": "Foo.m^T"
+            }
           }
-        ],
-        "params": [],
-        "returns": {
-          "type": "undefined"
-        },
-        "type": "Function"
+        ]
       }
     },
     "kind": "class",
@@ -69,8 +72,29 @@
       "file": "test/cases/overload.ts",
       "line": 7
     },
-    "overloaded": [
+    "type": "Function",
+    "signatures": [
       {
+        "type": "function",
+        "params": [
+          {
+            "id": "f^a",
+            "loc": {
+              "column": 18,
+              "file": "test/cases/overload.ts",
+              "line": 7
+            },
+            "name": "a",
+            "type": "number",
+            "kind": "parameter"
+          }
+        ],
+        "returns": {
+          "type": "string"
+        }
+      },
+      {
+        "type": "function",
         "params": [
           {
             "id": "f^a",
@@ -97,26 +121,8 @@
         ],
         "returns": {
           "type": "number"
-        },
-        "type": "Function"
+        }
       }
-    ],
-    "params": [
-      {
-        "id": "f^a",
-        "loc": {
-          "column": 18,
-          "file": "test/cases/overload.ts",
-          "line": 7
-        },
-        "name": "a",
-        "type": "number",
-        "kind": "parameter"
-      }
-    ],
-    "returns": {
-      "type": "string"
-    },
-    "type": "Function"
+    ]
   }
 }

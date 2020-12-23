@@ -2,7 +2,11 @@
   "X": {
     "kind": "typealias",
     "type": "Array",
-    "typeArgs": [{"type": "number"}],
+    "typeArgs": [
+      {
+        "type": "number"
+      }
+    ],
     "loc": {
       "file": "test/cases/index_signature.ts",
       "line": 1,

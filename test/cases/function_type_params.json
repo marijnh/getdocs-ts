@@ -6,56 +6,61 @@
       "getMeta": {
         "kind": "method",
         "type": "Function",
-        "returns": {
-          "type": "union",
-          "typeArgs": [
-            {
-              "type": "T",
-              "typeParamSource": "X.getMeta^T"
-            },
-            {
-              "type": "undefined"
-            }
-          ]
-        },
-        "params": [
-          {
-            "type": "Iterator",
-            "kind": "parameter",
-            "typeArgs": [
-              {
-                "type": "T",
-                "typeParamSource": "X.getMeta^T"
-              }
-            ],
-            "name": "type",
-            "id": "X.getMeta^type",
-            "loc": {
-              "column": 13,
-              "file": "test/cases/function_type_params.ts",
-              "line": 2
-            }
-          }
-        ],
-        "typeParams": [
-          {
-            "name": "T",
-            "type": "typeparam",
-            "kind": "typeparam",
-            "id": "X.getMeta^T",
-            "loc": {
-              "column": 10,
-              "file": "test/cases/function_type_params.ts",
-              "line": 2
-            }
-          }
-        ],
         "loc": {
           "line": 2,
           "column": 2,
           "file": "test/cases/function_type_params.ts"
         },
-        "id": "X.getMeta"
+        "id": "X.getMeta",
+        "signatures": [
+          {
+            "type": "function",
+            "params": [
+              {
+                "type": "Iterator",
+                "kind": "parameter",
+                "typeArgs": [
+                  {
+                    "type": "T",
+                    "typeParamSource": "X.getMeta^T"
+                  }
+                ],
+                "name": "type",
+                "id": "X.getMeta^type",
+                "loc": {
+                  "column": 13,
+                  "file": "test/cases/function_type_params.ts",
+                  "line": 2
+                }
+              }
+            ],
+            "typeParams": [
+              {
+                "name": "T",
+                "type": "typeparam",
+                "kind": "typeparam",
+                "id": "X.getMeta^T",
+                "loc": {
+                  "column": 10,
+                  "file": "test/cases/function_type_params.ts",
+                  "line": 2
+                }
+              }
+            ],
+            "returns": {
+              "type": "union",
+              "typeArgs": [
+                {
+                  "type": "T",
+                  "typeParamSource": "X.getMeta^T"
+                },
+                {
+                  "type": "undefined"
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     "loc": {

@@ -7,77 +7,82 @@
       "column": 0,
       "file": "test/cases/type_literal.ts"
     },
-    "params": [
+    "id": "findColumn",
+    "signatures": [
       {
-        "name": "string",
-        "type": "string",
-        "kind": "parameter",
-        "id": "findColumn^string",
-        "loc": {
-          "column": 27,
-          "file": "test/cases/type_literal.ts",
-          "line": 1
-        }
-      },
-      {
-        "name": "n",
-        "type": "number",
-        "kind": "parameter",
-        "id": "findColumn^n",
-        "loc": {
-          "column": 43,
-          "file": "test/cases/type_literal.ts",
-          "line": 1
-        }
-      },
-      {
-        "name": "col",
-        "type": "number",
-        "kind": "parameter",
-        "id": "findColumn^col",
-        "loc": {
-          "column": 54,
-          "file": "test/cases/type_literal.ts",
-          "line": 1
-        }
-      },
-      {
-        "name": "tabSize",
-        "type": "number",
-        "kind": "parameter",
-        "id": "findColumn^tabSize",
-        "loc": {
-          "column": 67,
-          "file": "test/cases/type_literal.ts",
-          "line": 1
+        "type": "function",
+        "params": [
+          {
+            "name": "string",
+            "type": "string",
+            "kind": "parameter",
+            "id": "findColumn^string",
+            "loc": {
+              "column": 27,
+              "file": "test/cases/type_literal.ts",
+              "line": 1
+            }
+          },
+          {
+            "name": "n",
+            "type": "number",
+            "kind": "parameter",
+            "id": "findColumn^n",
+            "loc": {
+              "column": 43,
+              "file": "test/cases/type_literal.ts",
+              "line": 1
+            }
+          },
+          {
+            "name": "col",
+            "type": "number",
+            "kind": "parameter",
+            "id": "findColumn^col",
+            "loc": {
+              "column": 54,
+              "file": "test/cases/type_literal.ts",
+              "line": 1
+            }
+          },
+          {
+            "name": "tabSize",
+            "type": "number",
+            "kind": "parameter",
+            "id": "findColumn^tabSize",
+            "loc": {
+              "column": 67,
+              "file": "test/cases/type_literal.ts",
+              "line": 1
+            }
+          }
+        ],
+        "returns": {
+          "type": "Object",
+          "properties": {
+            "offset": {
+              "kind": "property",
+              "loc": {
+                "line": 1,
+                "column": 86,
+                "file": "test/cases/type_literal.ts"
+              },
+              "type": "number",
+              "id": "findColumn^returns.offset"
+            },
+            "leftOver": {
+              "kind": "property",
+              "type": "number",
+              "loc": {
+                "line": 1,
+                "column": 102,
+                "file": "test/cases/type_literal.ts"
+              },
+              "id": "findColumn^returns.leftOver"
+            }
+          }
         }
       }
-    ],
-    "returns": {
-      "type": "Object",
-      "properties": {
-        "offset": {
-          "kind": "property",
-          "loc": {
-            "line": 1,
-            "column": 86,
-            "file": "test/cases/type_literal.ts"
-          },
-          "type": "number",
-          "id": "findColumn^returns.offset"
-        },
-        "leftOver": {
-          "kind": "property",
-          "type": "number",
-          "loc": {
-            "line": 1,
-            "column": 102,
-            "file": "test/cases/type_literal.ts"
-          },
-          "id": "findColumn^returns.leftOver"
-        }
-      }
-    },
-    "id": "findColumn"
+    ]
   }
 }

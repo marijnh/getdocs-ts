@@ -17,30 +17,35 @@
         "column": 2
       },
       "type": "Function",
-      "params": [
+      "signatures": [
         {
-          "id": "Foo.constructor^value",
-          "type": "T",
-          "kind": "parameter",
-          "typeParamSource": "Foo^T",
-          "loc": {
-            "file": "test/cases/default_type_arg.ts",
-            "line": 2,
-            "column": 14
-          },
-          "name": "value"
-        },
-        {
-          "id": "Foo.constructor^content",
-          "type": "V",
-          "kind": "parameter",
-          "typeParamSource": "Foo^V",
-          "loc": {
-            "file": "test/cases/default_type_arg.ts",
-            "line": 2,
-            "column": 33
-          },
-          "name": "content"
+          "type": "constructor",
+          "params": [
+            {
+              "id": "Foo.constructor^value",
+              "type": "T",
+              "kind": "parameter",
+              "typeParamSource": "Foo^T",
+              "loc": {
+                "file": "test/cases/default_type_arg.ts",
+                "line": 2,
+                "column": 14
+              },
+              "name": "value"
+            },
+            {
+              "id": "Foo.constructor^content",
+              "type": "V",
+              "kind": "parameter",
+              "typeParamSource": "Foo^V",
+              "loc": {
+                "file": "test/cases/default_type_arg.ts",
+                "line": 2,
+                "column": 33
+              },
+              "name": "content"
+            }
+          ]
         }
       ]
     },

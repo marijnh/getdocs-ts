@@ -50,7 +50,11 @@
     "kind": "variable",
     "type": "Point",
     "typeSource": "test/cases/references.ts",
-    "typeArgs": [{"type": "number"}],
+    "typeArgs": [
+      {
+        "type": "number"
+      }
+    ],
     "id": "p",
     "loc": {
       "file": "test/cases/references.ts",
@@ -71,7 +75,11 @@
       {
         "type": "Point",
         "typeSource": "test/cases/references.ts",
-        "typeArgs": [{"type": "string"}]
+        "typeArgs": [
+          {
+            "type": "string"
+          }
+        ]
       }
     ],
     "instanceProperties": {
@@ -145,6 +153,10 @@
       "line": 15,
       "column": 13
     },
-    "typeArgs": [{"type": "null"}]
+    "typeArgs": [
+      {
+        "type": "null"
+      }
+    ]
   }
 }

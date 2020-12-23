@@ -8,29 +8,34 @@
       "column": 0
     },
     "type": "Function",
-    "params": [
+    "signatures": [
       {
-        "id": "foo^a",
-        "type": "Object",
-        "kind": "parameter",
-        "properties": {
-          "value": {
-            "kind": "property",
-            "id": "foo^a.value",
+        "type": "function",
+        "params": [
+          {
+            "id": "foo^a",
+            "type": "Object",
+            "kind": "parameter",
+            "properties": {
+              "value": {
+                "kind": "property",
+                "id": "foo^a.value",
+                "loc": {
+                  "file": "test/cases/inline_generic.ts",
+                  "line": 3,
+                  "column": 13
+                },
+                "type": "number"
+              }
+            },
             "loc": {
               "file": "test/cases/inline_generic.ts",
-              "line": 3,
-              "column": 13
+              "line": 1,
+              "column": 20
             },
-            "type": "number"
+            "name": "a"
           }
-        },
-        "loc": {
-          "file": "test/cases/inline_generic.ts",
-          "line": 1,
-          "column": 20
-        },
-        "name": "a"
+        ]
       }
     ]
   }

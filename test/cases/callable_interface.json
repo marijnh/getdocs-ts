@@ -8,9 +8,14 @@
       "column": 0
     },
     "type": "interface",
-    "params": [],
-    "returns": {
-      "type": "any"
-    }
+    "signatures": [
+      {
+        "type": "function",
+        "params": [],
+        "returns": {
+          "type": "any"
+        }
+      }
+    ]
   }
 }

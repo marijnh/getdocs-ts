@@ -5,105 +5,128 @@
     "construct": {
       "kind": "constructor",
       "type": "Function",
-      "params": [
-        {
-          "type": "Object",
-          "kind": "parameter",
-          "properties": {
-            "init": {
-              "kind": "property",
-              "type": "Function",
-              "params": [
-                {
-                  "type": "Array",
-                  "kind": "parameter",
-                  "typeArgs": [{"type": "number"}],
-                  "name": "state",
-                  "id": "StateField.constructor^__0.init^state",
-                  "loc": {
-                    "column": 11,
-                    "file": "test/cases/object_pattern.ts",
-                    "line": 3
-                  }
-                }
-              ],
-              "returns": {
-                "type": "T",
-                "typeParamSource": "StateField^T"
-              },
-              "loc": {
-                "line": 3,
-                "column": 4,
-                "file": "test/cases/object_pattern.ts"
-              },
-              "id": "StateField.constructor^__0.init"
-            },
-            "apply": {
-              "kind": "property",
-              "type": "Function",
-              "params": [
-                {
-                  "type": "Object",
-                  "kind": "parameter",
-                  "name": "tr",
-                  "id": "StateField.constructor^__0.apply^tr",
-                  "loc": {
-                    "column": 12,
-                    "file": "test/cases/object_pattern.ts",
-                    "line": 4
-                  }
-                },
-                {
-                  "type": "T",
-                  "kind": "parameter",
-                  "typeParamSource": "StateField^T",
-                  "name": "value",
-                  "id": "StateField.constructor^__0.apply^value",
-                  "loc": {
-                    "column": 24,
-                    "file": "test/cases/object_pattern.ts",
-                    "line": 4
-                  }
-                },
-                {
-                  "type": "Array",
-                  "typeArgs": [{"type": "number"}],
-                  "name": "newState",
-                  "kind": "parameter",
-                  "id": "StateField.constructor^__0.apply^newState",
-                  "loc": {
-                    "column": 34,
-                    "file": "test/cases/object_pattern.ts",
-                    "line": 4
-                  }
-                }
-              ],
-              "returns": {
-                "type": "T",
-                "typeParamSource": "StateField^T"
-              },
-              "loc": {
-                "line": 4,
-                "column": 4,
-                "file": "test/cases/object_pattern.ts"
-              },
-              "id": "StateField.constructor^__0.apply"
-            }
-          },
-          "id": "StateField.constructor^__0",
-          "loc": {
-            "column": 14,
-            "file": "test/cases/object_pattern.ts",
-            "line": 2
-          }
-        }
-      ],
       "loc": {
         "line": 2,
         "column": 2,
         "file": "test/cases/object_pattern.ts"
       },
-      "id": "StateField.constructor"
+      "id": "StateField.constructor",
+      "signatures": [
+        {
+          "type": "constructor",
+          "params": [
+            {
+              "type": "Object",
+              "kind": "parameter",
+              "properties": {
+                "init": {
+                  "kind": "property",
+                  "type": "Function",
+                  "loc": {
+                    "line": 3,
+                    "column": 4,
+                    "file": "test/cases/object_pattern.ts"
+                  },
+                  "id": "StateField.constructor^__0.init",
+                  "signatures": [
+                    {
+                      "type": "function",
+                      "params": [
+                        {
+                          "type": "Array",
+                          "kind": "parameter",
+                          "typeArgs": [
+                            {
+                              "type": "number"
+                            }
+                          ],
+                          "name": "state",
+                          "id": "StateField.constructor^__0.init^state",
+                          "loc": {
+                            "column": 11,
+                            "file": "test/cases/object_pattern.ts",
+                            "line": 3
+                          }
+                        }
+                      ],
+                      "returns": {
+                        "type": "T",
+                        "typeParamSource": "StateField^T"
+                      }
+                    }
+                  ]
+                },
+                "apply": {
+                  "kind": "property",
+                  "type": "Function",
+                  "loc": {
+                    "line": 4,
+                    "column": 4,
+                    "file": "test/cases/object_pattern.ts"
+                  },
+                  "id": "StateField.constructor^__0.apply",
+                  "signatures": [
+                    {
+                      "type": "function",
+                      "params": [
+                        {
+                          "type": "Object",
+                          "kind": "parameter",
+                          "name": "tr",
+                          "id": "StateField.constructor^__0.apply^tr",
+                          "loc": {
+                            "column": 12,
+                            "file": "test/cases/object_pattern.ts",
+                            "line": 4
+                          }
+                        },
+                        {
+                          "type": "T",
+                          "kind": "parameter",
+                          "typeParamSource": "StateField^T",
+                          "name": "value",
+                          "id": "StateField.constructor^__0.apply^value",
+                          "loc": {
+                            "column": 24,
+                            "file": "test/cases/object_pattern.ts",
+                            "line": 4
+                          }
+                        },
+                        {
+                          "type": "Array",
+                          "typeArgs": [
+                            {
+                              "type": "number"
+                            }
+                          ],
+                          "name": "newState",
+                          "kind": "parameter",
+                          "id": "StateField.constructor^__0.apply^newState",
+                          "loc": {
+                            "column": 34,
+                            "file": "test/cases/object_pattern.ts",
+                            "line": 4
+                          }
+                        }
+                      ],
+                      "returns": {
+                        "type": "T",
+                        "typeParamSource": "StateField^T"
+                      }
+                    }
+                  ]
+                }
+              },
+              "id": "StateField.constructor^__0",
+              "loc": {
+                "column": 14,
+                "file": "test/cases/object_pattern.ts",
+                "line": 2
+              }
+            }
+          ]
+        }
+      ]
     },
     "typeParams": [
       {

@@ -2,7 +2,11 @@
   "Attrs": {
     "kind": "typealias",
     "type": "Object",
-    "typeArgs": [{"type": "string"}],
+    "typeArgs": [
+      {
+        "type": "string"
+      }
+    ],
     "loc": {
       "file": "test/cases/map_index_signature.ts",
       "line": 1,
@@ -17,37 +21,47 @@
       "editorAttributeEffect": {
         "kind": "property",
         "type": "Function",
-        "returns": {
-          "type": "union",
-          "typeArgs": [
-            {"type": "Attrs", "typeSource": "test/cases/map_index_signature.ts"},
-            {"type": "null"}
-          ]
-        },
-        "params": [
-          {
-            "type": "ReadonlyArray",
-            "kind": "parameter",
-            "typeArgs": [
-              {
-                "type": "RegExp"
-              }
-            ],
-            "name": "field",
-            "id": "ViewField.editorAttributeEffect^field",
-            "loc": {
-              "column": 33,
-              "file": "test/cases/map_index_signature.ts",
-              "line": 4
-            }
-          }
-        ],
         "loc": {
           "file": "test/cases/map_index_signature.ts",
           "line": 4,
           "column": 2
         },
-        "id": "ViewField.editorAttributeEffect"
+        "id": "ViewField.editorAttributeEffect",
+        "signatures": [
+          {
+            "type": "function",
+            "params": [
+              {
+                "type": "ReadonlyArray",
+                "kind": "parameter",
+                "typeArgs": [
+                  {
+                    "type": "RegExp"
+                  }
+                ],
+                "name": "field",
+                "id": "ViewField.editorAttributeEffect^field",
+                "loc": {
+                  "column": 33,
+                  "file": "test/cases/map_index_signature.ts",
+                  "line": 4
+                }
+              }
+            ],
+            "returns": {
+              "type": "union",
+              "typeArgs": [
+                {
+                  "type": "Attrs",
+                  "typeSource": "test/cases/map_index_signature.ts"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     "loc": {
