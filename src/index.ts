@@ -365,7 +365,7 @@ class Context {
       this.addSourceData([ctor], item)
       if (item.description && /@internal\b/.test(item.description)) continue
       if (!ctorItem || item.description) ctorItem = item
-      ctorSignatures.push(this.extend("constructor", ".").getCallSignature(signature, "constructor"))
+      ctorSignatures.push(this.extend("constructor", ".").getCallSignature(signature, "constructor", true))
       break
     }
 
@@ -477,7 +477,7 @@ class Context {
     return result
   }
 
-  getCallSignature(signature: Signature, type: "constructor" | "function") {
+  getCallSignature(signature: Signature, type: "constructor" | "function", suppressReturn = false) {
     let cx: Context = this
     let typeParams = signature.typeParameters && this.getTypeParams(signature.getDeclaration())
     let out = {type} as CallSignature
@@ -486,7 +486,7 @@ class Context {
       out.typeParams = typeParams
     }
     out.params = cx.getParams(signature)
-    if (type == "function") {
+    if (!suppressReturn) {
       let ret = signature.getReturnType()
       if (!(ret.flags & TypeFlags.Void)) out.returns = cx.extend("returns").getType(ret)
     }
