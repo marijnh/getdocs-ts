@@ -27,6 +27,7 @@
         "params": [
           {
             "type": "ReadonlyArray",
+            "kind": "parameter",
             "typeArgs": [
               {
                 "type": "RegExp"

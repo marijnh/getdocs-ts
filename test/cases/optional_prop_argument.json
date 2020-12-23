@@ -8,6 +8,7 @@
       "params": [
         {
           "name": "mirror",
+          "kind": "parameter",
           "type": "ReadonlyArray",
           "typeArgs": [{"type": "number"}],
           "optional": true,

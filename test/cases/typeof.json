@@ -23,6 +23,7 @@
         "name": "LocalX",
         "id": "x^LocalX",
         "type": "typeof",
+        "kind": "parameter",
         "typeArgs": [
           {
             "type": "X",

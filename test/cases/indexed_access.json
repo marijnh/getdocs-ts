@@ -6,6 +6,7 @@
       {
         "name": "T",
         "type": "typeparam",
+        "kind": "typeparam",
         "id": "getProperty^T",
         "loc": {
           "column": 28,
@@ -16,6 +17,7 @@
       {
         "name": "K",
         "type": "typeparam",
+        "kind": "typeparam",
         "implements": [
           {
             "type": "keyof",
@@ -38,6 +40,7 @@
     "params": [
       {
         "type": "T",
+        "kind": "parameter",
         "typeParamSource": "getProperty^T",
         "name": "o",
         "id": "getProperty^o",
@@ -49,6 +52,7 @@
       },
       {
         "type": "K",
+        "kind": "parameter",
         "typeParamSource": "getProperty^K",
         "name": "name",
         "id": "getProperty^name",

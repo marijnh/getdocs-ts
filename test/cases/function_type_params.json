@@ -21,6 +21,7 @@
         "params": [
           {
             "type": "Iterator",
+            "kind": "parameter",
             "typeArgs": [
               {
                 "type": "T",
@@ -40,6 +41,7 @@
           {
             "name": "T",
             "type": "typeparam",
+            "kind": "typeparam",
             "id": "X.getMeta^T",
             "loc": {
               "column": 10,

@@ -8,6 +8,7 @@
       "params": [
         {
           "type": "Object",
+          "kind": "parameter",
           "properties": {
             "init": {
               "kind": "property",
@@ -15,6 +16,7 @@
               "params": [
                 {
                   "type": "Array",
+                  "kind": "parameter",
                   "typeArgs": [{"type": "number"}],
                   "name": "state",
                   "id": "StateField.constructor^__0.init^state",
@@ -42,6 +44,7 @@
               "params": [
                 {
                   "type": "Object",
+                  "kind": "parameter",
                   "name": "tr",
                   "id": "StateField.constructor^__0.apply^tr",
                   "loc": {
@@ -52,6 +55,7 @@
                 },
                 {
                   "type": "T",
+                  "kind": "parameter",
                   "typeParamSource": "StateField^T",
                   "name": "value",
                   "id": "StateField.constructor^__0.apply^value",
@@ -65,6 +69,7 @@
                   "type": "Array",
                   "typeArgs": [{"type": "number"}],
                   "name": "newState",
+                  "kind": "parameter",
                   "id": "StateField.constructor^__0.apply^newState",
                   "loc": {
                     "column": 34,
@@ -104,6 +109,7 @@
       {
         "name": "T",
         "type": "typeparam",
+        "kind": "typeparam",
         "id": "StateField^T",
         "loc": {
           "column": 24,

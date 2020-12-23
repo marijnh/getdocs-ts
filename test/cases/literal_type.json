@@ -9,6 +9,7 @@
         "params": [
           {
             "type": "union",
+            "kind": "parameter",
             "typeArgs": [
               {
                 "type": "1"
@@ -47,6 +48,7 @@
         "params": [
           {
             "type": "number",
+            "kind": "parameter",
             "name": "start",
             "id": "X.movePos^start",
             "loc": {
@@ -57,6 +59,7 @@
           },
           {
             "type": "union",
+            "kind": "parameter",
             "typeArgs": [
               {
                 "type": "\"forward\""
@@ -81,6 +84,7 @@
           },
           {
             "type": "union",
+            "kind": "parameter",
             "typeArgs": [
               {
                 "type": "\"character\""
@@ -107,6 +111,7 @@
           },
           {
             "type": "union",
+            "kind": "parameter",
             "typeArgs": [
               {
                 "type": "\"move\""

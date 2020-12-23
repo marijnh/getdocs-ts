@@ -26,7 +26,8 @@
         "line": 1
       },
       "name": "K",
-      "type": "typeparam"
+      "type": "typeparam",
+      "kind": "typeparam"
     },
     "type": "mapped",
     "typeArgs": [
@@ -47,6 +48,7 @@
     "typeParams": [
       {
         "type": "typeparam",
+        "kind": "typeparam",
         "name": "T",
         "id": "Full^T",
         "loc": {

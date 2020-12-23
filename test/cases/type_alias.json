@@ -8,6 +8,7 @@
     "params": [
       {
         "type": "number",
+        "kind": "parameter",
         "name": "from",
         "id": "RangeFilter^from",
         "loc": {
@@ -18,6 +19,7 @@
       },
       {
         "type": "number",
+        "kind": "parameter",
         "name": "to",
         "id": "RangeFilter^to",
         "loc": {
@@ -29,6 +31,7 @@
       {
         "type": "T",
         "typeParamSource": "RangeFilter^T",
+        "kind": "parameter",
         "name": "value",
         "id": "RangeFilter^value",
         "loc": {
@@ -47,6 +50,7 @@
       {
         "name": "T",
         "type": "typeparam",
+        "kind": "typeparam",
         "id": "RangeFilter^T",
         "loc": {
           "column": 24,

@@ -22,6 +22,7 @@
                 },
                 "name": "x",
                 "type": "T",
+                "kind": "parameter",
                 "typeParamSource": "Foo.m^T"
               }
             ],
@@ -39,7 +40,8 @@
                   "line": 3
                 },
                 "name": "T",
-                "type": "typeparam"
+                "type": "typeparam",
+                "kind": "typeparam"
               }
             ]
           }
@@ -78,7 +80,8 @@
               "line": 8
             },
             "name": "a",
-            "type": "number"
+            "type": "number",
+            "kind": "parameter"
           },
           {
             "id": "f^b",
@@ -88,7 +91,8 @@
               "line": 8
             },
             "name": "b",
-            "type": "number"
+            "type": "number",
+            "kind": "parameter"
           }
         ],
         "returns": {
@@ -106,7 +110,8 @@
           "line": 7
         },
         "name": "a",
-        "type": "number"
+        "type": "number",
+        "kind": "parameter"
       }
     ],
     "returns": {

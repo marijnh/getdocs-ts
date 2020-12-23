@@ -20,13 +20,15 @@
         "line": 1
       },
       "name": "K",
-      "type": "typeparam"
+      "type": "typeparam",
+      "kind": "typeparam"
     },
     "type": "mapped",
     "typeParams": [
       {
         "name": "A",
         "type": "typeparam",
+        "kind": "typeparam",
         "id": "T^A",
         "loc": {
           "column": 14,
@@ -37,6 +39,7 @@
       {
         "name": "B",
         "type": "typeparam",
+        "kind": "typeparam",
         "id": "T^B",
         "loc": {
           "column": 17,

@@ -15,6 +15,7 @@
         {
           "name": "T",
           "type": "typeparam",
+          "kind": "typeparam",
           "id": "makeID^returns^T",
           "loc": {
             "file": "test/cases/parameterized_type.ts",
@@ -27,6 +28,7 @@
         {
           "name": "x",
           "type": "T",
+          "kind": "parameter",
           "typeParamSource": "makeID^returns^T",
           "id": "makeID^returns^x",
           "loc": {

@@ -47,6 +47,7 @@
     ],
     "key": {
       "type": "typeparam",
+      "kind": "typeparam",
       "name": "Type",
       "id": "x^Type",
       "loc": {

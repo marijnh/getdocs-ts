@@ -21,6 +21,7 @@
           {
             "name": "skip",
             "type": "number",
+            "kind": "parameter",
             "optional": true,
             "id": "TextIterator.next^skip",
             "loc": {

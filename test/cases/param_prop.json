@@ -9,6 +9,7 @@
         {
           "name": "start",
           "type": "number",
+          "kind": "parameter",
           "id": "Line.constructor^start",
           "loc": {
             "column": 4,

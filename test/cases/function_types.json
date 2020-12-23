@@ -19,6 +19,7 @@
         "params": [
           {
             "type": "Object",
+            "kind": "parameter",
             "properties": {
               "fromJSON": {
                 "loc": {
@@ -31,6 +32,7 @@
                 "params": [
                   {
                     "type": "any",
+                    "kind": "parameter",
                     "name": "json",
                     "id": "ChangeSet^fromJSON^ChangeType.fromJSON^json",
                     "loc": {
@@ -58,6 +60,7 @@
           },
           {
             "type": "any",
+            "kind": "parameter",
             "name": "json",
             "description": "The json",
             "id": "ChangeSet^fromJSON^json",

@@ -12,6 +12,7 @@
       {
         "name": "T",
         "type": "typeparam",
+        "kind": "typeparam",
         "id": "Point^T",
         "loc": {
           "column": 18,
@@ -106,6 +107,7 @@
       {
         "name": "T",
         "type": "typeparam",
+        "kind": "typeparam",
         "id": "Bar^T",
         "loc": {
           "column": 21,

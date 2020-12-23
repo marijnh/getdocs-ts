@@ -49,6 +49,7 @@ type BindingType = {
 type Param = BindingType & {
   name?: string,
   id: string,
+  kind: BindingKind,
   description?: string,
   loc?: Loc,
   optional?: boolean,
@@ -388,7 +389,8 @@ class Context {
             if (!deflt) break
             if (!cx) cx = this.addParams(args.map((a, i) => Object.assign({
               name: targetParams![i].symbol.name,
-              id: String(i)
+              id: String(i),
+              kind: "typeparam" as BindingKind
             }, a)))
             let compare = cx.getType(deflt)
             if (compareTypes(args[i], compare, args as any)) args.pop()
@@ -411,6 +413,7 @@ class Context {
       }
       let result: Param = {
         id: cx.id,
+        kind: "parameter",
         ...cx.getType(type, param)
       }
 
@@ -435,7 +438,7 @@ class Context {
   getTypeParam(param: TypeParameterDeclaration): Param {
     let sym = this.tc.getSymbolAtLocation(param.name)!
     let localCx = this.extend(sym)
-    let result: Param = {type: "typeparam", name: sym.name, id: localCx.id}
+    let result: Param = {type: "typeparam", kind: "typeparam", name: sym.name, id: localCx.id}
     this.addSourceData([param], result)
     let constraint = getEffectiveConstraintOfTypeParameter(param), type
     // Directly querying getTypeAtLocation for the constraint will

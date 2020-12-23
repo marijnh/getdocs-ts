@@ -38,6 +38,7 @@
     "params": [
       {
         "type": "string",
+        "kind": "parameter",
         "name": "y",
         "id": "x^y",
         "loc": {

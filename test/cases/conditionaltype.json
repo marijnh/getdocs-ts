@@ -33,7 +33,8 @@
           "line": 1
         },
         "name": "T",
-        "type": "typeparam"
+        "type": "typeparam",
+        "kind": "typeparam"
       }
     ]
   }

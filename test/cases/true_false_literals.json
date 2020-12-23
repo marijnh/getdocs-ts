@@ -5,6 +5,7 @@
     "params": [
       {
         "type": "any",
+        "kind": "parameter",
         "name": "a",
         "id": "x^a",
         "loc": {
@@ -38,6 +39,7 @@
     "params": [
       {
         "type": "any",
+        "kind": "parameter",
         "name": "a",
         "id": "y^a",
         "loc": {

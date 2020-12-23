@@ -12,6 +12,7 @@
       {
         "id": "f^g",
         "type": "Function",
+        "kind": "parameter",
         "params": [],
         "returns": {
           "type": "union",

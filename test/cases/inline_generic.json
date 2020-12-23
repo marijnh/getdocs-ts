@@ -12,6 +12,7 @@
       {
         "id": "foo^a",
         "type": "Object",
+        "kind": "parameter",
         "properties": {
           "value": {
             "kind": "property",

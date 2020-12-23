@@ -21,6 +21,7 @@
         {
           "id": "Foo.constructor^value",
           "type": "T",
+          "kind": "parameter",
           "typeParamSource": "Foo^T",
           "loc": {
             "file": "test/cases/default_type_arg.ts",
@@ -32,6 +33,7 @@
         {
           "id": "Foo.constructor^content",
           "type": "V",
+          "kind": "parameter",
           "typeParamSource": "Foo^V",
           "loc": {
             "file": "test/cases/default_type_arg.ts",
@@ -71,6 +73,7 @@
     "typeParams": [
       {
         "type": "typeparam",
+        "kind": "typeparam",
         "name": "T",
         "id": "Foo^T",
         "loc": {
@@ -82,6 +85,7 @@
       },
       {
         "type": "typeparam",
+        "kind": "typeparam",
         "name": "V",
         "id": "Foo^V",
         "loc": {

@@ -9,6 +9,7 @@
         "params": [
           {
             "type": "Array",
+            "kind": "parameter",
             "typeArgs": [
               {
                 "type": "Extension",
