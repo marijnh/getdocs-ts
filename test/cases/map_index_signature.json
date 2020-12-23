@@ -20,8 +20,8 @@
         "returns": {
           "type": "union",
           "typeArgs": [
-            {"type": "null"},
-            {"type": "Attrs", "typeSource": "test/cases/map_index_signature.ts"}
+            {"type": "Attrs", "typeSource": "test/cases/map_index_signature.ts"},
+            {"type": "null"}
           ]
         },
         "params": [

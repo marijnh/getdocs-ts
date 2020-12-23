@@ -10,7 +10,6 @@
     "type": "union",
     "typeArgs": [
       {"type": "number"},
-      {"type": "null"},
       {"type": "Object",
        "properties": {
          "ok": {
@@ -24,6 +23,7 @@
            }
          }
        }},
+      {"type": "null"},
       {"type": "undefined"}
     ]
   },

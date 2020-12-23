@@ -10,11 +10,11 @@
           "type": "union",
           "typeArgs": [
             {
-              "type": "undefined"
-            },
-            {
               "type": "T",
               "typeParamSource": "X.getMeta^T"
+            },
+            {
+              "type": "undefined"
             }
           ]
         },

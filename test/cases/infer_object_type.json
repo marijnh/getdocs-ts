@@ -6,9 +6,6 @@
       "type": "union",
       "typeArgs": [
         {
-          "type": "null"
-        },
-        {
           "type": "Object",
           "properties": {
             "ch": {
@@ -32,6 +29,9 @@
               "id": "x^returns.a"
             }
           }
+        },
+        {
+          "type": "null"
         }
       ]
     },

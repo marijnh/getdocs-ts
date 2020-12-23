@@ -181,8 +181,14 @@ class Context {
       }
       let union = type.flags & TypeFlags.Union
       let args = types.map(type => (type.flags & TypeFlags.Void) ? {type: "undefined"} : this.getType(type))
+      // If both true and false occur in the union, combine them into boolean
       if (union && args.some(a => a.type == "true") && args.some(a => a.type == "false"))
         args = [{type: "boolean"}].concat(args.filter(a => a.type != "true" && a.type != "false"))
+      // Move null and undefined types to the end
+      for (let tp of ["null", "undefined"]) {
+        let index = args.findIndex(a => a.type == tp)
+        if (index > -1 && index != args.length - 1) args.push(args.splice(index, 1)[0])
+      }
       return {
         type: union ? "union" : "intersection",
         typeArgs: args
