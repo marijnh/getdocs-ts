@@ -666,26 +666,38 @@ function stripComment(lines: string[]) {
   return lines.join("\n")
 }
 
-export function gather({filename, items = Object.create(null), basedir}:
-                       {filename: string, items?: {[name: string]: any}, basedir?: string}) {
-  const configPath = findConfigFile(filename, sys.fileExists)
-  const host = createCompilerHost({})
-  const options = configPath ? getParsedCommandLineOfConfigFile(configPath, {}, host as any)!.options : {}
-  const program = createProgram({rootNames: [filename], options, host})
-  const sourceFile = program.getSourceFile(filename)
-  if (!sourceFile) throw new Error(`Source file "${filename}" not found`)
+export interface GatherSpec {
+  filename: string
+  basedir?: string
+  items?: {[name: string]: any}
+}
 
-  const tc = program.getTypeChecker()
-  const exports = tc.getExportsOfModule(tc.getSymbolAtLocation(sourceFile)!)
+export function gather(spec: GatherSpec) {
+  return gatherMany([spec])[0]
+}
 
-  // Add all symbols aliased by exports to the set of things that
-  // should be considered exported
-  const closedExports = exports.slice()
-  for (let i = 0; i < closedExports.length; i++) {
-    let sym = closedExports[i], alias = (sym.flags & SymbolFlags.Alias) ? tc.getAliasedSymbol(sym) : null
-    if (alias && !closedExports.includes(alias)) closedExports.push(alias)
-  }
+export function gatherMany(specs: readonly GatherSpec[]) {
+  let filenames = specs.map(s => s.filename)
+  let configPath = findConfigFile(filenames[0], sys.fileExists)
+  let host = createCompilerHost({})
+  let options = configPath ? getParsedCommandLineOfConfigFile(configPath, {}, host as any)!.options : {}
+  let program = createProgram({rootNames: filenames, options, host})
+  let tc = program.getTypeChecker()
+  return specs.map(({filename, items = Object.create(null), basedir}) => {
+    let sourceFile = program.getSourceFile(filename)
+    if (!sourceFile) throw new Error(`Source file "${filename}" not found`)
 
-  new Context(tc, closedExports, resolve(basedir || dirname(configPath || filename)), "", []).gatherSymbols(exports, items, "")
-  return items
+    let exports = tc.getExportsOfModule(tc.getSymbolAtLocation(sourceFile)!)
+
+    // Add all symbols aliased by exports to the set of things that
+    // should be considered exported
+    let closedExports = exports.slice()
+    for (let i = 0; i < closedExports.length; i++) {
+      let sym = closedExports[i], alias = (sym.flags & SymbolFlags.Alias) ? tc.getAliasedSymbol(sym) : null
+      if (alias && !closedExports.includes(alias)) closedExports.push(alias)
+    }
+
+    new Context(tc, closedExports, resolve(basedir || dirname(configPath || filename)), "", []).gatherSymbols(exports, items, "")
+    return items
+  })
 }
