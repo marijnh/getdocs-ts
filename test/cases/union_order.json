@@ -3,7 +3,7 @@
     "kind": "variable",
     "id": "x",
     "loc": {
-      "file": "test/cases/union_order.ts",
+      "file": "union_order.ts",
       "line": 1,
       "column": 11
     },
@@ -20,7 +20,7 @@
             "type": "boolean",
             "id": "x.ok",
             "loc": {
-              "file": "test/cases/union_order.ts",
+              "file": "union_order.ts",
               "line": 1,
               "column": 31
             }
@@ -48,7 +48,7 @@
     ],
     "id": "U",
     "loc": {
-      "file": "test/cases/union_order.ts",
+      "file": "union_order.ts",
       "line": 3,
       "column": 0
     }
@@ -56,10 +56,10 @@
   "y": {
     "kind": "variable",
     "type": "U",
-    "typeSource": "test/cases/union_order.ts",
+    "typeSource": "union_order.ts",
     "id": "y",
     "loc": {
-      "file": "test/cases/union_order.ts",
+      "file": "union_order.ts",
       "line": 5,
       "column": 11
     }

@@ -6,45 +6,45 @@
       "Simple": {
         "kind": "enummember",
         "type": "MapMode",
-        "typeSource": "test/cases/enum.ts",
+        "typeSource": "enum.ts",
         "loc": {
           "line": 2,
           "column": 2,
-          "file": "test/cases/enum.ts"
+          "file": "enum.ts"
         },
         "id": "MapMode.Simple"
       },
       "TrackDel": {
         "kind": "enummember",
         "type": "MapMode",
-        "typeSource": "test/cases/enum.ts",
+        "typeSource": "enum.ts",
         "loc": {
           "line": 3,
           "column": 2,
-          "file": "test/cases/enum.ts"
+          "file": "enum.ts"
         },
         "id": "MapMode.TrackDel"
       },
       "TrackBefore": {
         "kind": "enummember",
         "type": "MapMode",
-        "typeSource": "test/cases/enum.ts",
+        "typeSource": "enum.ts",
         "description": "(Before)",
         "loc": {
           "line": 4,
           "column": 2,
-          "file": "test/cases/enum.ts"
+          "file": "enum.ts"
         },
         "id": "MapMode.TrackBefore"
       },
       "TrackAfter": {
         "kind": "enummember",
         "type": "MapMode",
-        "typeSource": "test/cases/enum.ts",
+        "typeSource": "enum.ts",
         "loc": {
           "line": 6,
           "column": 2,
-          "file": "test/cases/enum.ts"
+          "file": "enum.ts"
         },
         "id": "MapMode.TrackAfter"
       }
@@ -52,7 +52,7 @@
     "loc": {
       "line": 1,
       "column": 0,
-      "file": "test/cases/enum.ts"
+      "file": "enum.ts"
     },
     "id": "MapMode"
   }

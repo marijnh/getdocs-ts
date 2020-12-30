@@ -8,17 +8,17 @@
         "loc": {
           "line": 2,
           "column": 2,
-          "file": "test/cases/static_field.ts"
+          "file": "static_field.ts"
         },
         "type": "X",
-        "typeSource": "test/cases/static_field.ts",
+        "typeSource": "static_field.ts",
         "id": "X^empty"
       }
     },
     "loc": {
       "line": 1,
       "column": 0,
-      "file": "test/cases/static_field.ts"
+      "file": "static_field.ts"
     },
     "id": "X"
   }

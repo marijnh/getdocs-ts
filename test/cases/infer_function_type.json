@@ -3,7 +3,7 @@
     "kind": "variable",
     "type": "Function",
     "loc": {
-      "file": "test/cases/infer_function_type.ts",
+      "file": "infer_function_type.ts",
       "line": 5,
       "column": 13
     },

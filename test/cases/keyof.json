@@ -3,7 +3,7 @@
     "kind": "typealias",
     "id": "Foo",
     "loc": {
-      "file": "test/cases/keyof.ts",
+      "file": "keyof.ts",
       "line": 1,
       "column": 0
     },
@@ -13,7 +13,7 @@
         "kind": "property",
         "id": "Foo.a",
         "loc": {
-          "file": "test/cases/keyof.ts",
+          "file": "keyof.ts",
           "line": 1,
           "column": 19
         },
@@ -23,7 +23,7 @@
         "kind": "property",
         "id": "Foo.b",
         "loc": {
-          "file": "test/cases/keyof.ts",
+          "file": "keyof.ts",
           "line": 1,
           "column": 30
         },
@@ -35,7 +35,7 @@
     "kind": "variable",
     "id": "x",
     "loc": {
-      "file": "test/cases/keyof.ts",
+      "file": "keyof.ts",
       "line": 3,
       "column": 13
     },
@@ -51,7 +51,7 @@
       "name": "Type",
       "id": "x^Type",
       "loc": {
-        "file": "test/cases/keyof.ts",
+        "file": "keyof.ts",
         "line": 3,
         "column": 18
       },
@@ -61,7 +61,7 @@
           "typeArgs": [
             {
               "type": "Foo",
-              "typeSource": "test/cases/keyof.ts"
+              "typeSource": "keyof.ts"
             }
           ]
         }

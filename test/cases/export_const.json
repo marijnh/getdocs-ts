@@ -5,7 +5,7 @@
     "loc": {
       "line": 1,
       "column": 13,
-      "file": "test/cases/export_const.ts"
+      "file": "export_const.ts"
     },
     "id": "moveCharLeft"
   }

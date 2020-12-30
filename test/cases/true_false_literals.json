@@ -3,7 +3,7 @@
     "kind": "variable",
     "type": "Function",
     "loc": {
-      "file": "test/cases/true_false_literals.ts",
+      "file": "true_false_literals.ts",
       "line": 1,
       "column": 13
     },
@@ -19,7 +19,7 @@
             "id": "x^a",
             "loc": {
               "column": 17,
-              "file": "test/cases/true_false_literals.ts",
+              "file": "true_false_literals.ts",
               "line": 1
             }
           }
@@ -42,7 +42,7 @@
     "kind": "variable",
     "type": "Function",
     "loc": {
-      "file": "test/cases/true_false_literals.ts",
+      "file": "true_false_literals.ts",
       "line": 2,
       "column": 13
     },
@@ -58,7 +58,7 @@
             "id": "y^a",
             "loc": {
               "column": 17,
-              "file": "test/cases/true_false_literals.ts",
+              "file": "true_false_literals.ts",
               "line": 2
             }
           }

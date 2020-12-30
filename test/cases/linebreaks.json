@@ -5,7 +5,7 @@
     "kind": "variable",
     "loc": {
       "column": 13,
-      "file": "test/cases/linebreaks.ts",
+      "file": "linebreaks.ts",
       "line": 12
     },
     "type": "1"

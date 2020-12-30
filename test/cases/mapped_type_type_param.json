@@ -3,7 +3,7 @@
     "kind": "typealias",
     "id": "Full",
     "loc": {
-      "file": "test/cases/mapped_type_type_param.ts",
+      "file": "mapped_type_type_param.ts",
       "line": 1,
       "column": 0
     },
@@ -22,7 +22,7 @@
       ],
       "loc": {
         "column": 24,
-        "file": "test/cases/mapped_type_type_param.ts",
+        "file": "mapped_type_type_param.ts",
         "line": 1
       },
       "name": "K",
@@ -52,7 +52,7 @@
         "name": "T",
         "id": "Full^T",
         "loc": {
-          "file": "test/cases/mapped_type_type_param.ts",
+          "file": "mapped_type_type_param.ts",
           "line": 1,
           "column": 17
         }

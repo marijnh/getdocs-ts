@@ -12,7 +12,7 @@
             "typeArgs": [
               {
                 "type": "Text",
-                "typeSource": "test/cases/internal.ts"
+                "typeSource": "internal.ts"
               }
             ]
           },
@@ -23,7 +23,7 @@
         "loc": {
           "line": 2,
           "column": 2,
-          "file": "test/cases/internal.ts"
+          "file": "internal.ts"
         },
         "abstract": true,
         "readonly": true,
@@ -34,7 +34,7 @@
     "loc": {
       "line": 1,
       "column": 0,
-      "file": "test/cases/internal.ts"
+      "file": "internal.ts"
     },
     "id": "Text"
   }

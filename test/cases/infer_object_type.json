@@ -3,7 +3,7 @@
     "kind": "variable",
     "type": "Function",
     "loc": {
-      "file": "test/cases/infer_object_type.ts",
+      "file": "infer_object_type.ts",
       "line": 1,
       "column": 13
     },
@@ -19,7 +19,7 @@
             "id": "x^y",
             "loc": {
               "column": 18,
-              "file": "test/cases/infer_object_type.ts",
+              "file": "infer_object_type.ts",
               "line": 1
             }
           }
@@ -35,7 +35,7 @@
                   "type": "string",
                   "loc": {
                     "column": 15,
-                    "file": "test/cases/infer_object_type.ts",
+                    "file": "infer_object_type.ts",
                     "line": 4
                   },
                   "id": "x^returns.ch"
@@ -45,7 +45,7 @@
                   "type": "number",
                   "loc": {
                     "column": 22,
-                    "file": "test/cases/infer_object_type.ts",
+                    "file": "infer_object_type.ts",
                     "line": 4
                   },
                   "id": "x^returns.a"

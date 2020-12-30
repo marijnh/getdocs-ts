@@ -9,7 +9,7 @@
         "loc": {
           "line": 3,
           "column": 14,
-          "file": "test/cases/noninternal_prop_in_internal_constructor.ts"
+          "file": "noninternal_prop_in_internal_constructor.ts"
         },
         "id": "Extension.kind"
       }
@@ -17,7 +17,7 @@
     "loc": {
       "line": 1,
       "column": 0,
-      "file": "test/cases/noninternal_prop_in_internal_constructor.ts"
+      "file": "noninternal_prop_in_internal_constructor.ts"
     },
     "id": "Extension"
   }

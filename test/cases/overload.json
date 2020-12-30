@@ -7,7 +7,7 @@
         "kind": "method",
         "loc": {
           "column": 2,
-          "file": "test/cases/overload.ts",
+          "file": "overload.ts",
           "line": 2
         },
         "type": "Function",
@@ -26,7 +26,7 @@
                 "id": "Foo.m^x",
                 "loc": {
                   "column": 7,
-                  "file": "test/cases/overload.ts",
+                  "file": "overload.ts",
                   "line": 3
                 },
                 "name": "x",
@@ -40,7 +40,7 @@
                 "id": "Foo.m^T",
                 "loc": {
                   "column": 4,
-                  "file": "test/cases/overload.ts",
+                  "file": "overload.ts",
                   "line": 3
                 },
                 "name": "T",
@@ -59,7 +59,7 @@
     "kind": "class",
     "loc": {
       "column": 0,
-      "file": "test/cases/overload.ts",
+      "file": "overload.ts",
       "line": 1
     },
     "type": "class"
@@ -69,7 +69,7 @@
     "kind": "function",
     "loc": {
       "column": 0,
-      "file": "test/cases/overload.ts",
+      "file": "overload.ts",
       "line": 7
     },
     "type": "Function",
@@ -81,7 +81,7 @@
             "id": "f^a",
             "loc": {
               "column": 18,
-              "file": "test/cases/overload.ts",
+              "file": "overload.ts",
               "line": 7
             },
             "name": "a",
@@ -100,7 +100,7 @@
             "id": "f^a",
             "loc": {
               "column": 18,
-              "file": "test/cases/overload.ts",
+              "file": "overload.ts",
               "line": 8
             },
             "name": "a",
@@ -111,7 +111,7 @@
             "id": "f^b",
             "loc": {
               "column": 29,
-              "file": "test/cases/overload.ts",
+              "file": "overload.ts",
               "line": 8
             },
             "name": "b",

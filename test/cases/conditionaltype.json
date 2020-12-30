@@ -4,7 +4,7 @@
     "kind": "typealias",
     "loc": {
       "column": 0,
-      "file": "test/cases/conditionaltype.ts",
+      "file": "conditionaltype.ts",
       "line": 1
     },
     "type": "conditional",
@@ -29,7 +29,7 @@
         "id": "NonUndefined^T",
         "loc": {
           "column": 25,
-          "file": "test/cases/conditionaltype.ts",
+          "file": "conditionaltype.ts",
           "line": 1
         },
         "name": "T",

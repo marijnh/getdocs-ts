@@ -5,13 +5,13 @@
     "implements": [
       {
         "type": "I",
-        "typeSource": "test/cases/implements.ts"
+        "typeSource": "implements.ts"
       }
     ],
     "loc": {
       "line": 3,
       "column": 0,
-      "file": "test/cases/implements.ts"
+      "file": "implements.ts"
     },
     "id": "ChangeDesc"
   },
@@ -20,7 +20,7 @@
     "kind": "interface",
     "loc": {
       "column": 0,
-      "file": "test/cases/implements.ts",
+      "file": "implements.ts",
       "line": 1
     },
     "properties": {
@@ -29,7 +29,7 @@
         "kind": "property",
         "loc": {
           "column": 21,
-          "file": "test/cases/implements.ts",
+          "file": "implements.ts",
           "line": 1
         },
         "type": "number"

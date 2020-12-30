@@ -8,7 +8,7 @@
       "loc": {
         "line": 2,
         "column": 2,
-        "file": "test/cases/object_pattern.ts"
+        "file": "object_pattern.ts"
       },
       "id": "StateField.constructor",
       "signatures": [
@@ -25,7 +25,7 @@
                   "loc": {
                     "line": 3,
                     "column": 4,
-                    "file": "test/cases/object_pattern.ts"
+                    "file": "object_pattern.ts"
                   },
                   "id": "StateField.constructor^__0.init",
                   "signatures": [
@@ -44,7 +44,7 @@
                           "id": "StateField.constructor^__0.init^state",
                           "loc": {
                             "column": 11,
-                            "file": "test/cases/object_pattern.ts",
+                            "file": "object_pattern.ts",
                             "line": 3
                           }
                         }
@@ -62,7 +62,7 @@
                   "loc": {
                     "line": 4,
                     "column": 4,
-                    "file": "test/cases/object_pattern.ts"
+                    "file": "object_pattern.ts"
                   },
                   "id": "StateField.constructor^__0.apply",
                   "signatures": [
@@ -76,7 +76,7 @@
                           "id": "StateField.constructor^__0.apply^tr",
                           "loc": {
                             "column": 12,
-                            "file": "test/cases/object_pattern.ts",
+                            "file": "object_pattern.ts",
                             "line": 4
                           }
                         },
@@ -88,7 +88,7 @@
                           "id": "StateField.constructor^__0.apply^value",
                           "loc": {
                             "column": 24,
-                            "file": "test/cases/object_pattern.ts",
+                            "file": "object_pattern.ts",
                             "line": 4
                           }
                         },
@@ -104,7 +104,7 @@
                           "id": "StateField.constructor^__0.apply^newState",
                           "loc": {
                             "column": 34,
-                            "file": "test/cases/object_pattern.ts",
+                            "file": "object_pattern.ts",
                             "line": 4
                           }
                         }
@@ -120,7 +120,7 @@
               "id": "StateField.constructor^__0",
               "loc": {
                 "column": 14,
-                "file": "test/cases/object_pattern.ts",
+                "file": "object_pattern.ts",
                 "line": 2
               }
             }
@@ -136,7 +136,7 @@
         "id": "StateField^T",
         "loc": {
           "column": 24,
-          "file": "test/cases/object_pattern.ts",
+          "file": "object_pattern.ts",
           "line": 1
         }
       }
@@ -144,7 +144,7 @@
     "loc": {
       "line": 1,
       "column": 0,
-      "file": "test/cases/object_pattern.ts"
+      "file": "object_pattern.ts"
     },
     "id": "StateField"
   }

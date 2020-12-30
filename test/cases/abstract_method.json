@@ -3,7 +3,7 @@
     "loc": {
       "line": 1,
       "column": 0,
-      "file": "test/cases/abstract_method.ts"
+      "file": "abstract_method.ts"
     },
     "kind": "class",
     "type": "class",
@@ -15,7 +15,7 @@
         "loc": {
           "line": 2,
           "column": 2,
-          "file": "test/cases/abstract_method.ts"
+          "file": "abstract_method.ts"
         },
         "id": "X.firstLineLength",
         "signatures": [

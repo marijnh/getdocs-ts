@@ -5,7 +5,7 @@
     "loc": {
       "line": 1,
       "column": 0,
-      "file": "test/cases/type_literal.ts"
+      "file": "type_literal.ts"
     },
     "id": "findColumn",
     "signatures": [
@@ -19,7 +19,7 @@
             "id": "findColumn^string",
             "loc": {
               "column": 27,
-              "file": "test/cases/type_literal.ts",
+              "file": "type_literal.ts",
               "line": 1
             }
           },
@@ -30,7 +30,7 @@
             "id": "findColumn^n",
             "loc": {
               "column": 43,
-              "file": "test/cases/type_literal.ts",
+              "file": "type_literal.ts",
               "line": 1
             }
           },
@@ -41,7 +41,7 @@
             "id": "findColumn^col",
             "loc": {
               "column": 54,
-              "file": "test/cases/type_literal.ts",
+              "file": "type_literal.ts",
               "line": 1
             }
           },
@@ -52,7 +52,7 @@
             "id": "findColumn^tabSize",
             "loc": {
               "column": 67,
-              "file": "test/cases/type_literal.ts",
+              "file": "type_literal.ts",
               "line": 1
             }
           }
@@ -65,7 +65,7 @@
               "loc": {
                 "line": 1,
                 "column": 86,
-                "file": "test/cases/type_literal.ts"
+                "file": "type_literal.ts"
               },
               "type": "number",
               "id": "findColumn^returns.offset"
@@ -76,7 +76,7 @@
               "loc": {
                 "line": 1,
                 "column": 102,
-                "file": "test/cases/type_literal.ts"
+                "file": "type_literal.ts"
               },
               "id": "findColumn^returns.leftOver"
             }

@@ -12,7 +12,7 @@
     ],
     "id": "x",
     "loc": {
-      "file": "test/cases/tuple.ts",
+      "file": "tuple.ts",
       "line": 1,
       "column": 13
     }

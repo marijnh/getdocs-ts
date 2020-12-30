@@ -4,7 +4,7 @@
     "kind": "interface",
     "loc": {
       "column": 0,
-      "file": "test/cases/internal_extends_external.ts",
+      "file": "internal_extends_external.ts",
       "line": 1
     },
     "properties": {
@@ -13,7 +13,7 @@
         "kind": "property",
         "loc": {
           "column": 2,
-          "file": "test/cases/internal_extends_external.ts",
+          "file": "internal_extends_external.ts",
           "line": 2
         },
         "type": "number"
@@ -26,13 +26,13 @@
     "implements": [
       {
         "type": "A",
-        "typeSource": "test/cases/internal_extends_external.ts"
+        "typeSource": "internal_extends_external.ts"
       }
     ],
     "kind": "variable",
     "loc": {
       "column": 21,
-      "file": "test/cases/internal_extends_external.ts",
+      "file": "internal_extends_external.ts",
       "line": 9
     },
     "properties": {
@@ -41,7 +41,7 @@
         "kind": "property",
         "loc": {
           "column": 2,
-          "file": "test/cases/internal_extends_external.ts",
+          "file": "internal_extends_external.ts",
           "line": 6
         },
         "type": "number"

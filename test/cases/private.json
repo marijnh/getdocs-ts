@@ -5,7 +5,7 @@
     "loc": {
       "line": 1,
       "column": 0,
-      "file": "test/cases/private.ts"
+      "file": "private.ts"
     },
     "id": "EditorState"
   }

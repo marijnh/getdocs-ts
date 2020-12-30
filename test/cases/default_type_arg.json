@@ -3,7 +3,7 @@
     "kind": "class",
     "id": "Foo",
     "loc": {
-      "file": "test/cases/default_type_arg.ts",
+      "file": "default_type_arg.ts",
       "line": 1,
       "column": 0
     },
@@ -12,7 +12,7 @@
       "kind": "constructor",
       "id": "Foo.constructor",
       "loc": {
-        "file": "test/cases/default_type_arg.ts",
+        "file": "default_type_arg.ts",
         "line": 2,
         "column": 2
       },
@@ -27,7 +27,7 @@
               "kind": "parameter",
               "typeParamSource": "Foo^T",
               "loc": {
-                "file": "test/cases/default_type_arg.ts",
+                "file": "default_type_arg.ts",
                 "line": 2,
                 "column": 14
               },
@@ -39,7 +39,7 @@
               "kind": "parameter",
               "typeParamSource": "Foo^V",
               "loc": {
-                "file": "test/cases/default_type_arg.ts",
+                "file": "default_type_arg.ts",
                 "line": 2,
                 "column": 33
               },
@@ -54,7 +54,7 @@
         "kind": "property",
         "id": "Foo.value",
         "loc": {
-          "file": "test/cases/default_type_arg.ts",
+          "file": "default_type_arg.ts",
           "line": 2,
           "column": 14
         },
@@ -66,7 +66,7 @@
         "kind": "property",
         "id": "Foo.content",
         "loc": {
-          "file": "test/cases/default_type_arg.ts",
+          "file": "default_type_arg.ts",
           "line": 2,
           "column": 33
         },
@@ -82,7 +82,7 @@
         "name": "T",
         "id": "Foo^T",
         "loc": {
-          "file": "test/cases/default_type_arg.ts",
+          "file": "default_type_arg.ts",
           "line": 1,
           "column": 17
         },
@@ -94,7 +94,7 @@
         "name": "V",
         "id": "Foo^V",
         "loc": {
-          "file": "test/cases/default_type_arg.ts",
+          "file": "default_type_arg.ts",
           "line": 1,
           "column": 29
         },
@@ -106,23 +106,23 @@
     "kind": "variable",
     "id": "x",
     "loc": {
-      "file": "test/cases/default_type_arg.ts",
+      "file": "default_type_arg.ts",
       "line": 5,
       "column": 11
     },
     "type": "Foo",
-    "typeSource": "test/cases/default_type_arg.ts"
+    "typeSource": "default_type_arg.ts"
   },
   "y": {
     "kind": "variable",
     "id": "y",
     "loc": {
-      "file": "test/cases/default_type_arg.ts",
+      "file": "default_type_arg.ts",
       "line": 6,
       "column": 11
     },
     "type": "Foo",
-    "typeSource": "test/cases/default_type_arg.ts",
+    "typeSource": "default_type_arg.ts",
     "typeArgs": [
       {
         "type": "number"
@@ -136,12 +136,12 @@
     "kind": "variable",
     "id": "z",
     "loc": {
-      "file": "test/cases/default_type_arg.ts",
+      "file": "default_type_arg.ts",
       "line": 7,
       "column": 11
     },
     "type": "Foo",
-    "typeSource": "test/cases/default_type_arg.ts",
+    "typeSource": "default_type_arg.ts",
     "typeArgs": [
       {
         "type": "string"

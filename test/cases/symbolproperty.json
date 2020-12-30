@@ -4,7 +4,7 @@
     "kind": "typealias",
     "loc": {
       "column": 0,
-      "file": "test/cases/symbolproperty.ts",
+      "file": "symbolproperty.ts",
       "line": 3
     },
     "properties": {
@@ -13,7 +13,7 @@
         "kind": "property",
         "loc": {
           "column": 2,
-          "file": "test/cases/symbolproperty.ts",
+          "file": "symbolproperty.ts",
           "line": 5
         },
         "type": "string"
@@ -23,7 +23,7 @@
         "kind": "property",
         "loc": {
           "column": 2,
-          "file": "test/cases/symbolproperty.ts",
+          "file": "symbolproperty.ts",
           "line": 4
         },
         "type": "number"

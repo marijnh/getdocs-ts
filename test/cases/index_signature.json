@@ -8,7 +8,7 @@
       }
     ],
     "loc": {
-      "file": "test/cases/index_signature.ts",
+      "file": "index_signature.ts",
       "line": 1,
       "column": 0
     },

@@ -4,7 +4,7 @@
     "type": "1",
     "description": "Should appear",
     "loc": {
-      "file": "test/cases/comments.ts",
+      "file": "comments.ts",
       "line": 5,
       "column": 13
     },
@@ -19,7 +19,7 @@
         "type": "number",
         "description": "Should be\nseparate lines",
         "loc": {
-          "file": "test/cases/comments.ts",
+          "file": "comments.ts",
           "line": 8,
           "column": 2
         },
@@ -30,7 +30,7 @@
         "type": "boolean",
         "description": "Several comments\n\nWith blank lines\n\nBetween them",
         "loc": {
-          "file": "test/cases/comments.ts",
+          "file": "comments.ts",
           "line": 12,
           "column": 2
         },
@@ -38,7 +38,7 @@
       }
     },
     "loc": {
-      "file": "test/cases/comments.ts",
+      "file": "comments.ts",
       "line": 7,
       "column": 0
     },

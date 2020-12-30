@@ -6,7 +6,7 @@
     "loc": {
       "line": 1,
       "column": 0,
-      "file": "test/cases/internal_before_constructor.ts"
+      "file": "internal_before_constructor.ts"
     },
     "id": "Text"
   }

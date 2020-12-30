@@ -16,7 +16,7 @@
       ],
       "loc": {
         "column": 24,
-        "file": "test/cases/mapped_type.ts",
+        "file": "mapped_type.ts",
         "line": 1
       },
       "name": "K",
@@ -32,7 +32,7 @@
         "id": "T^A",
         "loc": {
           "column": 14,
-          "file": "test/cases/mapped_type.ts",
+          "file": "mapped_type.ts",
           "line": 1
         }
       },
@@ -43,7 +43,7 @@
         "id": "T^B",
         "loc": {
           "column": 17,
-          "file": "test/cases/mapped_type.ts",
+          "file": "mapped_type.ts",
           "line": 1
         }
       }
@@ -55,7 +55,7 @@
       }
     ],
     "loc": {
-      "file": "test/cases/mapped_type.ts",
+      "file": "mapped_type.ts",
       "line": 1,
       "column": 0
     },

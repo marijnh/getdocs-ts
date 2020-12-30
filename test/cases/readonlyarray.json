@@ -9,7 +9,7 @@
     ],
     "id": "x",
     "loc": {
-      "file": "test/cases/readonlyarray.ts",
+      "file": "readonlyarray.ts",
       "line": 1,
       "column": 11
     }

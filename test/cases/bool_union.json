@@ -3,7 +3,7 @@
     "kind": "variable",
     "id": "f",
     "loc": {
-      "file": "test/cases/bool_union.ts",
+      "file": "bool_union.ts",
       "line": 1,
       "column": 21
     },
@@ -17,7 +17,7 @@
             "type": "Function",
             "kind": "parameter",
             "loc": {
-              "file": "test/cases/bool_union.ts",
+              "file": "bool_union.ts",
               "line": 1,
               "column": 25
             },

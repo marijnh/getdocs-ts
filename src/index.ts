@@ -501,7 +501,7 @@ class Context {
   }
 
   nodePath(node: Node) {
-    return relative(process.cwd(), node.getSourceFile().fileName)
+    return relative(this.basedir, node.getSourceFile().fileName)
   }
 
   addSourceData(nodes: readonly Node[], target: Binding | Param, comments = true) {

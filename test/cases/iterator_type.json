@@ -3,7 +3,7 @@
     "kind": "variable",
     "id": "foo",
     "loc": {
-      "file": "test/cases/iterator_type.ts",
+      "file": "iterator_type.ts",
       "line": 1,
       "column": 13
     },

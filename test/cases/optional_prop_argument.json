@@ -8,7 +8,7 @@
       "loc": {
         "line": 2,
         "column": 2,
-        "file": "test/cases/optional_prop_argument.ts"
+        "file": "optional_prop_argument.ts"
       },
       "id": "X.constructor",
       "signatures": [
@@ -29,7 +29,7 @@
               "id": "X.constructor^mirror",
               "loc": {
                 "column": 14,
-                "file": "test/cases/optional_prop_argument.ts",
+                "file": "optional_prop_argument.ts",
                 "line": 2
               }
             }
@@ -49,7 +49,7 @@
         "loc": {
           "line": 2,
           "column": 14,
-          "file": "test/cases/optional_prop_argument.ts"
+          "file": "optional_prop_argument.ts"
         },
         "id": "X.mirror",
         "readonly": true
@@ -58,7 +58,7 @@
     "loc": {
       "line": 1,
       "column": 0,
-      "file": "test/cases/optional_prop_argument.ts"
+      "file": "optional_prop_argument.ts"
     },
     "id": "X"
   }

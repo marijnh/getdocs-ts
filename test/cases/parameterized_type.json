@@ -3,7 +3,7 @@
     "kind": "function",
     "type": "Function",
     "loc": {
-      "file": "test/cases/parameterized_type.ts",
+      "file": "parameterized_type.ts",
       "line": 1,
       "column": 0
     },
@@ -25,7 +25,7 @@
                   "typeParamSource": "makeID^returns^T",
                   "id": "makeID^returns^x",
                   "loc": {
-                    "file": "test/cases/parameterized_type.ts",
+                    "file": "parameterized_type.ts",
                     "line": 1,
                     "column": 30
                   }
@@ -38,7 +38,7 @@
                   "kind": "typeparam",
                   "id": "makeID^returns^T",
                   "loc": {
-                    "file": "test/cases/parameterized_type.ts",
+                    "file": "parameterized_type.ts",
                     "line": 1,
                     "column": 27
                   }

@@ -10,7 +10,7 @@
         "loc": {
           "line": 3,
           "column": 2,
-          "file": "test/cases/accessors.ts"
+          "file": "accessors.ts"
         },
         "id": "X.x",
         "description": "This is get x"
@@ -21,7 +21,7 @@
         "loc": {
           "line": 5,
           "column": 2,
-          "file": "test/cases/accessors.ts"
+          "file": "accessors.ts"
         },
         "id": "X.y",
         "description": "This is get y\n\nThis is set y"
@@ -35,7 +35,7 @@
         "loc": {
           "line": 9,
           "column": 2,
-          "file": "test/cases/accessors.ts"
+          "file": "accessors.ts"
         },
         "id": "X^x",
         "description": "This is static get x"
@@ -46,7 +46,7 @@
         "loc": {
           "line": 11,
           "column": 2,
-          "file": "test/cases/accessors.ts"
+          "file": "accessors.ts"
         },
         "id": "X^y",
         "description": "This is static set y"
@@ -55,7 +55,7 @@
     "loc": {
       "line": 2,
       "column": 0,
-      "file": "test/cases/accessors.ts"
+      "file": "accessors.ts"
     },
     "id": "X"
   }

@@ -9,7 +9,7 @@
         "loc": {
           "line": 2,
           "column": 2,
-          "file": "test/cases/literal_type.ts"
+          "file": "literal_type.ts"
         },
         "id": "X.iter",
         "signatures": [
@@ -33,7 +33,7 @@
                 "id": "X.iter^dir",
                 "loc": {
                   "column": 7,
-                  "file": "test/cases/literal_type.ts",
+                  "file": "literal_type.ts",
                   "line": 2
                 }
               }
@@ -48,7 +48,7 @@
         "kind": "method",
         "type": "Function",
         "loc": {
-          "file": "test/cases/literal_type.ts",
+          "file": "literal_type.ts",
           "line": 3,
           "column": 2
         },
@@ -64,7 +64,7 @@
                 "id": "X.movePos^start",
                 "loc": {
                   "column": 10,
-                  "file": "test/cases/literal_type.ts",
+                  "file": "literal_type.ts",
                   "line": 3
                 }
               },
@@ -89,7 +89,7 @@
                 "id": "X.movePos^direction",
                 "loc": {
                   "column": 25,
-                  "file": "test/cases/literal_type.ts",
+                  "file": "literal_type.ts",
                   "line": 3
                 }
               },
@@ -116,7 +116,7 @@
                 "id": "X.movePos^granularity",
                 "loc": {
                   "column": 10,
-                  "file": "test/cases/literal_type.ts",
+                  "file": "literal_type.ts",
                   "line": 4
                 }
               },
@@ -137,7 +137,7 @@
                 "id": "X.movePos^action",
                 "loc": {
                   "column": 10,
-                  "file": "test/cases/literal_type.ts",
+                  "file": "literal_type.ts",
                   "line": 5
                 }
               }
@@ -152,7 +152,7 @@
     "loc": {
       "line": 1,
       "column": 0,
-      "file": "test/cases/literal_type.ts"
+      "file": "literal_type.ts"
     },
     "id": "X"
   }

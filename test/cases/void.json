@@ -3,7 +3,7 @@
     "kind": "variable",
     "type": "Function",
     "loc": {
-      "file": "test/cases/void.ts",
+      "file": "void.ts",
       "line": 1,
       "column": 13
     },

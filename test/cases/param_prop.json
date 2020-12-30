@@ -8,7 +8,7 @@
       "loc": {
         "line": 2,
         "column": 2,
-        "file": "test/cases/param_prop.ts"
+        "file": "param_prop.ts"
       },
       "id": "Line.constructor",
       "signatures": [
@@ -22,7 +22,7 @@
               "id": "Line.constructor^start",
               "loc": {
                 "column": 4,
-                "file": "test/cases/param_prop.ts",
+                "file": "param_prop.ts",
                 "line": 3
               }
             }
@@ -38,7 +38,7 @@
         "loc": {
           "line": 3,
           "column": 4,
-          "file": "test/cases/param_prop.ts"
+          "file": "param_prop.ts"
         },
         "id": "Line.start",
         "readonly": true
@@ -47,7 +47,7 @@
     "loc": {
       "line": 1,
       "column": 0,
-      "file": "test/cases/param_prop.ts"
+      "file": "param_prop.ts"
     },
     "id": "Line"
   }

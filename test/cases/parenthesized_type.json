@@ -3,7 +3,7 @@
     "kind": "typealias",
     "type": "number",
     "loc": {
-      "file": "test/cases/parenthesized_type.ts",
+      "file": "parenthesized_type.ts",
       "line": 1,
       "column": 0
     },

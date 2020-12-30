@@ -5,7 +5,7 @@
     "loc": {
       "line": 1,
       "column": 0,
-      "file": "test/cases/this_type.ts"
+      "file": "this_type.ts"
     },
     "implements": [
       {
@@ -23,7 +23,7 @@
         "type": "Function",
         "loc": {
           "line": 2,
-          "file": "test/cases/this_type.ts",
+          "file": "this_type.ts",
           "column": 2
         },
         "id": "TextIterator.next",
@@ -39,14 +39,14 @@
                 "id": "TextIterator.next^skip",
                 "loc": {
                   "column": 7,
-                  "file": "test/cases/this_type.ts",
+                  "file": "this_type.ts",
                   "line": 2
                 }
               }
             ],
             "returns": {
               "type": "TextIterator",
-              "typeSource": "test/cases/this_type.ts"
+              "typeSource": "this_type.ts"
             }
           }
         ]

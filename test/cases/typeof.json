@@ -3,7 +3,7 @@
     "kind": "class",
     "id": "X",
     "loc": {
-      "file": "test/cases/typeof.ts",
+      "file": "typeof.ts",
       "line": 1,
       "column": 0
     },
@@ -13,7 +13,7 @@
     "kind": "function",
     "id": "x",
     "loc": {
-      "file": "test/cases/typeof.ts",
+      "file": "typeof.ts",
       "line": 3,
       "column": 0
     },
@@ -30,11 +30,11 @@
             "typeArgs": [
               {
                 "type": "X",
-                "typeSource": "test/cases/typeof.ts"
+                "typeSource": "typeof.ts"
               }
             ],
             "loc": {
-              "file": "test/cases/typeof.ts",
+              "file": "typeof.ts",
               "line": 3,
               "column": 18
             }

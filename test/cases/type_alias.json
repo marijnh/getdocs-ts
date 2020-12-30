@@ -5,7 +5,7 @@
     "loc": {
       "line": 1,
       "column": 0,
-      "file": "test/cases/type_alias.ts"
+      "file": "type_alias.ts"
     },
     "typeParams": [
       {
@@ -15,7 +15,7 @@
         "id": "RangeFilter^T",
         "loc": {
           "column": 24,
-          "file": "test/cases/type_alias.ts",
+          "file": "type_alias.ts",
           "line": 1
         }
       }
@@ -32,7 +32,7 @@
             "id": "RangeFilter^from",
             "loc": {
               "column": 30,
-              "file": "test/cases/type_alias.ts",
+              "file": "type_alias.ts",
               "line": 1
             }
           },
@@ -43,7 +43,7 @@
             "id": "RangeFilter^to",
             "loc": {
               "column": 44,
-              "file": "test/cases/type_alias.ts",
+              "file": "type_alias.ts",
               "line": 1
             }
           },
@@ -55,7 +55,7 @@
             "id": "RangeFilter^value",
             "loc": {
               "column": 56,
-              "file": "test/cases/type_alias.ts",
+              "file": "type_alias.ts",
               "line": 1
             }
           }

@@ -3,7 +3,7 @@
     "id": "Bar",
     "extends": {
       "type": "Foo",
-      "typeSource": "test/cases/subclass_methods.ts"
+      "typeSource": "subclass_methods.ts"
     },
     "instanceProperties": {
       "d": {
@@ -12,7 +12,7 @@
         "kind": "method",
         "loc": {
           "column": 2,
-          "file": "test/cases/subclass_methods.ts",
+          "file": "subclass_methods.ts",
           "line": 11
         },
         "type": "Function",
@@ -30,7 +30,7 @@
     "kind": "class",
     "loc": {
       "column": 0,
-      "file": "test/cases/subclass_methods.ts",
+      "file": "subclass_methods.ts",
       "line": 8
     },
     "type": "class"
@@ -44,7 +44,7 @@
         "kind": "method",
         "loc": {
           "column": 2,
-          "file": "test/cases/subclass_methods.ts",
+          "file": "subclass_methods.ts",
           "line": 2
         },
         "type": "Function",
@@ -64,7 +64,7 @@
         "kind": "method",
         "loc": {
           "column": 2,
-          "file": "test/cases/subclass_methods.ts",
+          "file": "subclass_methods.ts",
           "line": 3
         },
         "type": "Function",
@@ -83,7 +83,7 @@
         "kind": "method",
         "loc": {
           "column": 2,
-          "file": "test/cases/subclass_methods.ts",
+          "file": "subclass_methods.ts",
           "line": 4
         },
         "type": "Function",
@@ -102,7 +102,7 @@
         "kind": "method",
         "loc": {
           "column": 2,
-          "file": "test/cases/subclass_methods.ts",
+          "file": "subclass_methods.ts",
           "line": 5
         },
         "type": "Function",
@@ -120,7 +120,7 @@
     "kind": "class",
     "loc": {
       "column": 0,
-      "file": "test/cases/subclass_methods.ts",
+      "file": "subclass_methods.ts",
       "line": 1
     },
     "type": "class"

@@ -7,7 +7,7 @@
         "kind": "property",
         "type": "boolean",
         "loc": {
-          "file": "test/cases/infer_instantiation.ts",
+          "file": "infer_instantiation.ts",
           "line": 5,
           "column": 26
         },
@@ -15,7 +15,7 @@
       }
     },
     "loc": {
-      "file": "test/cases/infer_instantiation.ts",
+      "file": "infer_instantiation.ts",
       "line": 5,
       "column": 0
     },
@@ -25,7 +25,7 @@
     "kind": "variable",
     "type": "Function",
     "loc": {
-      "file": "test/cases/infer_instantiation.ts",
+      "file": "infer_instantiation.ts",
       "line": 7,
       "column": 13
     },
@@ -38,11 +38,11 @@
             "name": "spec",
             "type": "Config",
             "kind": "parameter",
-            "typeSource": "test/cases/infer_instantiation.ts",
+            "typeSource": "infer_instantiation.ts",
             "id": "f^spec",
             "loc": {
               "column": 73,
-              "file": "test/cases/infer_instantiation.ts",
+              "file": "infer_instantiation.ts",
               "line": 1
             }
           }

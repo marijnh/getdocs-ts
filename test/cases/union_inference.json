@@ -9,7 +9,7 @@
         "loc": {
           "line": 2,
           "column": 2,
-          "file": "test/cases/union_inference.ts"
+          "file": "union_inference.ts"
         },
         "id": "X.peek",
         "signatures": [
@@ -34,7 +34,7 @@
     "loc": {
       "line": 1,
       "column": 0,
-      "file": "test/cases/union_inference.ts"
+      "file": "union_inference.ts"
     },
     "id": "X"
   }

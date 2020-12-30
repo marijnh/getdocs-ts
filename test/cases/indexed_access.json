@@ -3,7 +3,7 @@
     "kind": "function",
     "type": "Function",
     "loc": {
-      "file": "test/cases/indexed_access.ts",
+      "file": "indexed_access.ts",
       "line": 1,
       "column": 0
     },
@@ -20,7 +20,7 @@
             "id": "getProperty^o",
             "loc": {
               "column": 50,
-              "file": "test/cases/indexed_access.ts",
+              "file": "indexed_access.ts",
               "line": 1
             }
           },
@@ -32,7 +32,7 @@
             "id": "getProperty^name",
             "loc": {
               "column": 56,
-              "file": "test/cases/indexed_access.ts",
+              "file": "indexed_access.ts",
               "line": 1
             }
           }
@@ -45,7 +45,7 @@
             "id": "getProperty^T",
             "loc": {
               "column": 28,
-              "file": "test/cases/indexed_access.ts",
+              "file": "indexed_access.ts",
               "line": 1
             }
           },
@@ -67,7 +67,7 @@
             "id": "getProperty^K",
             "loc": {
               "column": 31,
-              "file": "test/cases/indexed_access.ts",
+              "file": "indexed_access.ts",
               "line": 1
             }
           }

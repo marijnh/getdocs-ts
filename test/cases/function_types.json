@@ -3,7 +3,7 @@
     "loc": {
       "line": 1,
       "column": 0,
-      "file": "test/cases/function_types.ts"
+      "file": "function_types.ts"
     },
     "kind": "class",
     "type": "class",
@@ -12,7 +12,7 @@
         "loc": {
           "line": 2,
           "column": 2,
-          "file": "test/cases/function_types.ts"
+          "file": "function_types.ts"
         },
         "kind": "method",
         "type": "Function",
@@ -29,7 +29,7 @@
                     "loc": {
                       "line": 4,
                       "column": 17,
-                      "file": "test/cases/function_types.ts"
+                      "file": "function_types.ts"
                     },
                     "kind": "property",
                     "type": "Function",
@@ -45,14 +45,14 @@
                             "id": "ChangeSet^fromJSON^ChangeType.fromJSON^json",
                             "loc": {
                               "column": 28,
-                              "file": "test/cases/function_types.ts",
+                              "file": "function_types.ts",
                               "line": 4
                             }
                           }
                         ],
                         "returns": {
                           "type": "ChangeSet",
-                          "typeSource": "test/cases/function_types.ts"
+                          "typeSource": "function_types.ts"
                         }
                       }
                     ]
@@ -63,7 +63,7 @@
                 "id": "ChangeSet^fromJSON^ChangeType",
                 "loc": {
                   "column": 4,
-                  "file": "test/cases/function_types.ts",
+                  "file": "function_types.ts",
                   "line": 3
                 }
               },
@@ -75,14 +75,14 @@
                 "id": "ChangeSet^fromJSON^json",
                 "loc": {
                   "column": 4,
-                  "file": "test/cases/function_types.ts",
+                  "file": "function_types.ts",
                   "line": 5
                 }
               }
             ],
             "returns": {
               "type": "ChangeSet",
-              "typeSource": "test/cases/function_types.ts"
+              "typeSource": "function_types.ts"
             }
           }
         ]

@@ -21,7 +21,7 @@
         "default": "Array<number>",
         "loc": {
           "column": 23,
-          "file": "test/cases/type_param.ts",
+          "file": "type_param.ts",
           "line": 1
         }
       }
@@ -34,7 +34,7 @@
     "loc": {
       "line": 1,
       "column": 0,
-      "file": "test/cases/type_param.ts"
+      "file": "type_param.ts"
     },
     "id": "ChangeSet"
   }

@@ -9,7 +9,7 @@
         "loc": {
           "line": 2,
           "column": 2,
-          "file": "test/cases/rest_param.ts"
+          "file": "rest_param.ts"
         },
         "id": "Extension^all",
         "signatures": [
@@ -22,7 +22,7 @@
                 "typeArgs": [
                   {
                     "type": "Extension",
-                    "typeSource": "test/cases/rest_param.ts"
+                    "typeSource": "rest_param.ts"
                   }
                 ],
                 "rest": true,
@@ -30,14 +30,14 @@
                 "id": "Extension^all^extensions",
                 "loc": {
                   "column": 13,
-                  "file": "test/cases/rest_param.ts",
+                  "file": "rest_param.ts",
                   "line": 2
                 }
               }
             ],
             "returns": {
               "type": "Extension",
-              "typeSource": "test/cases/rest_param.ts"
+              "typeSource": "rest_param.ts"
             }
           }
         ]
@@ -46,7 +46,7 @@
     "loc": {
       "line": 1,
       "column": 0,
-      "file": "test/cases/rest_param.ts"
+      "file": "rest_param.ts"
     },
     "id": "Extension"
   }

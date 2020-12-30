@@ -9,7 +9,7 @@
         "loc": {
           "line": 2,
           "column": 2,
-          "file": "test/cases/function_type_params.ts"
+          "file": "function_type_params.ts"
         },
         "id": "X.getMeta",
         "signatures": [
@@ -29,7 +29,7 @@
                 "id": "X.getMeta^type",
                 "loc": {
                   "column": 13,
-                  "file": "test/cases/function_type_params.ts",
+                  "file": "function_type_params.ts",
                   "line": 2
                 }
               }
@@ -42,7 +42,7 @@
                 "id": "X.getMeta^T",
                 "loc": {
                   "column": 10,
-                  "file": "test/cases/function_type_params.ts",
+                  "file": "function_type_params.ts",
                   "line": 2
                 }
               }
@@ -66,7 +66,7 @@
     "loc": {
       "line": 1,
       "column": 0,
-      "file": "test/cases/function_type_params.ts"
+      "file": "function_type_params.ts"
     },
     "id": "X"
   }

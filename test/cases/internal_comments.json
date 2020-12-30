@@ -9,7 +9,7 @@
         "loc": {
           "line": 7,
           "column": 2,
-          "file": "test/cases/internal_comments.ts"
+          "file": "internal_comments.ts"
         },
         "description": "actual comment",
         "id": "X.g",
@@ -24,7 +24,7 @@
     "loc": {
       "line": 1,
       "column": 0,
-      "file": "test/cases/internal_comments.ts"
+      "file": "internal_comments.ts"
     },
     "id": "X"
   }

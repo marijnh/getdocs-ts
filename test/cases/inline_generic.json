@@ -3,7 +3,7 @@
     "kind": "function",
     "id": "foo",
     "loc": {
-      "file": "test/cases/inline_generic.ts",
+      "file": "inline_generic.ts",
       "line": 1,
       "column": 0
     },
@@ -21,7 +21,7 @@
                 "kind": "property",
                 "id": "foo^a.value",
                 "loc": {
-                  "file": "test/cases/inline_generic.ts",
+                  "file": "inline_generic.ts",
                   "line": 3,
                   "column": 13
                 },
@@ -29,7 +29,7 @@
               }
             },
             "loc": {
-              "file": "test/cases/inline_generic.ts",
+              "file": "inline_generic.ts",
               "line": 1,
               "column": 20
             },

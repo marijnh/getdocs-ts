@@ -4,7 +4,7 @@
     "loc": {
       "line": 1,
       "column": 0,
-      "file": "test/cases/extends.ts"
+      "file": "extends.ts"
     },
     "extends": {
       "type": "Error"

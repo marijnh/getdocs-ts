@@ -3,7 +3,7 @@
     "kind": "variable",
     "id": "x",
     "loc": {
-      "file": "test/cases/void_union.ts",
+      "file": "void_union.ts",
       "line": 1,
       "column": 13
     },

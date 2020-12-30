@@ -4,7 +4,7 @@
     "kind": "interface",
     "loc": {
       "column": 0,
-      "file": "test/cases/optionalprop.ts",
+      "file": "optionalprop.ts",
       "line": 1
     },
     "properties": {
@@ -13,7 +13,7 @@
         "kind": "property",
         "loc": {
           "column": 2,
-          "file": "test/cases/optionalprop.ts",
+          "file": "optionalprop.ts",
           "line": 2
         },
         "type": "number"
@@ -23,7 +23,7 @@
         "kind": "property",
         "loc": {
           "column": 2,
-          "file": "test/cases/optionalprop.ts",
+          "file": "optionalprop.ts",
           "line": 3
         },
         "optional": true,

@@ -3,7 +3,7 @@
     "kind": "class",
     "type": "class",
     "loc": {
-      "file": "test/cases/reexport.ts",
+      "file": "reexport.ts",
       "line": 1,
       "column": 0
     },
@@ -15,7 +15,7 @@
         "id": "Foo.x",
         "loc": {
           "column": 2,
-          "file": "test/cases/reexport.ts",
+          "file": "reexport.ts",
           "line": 2
         }
       }
@@ -25,11 +25,11 @@
     "kind": "reexport",
     "id": "Type",
     "loc": {
-      "file": "test/cases/reexport.ts",
+      "file": "reexport.ts",
       "line": 7,
       "column": 8
     },
     "type": "Type",
-    "typeSource": "node_modules/typescript/lib/typescript.d.ts"
+    "typeSource": "../../node_modules/typescript/lib/typescript.d.ts"
   }
 }

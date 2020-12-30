@@ -4,7 +4,7 @@
     "type": "Object",
     "id": "Point",
     "loc": {
-      "file": "test/cases/references.ts",
+      "file": "references.ts",
       "line": 1,
       "column": 0
     },
@@ -16,7 +16,7 @@
         "id": "Point^T",
         "loc": {
           "column": 18,
-          "file": "test/cases/references.ts",
+          "file": "references.ts",
           "line": 1
         }
       }
@@ -28,7 +28,7 @@
         "typeParamSource": "Point^T",
         "id": "Point.x",
         "loc": {
-          "file": "test/cases/references.ts",
+          "file": "references.ts",
           "line": 1,
           "column": 24
         }
@@ -39,7 +39,7 @@
         "typeParamSource": "Point^T",
         "id": "Point.y",
         "loc": {
-          "file": "test/cases/references.ts",
+          "file": "references.ts",
           "line": 1,
           "column": 30
         }
@@ -49,7 +49,7 @@
   "p": {
     "kind": "variable",
     "type": "Point",
-    "typeSource": "test/cases/references.ts",
+    "typeSource": "references.ts",
     "typeArgs": [
       {
         "type": "number"
@@ -57,7 +57,7 @@
     ],
     "id": "p",
     "loc": {
-      "file": "test/cases/references.ts",
+      "file": "references.ts",
       "line": 3,
       "column": 13
     }
@@ -67,14 +67,14 @@
     "type": "class",
     "id": "Foo",
     "loc": {
-      "file": "test/cases/references.ts",
+      "file": "references.ts",
       "line": 5,
       "column": 0
     },
     "implements": [
       {
         "type": "Point",
-        "typeSource": "test/cases/references.ts",
+        "typeSource": "references.ts",
         "typeArgs": [
           {
             "type": "string"
@@ -89,7 +89,7 @@
         "readonly": true,
         "id": "Foo.z",
         "loc": {
-          "file": "test/cases/references.ts",
+          "file": "references.ts",
           "line": 8,
           "column": 2
         }
@@ -99,10 +99,10 @@
   "f": {
     "kind": "variable",
     "type": "Foo",
-    "typeSource": "test/cases/references.ts",
+    "typeSource": "references.ts",
     "id": "f",
     "loc": {
-      "file": "test/cases/references.ts",
+      "file": "references.ts",
       "line": 11,
       "column": 13
     }
@@ -119,13 +119,13 @@
         "id": "Bar^T",
         "loc": {
           "column": 21,
-          "file": "test/cases/references.ts",
+          "file": "references.ts",
           "line": 13
         }
       }
     ],
     "loc": {
-      "file": "test/cases/references.ts",
+      "file": "references.ts",
       "line": 13,
       "column": 0
     },
@@ -136,7 +136,7 @@
         "typeParamSource": "Bar^T",
         "id": "Bar.a",
         "loc": {
-          "file": "test/cases/references.ts",
+          "file": "references.ts",
           "line": 13,
           "column": 26
         }
@@ -146,10 +146,10 @@
   "b": {
     "kind": "variable",
     "type": "Bar",
-    "typeSource": "test/cases/references.ts",
+    "typeSource": "references.ts",
     "id": "b",
     "loc": {
-      "file": "test/cases/references.ts",
+      "file": "references.ts",
       "line": 15,
       "column": 13
     },
