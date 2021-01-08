@@ -18,7 +18,7 @@
     }
   ],
   "author": "Adrian Heine <mail@adrianheine.de>",
-  "license": "AGPL-3.0",
+  "license": "MIT",
   "dependencies": {
     "typescript": "^4.1.3"
   },
