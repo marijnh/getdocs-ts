@@ -1,4 +1,5 @@
 /node_modules
 /src/index.js
 /src/index.js.map
+/src/index.d.ts
 .tern-*
