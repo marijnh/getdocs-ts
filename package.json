@@ -1,11 +1,14 @@
 {
-  "name": "gettypes",
+  "name": "getdocs-ts",
   "version": "0.0.1",
-  "description": "extract builddocs-style info from typescript sources",
+  "description": "Extract builddocs-style info from typescript sources",
   "main": "src/index.js",
   "scripts": {
     "test": "mocha",
     "prepare": "tsc"
+  },
+  "bin": {
+    "getdocs-ts": "./bin/getdocs-ts.js"
   },
   "contributors": [
     {
