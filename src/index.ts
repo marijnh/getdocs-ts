@@ -13,14 +13,14 @@ import {
 
 import {resolve, dirname, relative, sep} from "path"
 
-type BindingKind = "class" | "enum" | "enummember" | "interface" | "variable" | "property" | "method" |
+export type BindingKind = "class" | "enum" | "enummember" | "interface" | "variable" | "property" | "method" |
   "typealias" | "typeparam" | "constructor" | "function" | "parameter" | "reexport"
 
 const ItemsWithParams = ["class", "enum", "interface", "typealias"]
 
-type Loc = {file: string, line: number, column: number}
+export type Loc = {file: string, line: number, column: number}
 
-type Binding = {
+export type Binding = {
   kind: BindingKind,
   id: string,
   description?: string,
@@ -30,7 +30,7 @@ type Binding = {
   optional?: boolean
 }
 
-type BindingType = {
+export type BindingType = {
   type: string,
   typeSource?: string, // missing means this is a built-in type
   typeParamSource?: string,
@@ -46,14 +46,14 @@ type BindingType = {
   implements?: readonly BindingType[]
 }
 
-type CallSignature = {
+export type CallSignature = {
   type: "function" | "constructor",
   params: readonly Param[],
   returns?: BindingType,
   typeParams?: readonly Param[]
 }
 
-type Param = BindingType & {
+export type Param = BindingType & {
   name?: string,
   id: string,
   kind: "parameter" | "typeparam",
@@ -64,7 +64,7 @@ type Param = BindingType & {
   default?: string
 }
 
-type Item = Binding & BindingType
+export type Item = Binding & BindingType
 
 // Used for recursion check in getObjectType
 const gettingObjectTypes: Type[] = []
@@ -669,21 +669,21 @@ function stripComment(lines: string[]) {
 export interface GatherSpec {
   filename: string
   basedir?: string
-  items?: {[name: string]: any}
+  items?: {[name: string]: Item}
 }
 
 export function gather(spec: GatherSpec) {
   return gatherMany([spec])[0]
 }
 
-export function gatherMany(specs: readonly GatherSpec[]) {
+export function gatherMany(specs: readonly GatherSpec[]): readonly {[name: string]: Item}[] {
   let filenames = specs.map(s => s.filename)
   let configPath = findConfigFile(filenames[0], sys.fileExists)
   let host = createCompilerHost({})
   let options = configPath ? getParsedCommandLineOfConfigFile(configPath, {}, host as any)!.options : {}
   let program = createProgram({rootNames: filenames, options, host})
   let tc = program.getTypeChecker()
-  return specs.map(({filename, items = Object.create(null), basedir}) => {
+  return specs.map(({filename, items = Object.create(null) as {[name: string]: Item}, basedir}) => {
     let sourceFile = program.getSourceFile(filename)
     if (!sourceFile) throw new Error(`Source file "${filename}" not found`)
 
