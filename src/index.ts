@@ -669,7 +669,6 @@ function stripComment(lines: string[]) {
 export interface GatherSpec {
   filename: string
   basedir?: string
-  items?: {[name: string]: Item}
 }
 
 export function gather(spec: GatherSpec) {
@@ -683,7 +682,8 @@ export function gatherMany(specs: readonly GatherSpec[]): readonly {[name: strin
   let options = configPath ? getParsedCommandLineOfConfigFile(configPath, {}, host as any)!.options : {}
   let program = createProgram({rootNames: filenames, options, host})
   let tc = program.getTypeChecker()
-  return specs.map(({filename, items = Object.create(null) as {[name: string]: Item}, basedir}) => {
+  return specs.map(({filename, basedir}) => {
+    let items: {[name: string]: Item} = Object.create(null)
     let sourceFile = program.getSourceFile(filename)
     if (!sourceFile) throw new Error(`Source file "${filename}" not found`)
 
