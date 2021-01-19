@@ -24,7 +24,7 @@ internal to the module. This defaults to the parent directory of the
 main filename.
 
 A second function `gatherMany`, takes an array of configurations and
-extracts them all at once. Because this avoids duplicates startup,
+extracts them all at once. Because this avoids duplicate startup,
 typechecking, and module loading work, this can be a _lot_ faster when
 generating docs for a bunch of modules at once.
 
