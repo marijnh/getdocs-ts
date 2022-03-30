@@ -264,6 +264,7 @@ class Context {
       return this.getObjectType(type as ObjectType, objFlags & ObjectFlags.Interface ? type.symbol : undefined)
     }
     if (type.flags & TypeFlags.Unknown) return {type: "unknown"}
+    if (type.flags & TypeFlags.NonPrimitive) return {type: "object"}
 
     let maybePath = ""
     let maybeD, maybeS = forSymbol || type.symbol
@@ -326,7 +327,7 @@ class Context {
   getClassType(type: ObjectType): BindingType {
     let out: BindingType = {type: "class"}
     let classDecl = type.symbol.valueDeclaration
-    if (!isClassLike(classDecl)) throw new Error("Class decl isn't class-like")
+    if (!classDecl || !isClassLike(classDecl)) throw new Error("Class decl isn't class-like")
 
     let parentProps: string[] = []
     if (classDecl.heritageClauses) {
