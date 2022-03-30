@@ -101,8 +101,8 @@ class Context {
 
   symbolName(symbol: Symbol) {
     if (!/^__@/.test(symbol.name)) return symbol.name
-    let name = symbol.name.slice(3)
-    return /@/.test(name) ? "[unique symbol]" : `[symbol ${name}]`
+    let name = symbol.name.slice(3).match(/^[^@]*/)![0]
+    return name == "sym" ? "[unique symbol]" : `[symbol ${name}]`
   }
 
   itemForSymbol(symbol: Symbol, kind?: BindingKind): Item | null {
