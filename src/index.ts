@@ -687,8 +687,9 @@ export function gatherMany(specs: readonly GatherSpec[]): readonly {[name: strin
     let items: {[name: string]: Item} = Object.create(null)
     let sourceFile = program.getSourceFile(filename)
     if (!sourceFile) throw new Error(`Source file "${filename}" not found`)
-
-    let exports = tc.getExportsOfModule(tc.getSymbolAtLocation(sourceFile)!)
+    let fileSymbol = tc.getSymbolAtLocation(sourceFile)
+    if (!fileSymbol) throw new Error(`No symbol for file "${filename}" (no exports?)`)
+    let exports = tc.getExportsOfModule(fileSymbol)
 
     // Add all symbols aliased by exports to the set of things that
     // should be considered exported
