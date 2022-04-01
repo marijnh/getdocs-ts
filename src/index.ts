@@ -146,6 +146,14 @@ class Context {
       : kind == "reexport" ? cx.getReferenceType(this.tc.getAliasedSymbol(symbol))
       : cx.getType(type, symbol)
     if (params) typeDesc.typeParams = params
+    if (binding.description && /@nonabstract\b/.test(binding.description)) {
+      binding.description = binding.description.replace(/\s*@nonabstract\b/, "")
+      if (typeDesc.type == "class") {
+        delete binding.abstract
+        if (typeDesc.instanceProperties) for (let name in typeDesc.instanceProperties)
+          delete typeDesc.instanceProperties[name].abstract
+      }
+    }
 
     return {...binding, ...typeDesc}
   }

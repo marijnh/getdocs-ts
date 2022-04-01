@@ -1,0 +1,52 @@
+
+{
+  "X": {
+    "kind": "class",
+    "id": "X",
+    "description": "Comment",
+    "loc": {
+      "file": "nonabstract.ts",
+      "line": 1,
+      "column": 0
+    },
+    "type": "class",
+    "instanceProperties": {
+      "f": {
+        "kind": "method",
+        "id": "X.f",
+        "loc": {
+          "file": "nonabstract.ts",
+          "line": 3,
+          "column": 2
+        },
+        "type": "Function",
+        "signatures": [
+          {
+            "type": "function",
+            "params": []
+          }
+        ]
+      },
+      "x": {
+        "kind": "property",
+        "id": "X.x",
+        "loc": {
+          "file": "nonabstract.ts",
+          "line": 4,
+          "column": 2
+        },
+        "type": "number"
+      },
+      "z": {
+        "kind": "property",
+        "id": "X.z",
+        "loc": {
+          "file": "nonabstract.ts",
+          "line": 5,
+          "column": 2
+        },
+        "type": "boolean"
+      }
+    }
+  }
+}
