@@ -88,7 +88,7 @@ class Context {
   gatherSymbols(symbols: readonly Symbol[], target: {[name: string]: Item} = {}, sep = ".",
                 filter?: (name: string, value: Item) => boolean) {
     let gathered = 0
-    for (const symbol of symbols.slice().sort(compareSymbols)) {
+    for (const symbol of symbols.filter(s => maybeDecl(s)).sort(compareSymbols)) {
       let name = this.symbolName(symbol)
       let item = this.extend(name, sep).itemForSymbol(symbol)
       if (item && (!filter || filter(name, item))) {
