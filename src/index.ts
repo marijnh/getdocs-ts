@@ -477,10 +477,10 @@ class Context {
     // that case and manually handles it.
     if (constraint && constraint.kind == SyntaxKind.TypeOperator &&
         (constraint as TypeOperatorNode).operator == SyntaxKind.KeyOfKeyword &&
-        (type = localCx.tc.getTypeAtLocation((constraint as TypeOperatorNode).type)))
+        (type = this.tc.getTypeAtLocation((constraint as TypeOperatorNode).type)))
       result.implements = [{type: "keyof", typeArgs: [this.getType(type)]}]
-    else if (constraint && (type = localCx.tc.getTypeAtLocation(constraint)))
-      result.implements = [localCx.getType(type)]
+    else if (constraint && (type = this.tc.getTypeAtLocation(constraint)))
+      result.implements = [localCx.addParams([result]).getType(type)]
     if (param.default)
       result.default = param.getSourceFile().text.slice(param.default.pos, param.default.end).trim()
     return result
