@@ -133,7 +133,8 @@ class Context {
     if ((mods & ModifierFlags.Readonly) ||
         ((symbol.flags & (SymbolFlags.GetAccessor | SymbolFlags.SetAccessor)) == SymbolFlags.GetAccessor))
       binding.readonly = true
-    if ((mods & ModifierFlags.Private) || binding.description && /@internal\b/.test(binding.description)) return null
+    if ((mods & (ModifierFlags.Private | ModifierFlags.Protected)) ||
+        binding.description && /@internal\b/.test(binding.description)) return null
     if (symbol.flags & SymbolFlags.Optional) {
       binding.optional = true
       type = this.tc.getNonNullableType(type)
@@ -369,7 +370,7 @@ class Context {
     let ctorItem, ctorSignatures = []
     for (let ctor of ctors) {
       let signature = type.getConstructSignatures().find(sig => sig.getDeclaration() == ctor)
-      if (!signature || (getCombinedModifierFlags(ctor) & ModifierFlags.Private)) continue
+      if (!signature || (getCombinedModifierFlags(ctor) & (ModifierFlags.Private | ModifierFlags.Protected))) continue
       let item: Binding & BindingType = {kind: "constructor", id: this.id + ".constructor", type: "Function"}
       this.addSourceData([ctor], item)
       if (item.description && /@internal\b/.test(item.description)) continue
