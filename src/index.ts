@@ -215,7 +215,7 @@ class Context {
     if (type.flags & TypeFlags.TypeParameter) {
       let name = type.symbol.name, found = this.typeParams.find(p => p.name == name)
       if (!found) {
-        return {type: name, typeSource: 'missing'}
+        return {type: name, typeParamSource: 'missing'}
       }
       return {type: name, typeParamSource: found.id}
     }
