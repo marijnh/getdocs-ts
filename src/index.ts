@@ -213,8 +213,9 @@ class Context {
 
     if (type.flags & TypeFlags.TypeParameter) {
       let name = type.symbol.name, found = this.typeParams.find(p => p.name == name)
-      if (!found) throw new Error(`Unknown type parameter ${name}`)
-      return {type: name, typeParamSource: found.id}
+      if (!found && maybeDecl(type.symbol)?.parent?.kind != SyntaxKind.InferType)
+        throw new Error(`Unknown type parameter ${name}`)
+      return {type: name, typeParamSource: found ? found.id : this.id}
     }
 
     if (type.flags & TypeFlags.Index) {

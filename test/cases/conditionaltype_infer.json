@@ -1,0 +1,47 @@
+{
+  "InferParams": {
+    "id": "InferParams",
+    "kind": "typealias",
+    "loc": {
+      "column": 0,
+      "file": "conditionaltype_infer.ts",
+      "line": 1
+    },
+    "type": "conditional",
+    "typeArgs": [
+      {
+        "type": "T",
+        "typeParamSource": "InferParams^T"
+      },
+      {
+        "type": "Array",
+        "typeArgs": [
+          {
+            "type": "U",
+            "typeParamSource": "InferParams"
+          }
+        ]
+      },
+      {
+        "type": "U",
+        "typeParamSource": "InferParams"
+      },
+      {
+        "type": "never"
+      }
+    ],
+    "typeParams": [
+      {
+        "id": "InferParams^T",
+        "kind": "typeparam",
+        "loc": {
+          "column": 24,
+          "file": "conditionaltype_infer.ts",
+          "line": 1
+        },
+        "name": "T",
+        "type": "typeparam"
+      }
+    ]
+  }
+}
