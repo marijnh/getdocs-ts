@@ -182,6 +182,7 @@ class Context {
     if (type.flags & TypeFlags.Boolean) return {type: "boolean"}
     if (type.flags & TypeFlags.Undefined) return {type: "undefined"}
     if (type.flags & TypeFlags.Null) return {type: "null"}
+    if (type.flags & TypeFlags.Void) return {type: "void"}
     // FIXME TypeScript doesn't export this. See https://github.com/microsoft/TypeScript/issues/26075, where they intend to fix that
     if (type.flags & TypeFlags.BooleanLiteral) return {type: (type as any).intrinsicName}
     if (type.flags & TypeFlags.Literal) return {type: JSON.stringify((type as LiteralType).value)}
@@ -213,7 +214,9 @@ class Context {
 
     if (type.flags & TypeFlags.TypeParameter) {
       let name = type.symbol.name, found = this.typeParams.find(p => p.name == name)
-      if (!found) throw new Error(`Unknown type parameter ${name}`)
+      if (!found) {
+        return {type: name, typeSource: 'missing'}
+      }
       return {type: name, typeParamSource: found.id}
     }
 
