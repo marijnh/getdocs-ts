@@ -1,0 +1,86 @@
+{
+  "B": {
+    "id": "B",
+    "key": {
+      "id": "B^P",
+      "implements": [
+        {
+          "type": "K",
+          "typeParamSource": "../../node_modules/typescript/lib/lib.es5.d.ts"
+        }
+      ],
+      "kind": "typeparam",
+      "loc": {
+        "column": 5,
+        "file": "../../node_modules/typescript/lib/lib.es5.d.ts",
+        "line": 1571
+      },
+      "name": "P",
+      "type": "typeparam"
+    },
+    "kind": "typealias",
+    "loc": {
+      "column": 0,
+      "file": "utility_type.ts",
+      "line": 6
+    },
+    "type": "mapped",
+    "typeArgs": [
+      {
+        "type": "indexed",
+        "typeArgs": [
+          {
+            "type": "T",
+            "typeParamSource": "../../node_modules/typescript/lib/lib.es5.d.ts"
+          },
+          {
+            "type": "P",
+            "typeParamSource": "B^P"
+          }
+        ]
+      }
+    ]
+  },
+  "C": {
+    "id": "C",
+    "key": {
+      "id": "C^P",
+      "implements": [
+        {
+          "type": "K",
+          "typeParamSource": "../../node_modules/typescript/lib/lib.es5.d.ts"
+        }
+      ],
+      "kind": "typeparam",
+      "loc": {
+        "column": 5,
+        "file": "../../node_modules/typescript/lib/lib.es5.d.ts",
+        "line": 1571
+      },
+      "name": "P",
+      "type": "typeparam"
+    },
+    "kind": "typealias",
+    "loc": {
+      "column": 0,
+      "file": "utility_type.ts",
+      "line": 8
+    },
+    "type": "mapped",
+    "typeArgs": [
+      {
+        "type": "indexed",
+        "typeArgs": [
+          {
+            "type": "T",
+            "typeParamSource": "../../node_modules/typescript/lib/lib.es5.d.ts"
+          },
+          {
+            "type": "P",
+            "typeParamSource": "C^P"
+          }
+        ]
+      }
+    ]
+  }
+}

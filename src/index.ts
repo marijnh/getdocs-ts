@@ -214,9 +214,22 @@ class Context {
 
     if (type.flags & TypeFlags.TypeParameter) {
       let name = type.symbol.name, found = this.typeParams.find(p => p.name == name)
-      if (!found && maybeDecl(type.symbol)?.parent?.kind != SyntaxKind.InferType)
-        throw new Error(`Unknown type parameter ${name}`)
-      return {type: name, typeParamSource: found ? found.id : this.id}
+      if (found) {
+        return {type: name, typeParamSource: found.id}
+      }
+
+      let decl = maybeDecl(type.symbol),
+          parent = decl?.parent;
+
+      if (parent?.kind === SyntaxKind.InferType) {
+        return {type: name, typeParamSource: this.id}
+      }
+
+      if (parent?.kind === SyntaxKind.TypeAliasDeclaration) {
+        return {type:name, typeParamSource: this.nodePath(parent)}
+      }
+
+      throw new Error(`Unknown type parameter ${name}`)
     }
 
     if (type.flags & TypeFlags.Index) {
