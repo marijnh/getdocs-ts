@@ -1,0 +1,30 @@
+{
+  "A": {
+    "id": "A",
+    "kind": "typealias",
+    "loc": {
+      "column": 0,
+      "file": "template_literal.ts",
+      "line": 1
+    },
+    "typeParams": [
+      {
+        "id": "A^T",
+        "implements": [
+          {
+            "type": "string"
+          }
+        ],
+        "kind": "typeparam",
+        "loc": {
+          "column": 14,
+          "file": "template_literal.ts",
+          "line": 1
+        },
+        "name": "T",
+        "type": "typeparam"
+      }
+    ],
+    "type": "TemplateLiteral"
+  }
+}
