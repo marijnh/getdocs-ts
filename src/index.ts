@@ -8,7 +8,7 @@ import {
   Type, TypeFlags, ObjectType, TypeReference, ObjectFlags, LiteralType, UnionOrIntersectionType, ConditionalType,
   Signature, IndexType, IndexedAccessType, TypeElement,
   Node, SyntaxKind, UnionOrIntersectionTypeNode, MappedTypeNode, TypeOperatorNode, TypeLiteralNode,
-  Declaration, NamedDeclaration, TypeParameterDeclaration, ParameterDeclaration, EnumDeclaration, VariableDeclaration, ConstructorDeclaration
+  Declaration, NamedDeclaration, TypeParameterDeclaration, ParameterDeclaration, EnumDeclaration, VariableDeclaration, ConstructorDeclaration, TemplateLiteralType
 } from "typescript"
 
 import {resolve, dirname, relative, sep} from "path"
@@ -187,6 +187,11 @@ class Context {
     if (type.flags & TypeFlags.BooleanLiteral) return {type: (type as any).intrinsicName}
     if (type.flags & TypeFlags.Literal) return {type: JSON.stringify((type as LiteralType).value)}
     if (type.flags & TypeFlags.Never) return {type: "never"}
+    if (type.flags & TypeFlags.Substitution) return {type: "substitution"}
+    if (type.flags & TypeFlags.TemplateLiteral) {
+      console.log((type as TemplateLiteralType).texts)
+      return {type: "template"}
+    }
 
     if (type.flags & TypeFlags.UnionOrIntersection) {
       let types = (type as UnionOrIntersectionType).types, decl
