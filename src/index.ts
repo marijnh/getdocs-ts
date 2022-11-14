@@ -8,7 +8,8 @@ import {
   Type, TypeFlags, ObjectType, TypeReference, ObjectFlags, LiteralType, UnionOrIntersectionType, ConditionalType,
   Signature, IndexType, IndexedAccessType, TypeElement,
   Node, SyntaxKind, UnionOrIntersectionTypeNode, MappedTypeNode, TypeOperatorNode, TypeLiteralNode,
-  Declaration, NamedDeclaration, TypeParameterDeclaration, ParameterDeclaration, EnumDeclaration, VariableDeclaration, ConstructorDeclaration
+  Declaration, NamedDeclaration, TypeParameterDeclaration, ParameterDeclaration, EnumDeclaration,
+  VariableDeclaration, ConstructorDeclaration, TypeAliasDeclaration, TypeReferenceNode
 } from "typescript"
 
 import {resolve, dirname, relative, sep} from "path"
@@ -252,7 +253,24 @@ class Context {
         if ((target.flags & TypeFlags.Object) && ((target as ObjectType).objectFlags & ObjectFlags.Tuple))
           return {type: "tuple", typeArgs: (type as TypeReference).typeArguments!.map(t => this.getType(t))}
       }
+
       if (objFlags & ObjectFlags.Mapped) {
+        // Instantiated types replace the type they are defined as with
+        // some messy out-of context instantiation of the way that type
+        // itself is defined. Here we try to fish the original
+        // definition out of the syntax tree.
+        if (objFlags & ObjectFlags.Instantiated) {
+          let decl = forSymbol && maybeDecl(forSymbol)
+          if (decl?.kind == SyntaxKind.TypeAliasDeclaration &&
+            (decl as TypeAliasDeclaration).type.kind == SyntaxKind.TypeReference) {
+            let ref = (decl as TypeAliasDeclaration).type as TypeReferenceNode
+            let name = this.tc.getTypeAtLocation(ref.typeName)
+            let args = (ref.typeArguments || []).map(n => this.tc.getTypeAtLocation(n))
+            return this.getReferenceType(name.aliasSymbol || name.symbol, args)
+          }
+          return {type: "instantiated"}
+        }
+
         let decl = maybeDecl(type.symbol) as MappedTypeNode, innerType = decl && decl.type
         let typeParam = decl && decl.typeParameter ? this.getTypeParam(decl.typeParameter) : null
         let cx = typeParam ? this.addParams([typeParam]) : this
@@ -272,6 +290,7 @@ class Context {
       if ((type.symbol.flags & (SymbolFlags.Class | SymbolFlags.Enum | SymbolFlags.ValueModule)) &&
           this.isAvailable(type.symbol))
         return {type: "typeof", typeArgs: [this.getReferenceType(type.symbol)]}
+
       return this.getObjectType(type as ObjectType, objFlags & ObjectFlags.Interface ? type.symbol : undefined)
     }
     if (type.flags & TypeFlags.Unknown) return {type: "unknown"}
