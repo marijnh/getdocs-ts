@@ -6,7 +6,7 @@ import {
   TypeChecker,
   Symbol, SymbolFlags, ModifierFlags,
   Type, TypeFlags, ObjectType, TypeReference, ObjectFlags, LiteralType, UnionOrIntersectionType, ConditionalType,
-  Signature, IndexType, IndexedAccessType, TypeElement,
+  Signature, IndexType, IndexedAccessType, TypeElement, TemplateLiteralType,
   Node, SyntaxKind, UnionOrIntersectionTypeNode, MappedTypeNode, TypeOperatorNode, TypeLiteralNode,
   Declaration, NamedDeclaration, TypeParameterDeclaration, ParameterDeclaration, EnumDeclaration,
   VariableDeclaration, ConstructorDeclaration, TypeAliasDeclaration, TypeReferenceNode
@@ -184,6 +184,10 @@ class Context {
     if (type.flags & TypeFlags.Undefined) return {type: "undefined"}
     if (type.flags & TypeFlags.Null) return {type: "null"}
     if (type.flags & TypeFlags.Void) return {type: "void"}
+    if (type.flags & TypeFlags.TemplateLiteral) return {
+      type: "TemplateLiteral",
+      typeArgs: (type as TemplateLiteralType).types.map(t => this.getType(t))
+    }
     // FIXME TypeScript doesn't export this. See https://github.com/microsoft/TypeScript/issues/26075, where they intend to fix that
     if (type.flags & TypeFlags.BooleanLiteral) return {type: (type as any).intrinsicName}
     if (type.flags & TypeFlags.Literal) return {type: JSON.stringify((type as LiteralType).value)}
