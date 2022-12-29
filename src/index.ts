@@ -134,8 +134,8 @@ class Context {
     if ((mods & ModifierFlags.Readonly) ||
         ((symbol.flags & (SymbolFlags.GetAccessor | SymbolFlags.SetAccessor)) == SymbolFlags.GetAccessor))
       binding.readonly = true
-    if ((mods & (ModifierFlags.Private | ModifierFlags.Protected)) ||
-        binding.description && /@internal\b/.test(binding.description)) return null
+    if ((mods & (ModifierFlags.Private | ModifierFlags.Protected)) || isHidden(binding.description))
+      return null
     if (symbol.flags & SymbolFlags.Optional) {
       binding.optional = true
       type = this.tc.getNonNullableType(type)
@@ -398,7 +398,7 @@ class Context {
       if (!signature || (getCombinedModifierFlags(ctor) & (ModifierFlags.Private | ModifierFlags.Protected))) continue
       let item: Binding & BindingType = {kind: "constructor", id: this.id + ".constructor", type: "Function"}
       this.addSourceData([ctor], item)
-      if (item.description && /@internal\b/.test(item.description)) continue
+      if (isHidden(item.description)) continue
       if (!ctorItem || item.description) ctorItem = item
       ctorSignatures.push(this.extend("constructor", ".").getCallSignature(signature, "constructor", true))
       break
@@ -699,6 +699,10 @@ function stripComment(lines: string[]) {
   while (lines.length && !lines[lines.length - 1]) lines.pop()
   while (lines.length && !lines[0]) lines.shift()
   return lines.join("\n")
+}
+
+function isHidden(description: string | undefined) {
+  return description && /@(internal|hide)\b/.test(description)
 }
 
 export interface GatherSpec {

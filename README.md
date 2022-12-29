@@ -28,6 +28,9 @@ extracts them all at once. Because this avoids duplicate startup,
 typechecking, and module loading work, this can be a _lot_ faster when
 generating docs for a bunch of modules at once.
 
+The tool will omit declarations with a doc comment that includes
+`@internal` or `@hide` from its output.
+
 ## Output format
 
 These declarations summarize the structore of the returned values.
