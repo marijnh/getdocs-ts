@@ -67,8 +67,8 @@ export type Param = BindingType & {
 
 export type Item = Binding & BindingType
 
-// Used for recursion check in getObjectType
-const gettingObjectTypes: Type[] = []
+// Used for recursion check in getObjectType and getCallSignature
+const gettingObjectTypes: Type[] = [], gettingCallSignatures: Signature[] = []
 
 class Context {
   constructor(readonly tc: TypeChecker,
@@ -513,6 +513,8 @@ class Context {
   }
 
   getCallSignature(signature: Signature, type: "constructor" | "function", suppressReturn = false) {
+    if (gettingCallSignatures.includes(signature)) return {type, params: []}
+    gettingCallSignatures.push(signature)
     let cx: Context = this
     let typeParams = signature.typeParameters && this.getTypeParams(signature.getDeclaration())
     let out = {type} as CallSignature
@@ -525,6 +527,7 @@ class Context {
       let ret = signature.getReturnType()
       if (!(ret.flags & TypeFlags.Void)) out.returns = cx.extend("returns").getType(ret)
     }
+    gettingCallSignatures.pop()
     return out
   }
 
