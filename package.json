@@ -1,6 +1,6 @@
 {
   "name": "getdocs-ts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Extract builddocs-style info from typescript sources",
   "main": "src/index.js",
   "scripts": {
