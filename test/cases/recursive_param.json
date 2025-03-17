@@ -1,0 +1,156 @@
+{
+  "A": {
+    "kind": "interface",
+    "id": "A",
+    "loc": {
+      "file": "recursive_param.ts",
+      "line": 1,
+      "column": 0
+    },
+    "type": "interface",
+    "typeParams": [
+      {
+        "type": "typeparam",
+        "kind": "typeparam",
+        "name": "T",
+        "id": "A^T",
+        "loc": {
+          "file": "recursive_param.ts",
+          "line": 1,
+          "column": 19
+        },
+        "implements": [
+          {
+            "type": "union",
+            "typeArgs": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "Function",
+                "signatures": [
+                  {
+                    "type": "function",
+                    "params": [
+                      {
+                        "id": "A^T^props",
+                        "kind": "parameter",
+                        "type": "any",
+                        "loc": {
+                          "file": "recursive_param.ts",
+                          "line": 2,
+                          "column": 18
+                        },
+                        "name": "props"
+                      }
+                    ],
+                    "returns": {
+                      "type": "A",
+                      "typeSource": "recursive_param.ts",
+                      "typeArgs": [
+                        {
+                          "type": "any"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "Function",
+                "signatures": [
+                  {
+                    "type": "function",
+                    "params": [
+                      {
+                        "id": "A^T^props",
+                        "kind": "parameter",
+                        "type": "any",
+                        "loc": {
+                          "file": "recursive_param.ts",
+                          "line": 2,
+                          "column": 45
+                        },
+                        "name": "props"
+                      }
+                    ],
+                    "returns": {
+                      "type": "any"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "default": "B | string"
+      }
+    ]
+  },
+  "B": {
+    "kind": "typealias",
+    "id": "B",
+    "loc": {
+      "file": "recursive_param.ts",
+      "line": 2,
+      "column": 0
+    },
+    "type": "union",
+    "typeArgs": [
+      {
+        "type": "Function",
+        "signatures": [
+          {
+            "type": "function",
+            "params": [
+              {
+                "id": "B^props",
+                "kind": "parameter",
+                "type": "any",
+                "loc": {
+                  "file": "recursive_param.ts",
+                  "line": 2,
+                  "column": 18
+                },
+                "name": "props"
+              }
+            ],
+            "returns": {
+              "type": "A",
+              "typeSource": "recursive_param.ts",
+              "typeArgs": [
+                {
+                  "type": "any"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "Function",
+        "signatures": [
+          {
+            "type": "function",
+            "params": [
+              {
+                "id": "B^props",
+                "kind": "parameter",
+                "type": "any",
+                "loc": {
+                  "file": "recursive_param.ts",
+                  "line": 2,
+                  "column": 45
+                },
+                "name": "props"
+              }
+            ],
+            "returns": {
+              "type": "any"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
