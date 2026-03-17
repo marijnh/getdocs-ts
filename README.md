@@ -1,3 +1,5 @@
+**This repository has moved to https://code.haverbeke.berlin/marijn/getdocs-ts**
+
 # getdocs-ts
 
 This is a tool for extracting documentation and typing information
